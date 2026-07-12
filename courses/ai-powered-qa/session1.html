@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 1: AI Foundations — AI Uplift</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<div class="container">
+  <a href="../../index.html" class="back-link">← Back to courses</a>
+
+  <!-- GATE -->
+  <div id="gate" class="gate-overlay">
+    <h2>Session 1: AI Foundations for QA</h2>
+    <p>Enter the session passcode shared by your facilitator</p>
+    <input type="password" id="passcode" class="gate-input" placeholder="Session passcode" autofocus>
+    <button onclick="checkPass()" class="gate-btn">Access Materials</button>
+    <div id="error" class="gate-error">Incorrect passcode. Try again.</div>
+  </div>
+
+  <!-- PROTECTED CONTENT -->
+  <div id="content" style="display:none;">
+    <h2 style="font-size:24px;font-weight:800;margin-bottom:4px;">Session 1: AI Foundations for QA</h2>
+    <p style="font-size:13px;color:var(--mint);margin-bottom:4px;">Shifting the Mindset</p>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:24px;">14th July 2026 • 2 Hours • Theory + Practical</p>
+
+    <div class="content-section">
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Distinguish between AI hype and practical AI-driven testing capabilities</li>
+        <li>Identify AI tools and agent capabilities relevant to QA engineering</li>
+        <li>Explain spec-driven development and its role in AI-augmented QA</li>
+        <li>Articulate how the QA role is evolving — and the guardrails needed</li>
+        <li>Critically evaluate AI-generated test artifacts</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h3>📝 Key Concepts</h3>
+      <ul>
+        <li><strong>Three Levels of AI:</strong> Assisted (human drives) → Augmented (AI handles routine, human validates) → Autonomous (AI plans & executes)</li>
+        <li><strong>Tools vs Agents:</strong> A tool is a single transaction. An agent has goals, memory, and multi-step planning.</li>
+        <li><strong>Spec-Driven Development:</strong> Clear specs = clear AI output. Vague specs = garbage output.</li>
+        <li><strong>The Loop:</strong> Spec → AI Code → AI Tests → Validate → Refine (continuous)</li>
+        <li><strong>Guardrail Zones:</strong> Green (automate freely) → Yellow (human reviews) → Red (human only)</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h3>🧪 Exercise: Tool Map Template</h3>
+      <p>Map AI tools relevant to your QA practice:</p>
+      <pre>
+| Category              | Tool Name | Value (H/M/L) | Complexity (H/M/L) | Agent? |
+|-----------------------|-----------|---------------|---------------------|--------|
+| Test Generation       |           |               |                     |        |
+| Execution             |           |               |                     |        |
+| Defect Intelligence   |           |               |                     |        |
+| Test Data             |           |               |                     |        |
+| Visual Testing        |           |               |                     |        |
+| Monitoring            |           |               |                     |        |
+| CI/CD Integration     |           |               |                     |        |
+
+Top 3 to explore: _______________
+Biggest gap: _______________</pre>
+    </div>
+
+    <div class="content-section">
+      <h3>📋 Exercise: Spec Template</h3>
+      <pre>
+APP NAME: _______________
+PURPOSE: One sentence — what does it do?
+TARGET USER: Who is this for?
+
+USER STORIES (3–5):
+As a [user], I want to [action], so that [benefit]
+
+ACCEPTANCE CRITERIA (per story):
+Given [context]
+When [action]
+Then [expected result]
+
+EDGE CASES:
+- What happens when [boundary condition]?
+- What happens when [error condition]?
+
+NON-FUNCTIONAL:
+- Performance expectations
+- Browser/device support</pre>
+    </div>
+
+    <div class="content-section">
+      <h3>✍️ Writing Testable Specs — 5 Principles</h3>
+      <ul>
+        <li><strong>1. Given/When/Then</strong> — behavioral expectations in structured format</li>
+        <li><strong>2. Explicit boundaries</strong> — "1–100 characters" not "enters text"</li>
+        <li><strong>3. Negative cases</strong> — what should NOT happen</li>
+        <li><strong>4. Data constraints</strong> — valid formats, ranges, types</li>
+        <li><strong>5. Error behaviors</strong> — what happens when things go wrong</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h3>🔑 Key Stats to Remember</h3>
+      <ul>
+        <li>94% of teams use AI in testing (BrowserStack 2026)</li>
+        <li>Only 12% have reached full autonomous level</li>
+        <li>40–70% reduction in test creation time (Forrester 2025)</li>
+        <li>80% of enterprises will use AI-augmented testing by 2027 (Gartner)</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h3>📚 Homework (Optional)</h3>
+      <ul>
+        <li>Refine your micro-app spec using the 5 principles</li>
+        <li>Try one AI tool from your tool map — document what you learned</li>
+        <li>Bring your spec to Session 2 — we're building from it</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+const HASH = 'df42a4d5d3537666f9ed0012c3a44999878842f8d92f2ac056e6df0ca4ac44d1';
+async function sha256(t){const e=new TextEncoder().encode(t);const h=await crypto.subtle.digest('SHA-256',e);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('');}
+async function checkPass(){const h=await sha256(document.getElementById('passcode').value);if(h===HASH){document.getElementById('gate').style.display='none';document.getElementById('content').style.display='block';}else{document.getElementById('error').style.display='block';document.getElementById('passcode').value='';document.getElementById('passcode').focus();}}
+document.getElementById('passcode').addEventListener('keyup',e=>{if(e.key==='Enter')checkPass();});
+</script>
+</body>
+</html>

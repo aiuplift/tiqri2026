@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 3: Process & Roadmap — AI Uplift</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<div class="container">
+  <a href="../../index.html" class="back-link">← Back to courses</a>
+
+  <!-- GATE -->
+  <div id="gate" class="gate-overlay">
+    <h2>Session 3: Process Improvement & AI Adoption</h2>
+    <p>Enter the session passcode shared by your facilitator</p>
+    <input type="password" id="passcode" class="gate-input" placeholder="Session passcode" autofocus>
+    <button onclick="checkPass()" class="gate-btn">Access Materials</button>
+    <div id="error" class="gate-error">Incorrect passcode. Try again.</div>
+  </div>
+
+  <!-- PROTECTED CONTENT -->
+  <div id="content" style="display:none;">
+    <h2 style="font-size:24px;font-weight:800;margin-bottom:4px;">Session 3: Process Improvement & AI Adoption</h2>
+    <p style="font-size:13px;color:var(--mint);margin-bottom:4px;">Building an AI-Augmented QA Practice</p>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:24px;">28th July 2026 • 2 Hours • Strategy + Final Presentations</p>
+
+    <div class="content-section">
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Assess your team's QA maturity and identify high-value AI integration points</li>
+        <li>Define AI skills your team needs and create a development path</li>
+        <li>Design guardrails and governance frameworks for AI use in QE</li>
+        <li>Build a business case and phased adoption roadmap</li>
+        <li>Present a complete AI-augmented project demonstration</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h3>📊 QA Maturity Spectrum</h3>
+      <pre>
+Level 1: MANUAL       → Ad-hoc testing, no standards, reactive
+Level 2: AUTOMATED    → Scripted tests, CI integration, team standards
+Level 3: AI-AUGMENTED → AI assists human work, spec-driven, guardrails
+Level 4: AI-NATIVE    → AI plans & executes, human sets goals only</pre>
+      <p style="margin-top:8px;"><strong>Key insight:</strong> Don't jump levels. AI works best when there's structure to augment.</p>
+    </div>
+
+    <div class="content-section">
+      <h3>🛡️ The Guardrail Framework</h3>
+      <pre>
+┌─────────────┐  ┌─────────────┐  ┌─────────────┐
+│  AUTOMATE   │  │    GATE     │  │  PROHIBIT   │
+│  FREELY     │  │  (Human     │  │  (Human     │
+│             │  │   reviews)  │  │   only)     │
+│ • Test data │  │ • Test gen  │  │ • Security  │
+│ • Formatting│  │ • Defect    │  │ • Compliance│
+│ • Boilerplate│ │   triage    │  │ • Risk      │
+│ • Reports   │  │ • Spec      │  │   decisions │
+│             │  │   review    │  │ • GDPR data │
+└─────────────┘  └─────────────┘  └─────────────┘
+Trust increases ←────────────────→ Trust decreases</pre>
+    </div>
+
+    <div class="content-section">
+      <h3>📐 Effort vs. Impact Matrix</h3>
+      <pre>
+HIGH IMPACT │  Quick Wins      │  Strategic
+            │  (DO FIRST)      │  (PLAN FOR)
+────────────┼──────────────────┼──────────────
+LOW IMPACT  │  Nice-to-Have    │  Avoid
+            │  (IF TIME)       │  (NOT WORTH IT)
+            └─── LOW EFFORT ───┴── HIGH EFFORT ─</pre>
+    </div>
+
+    <div class="content-section">
+      <h3>📅 30-60-90 Day Roadmap Template</h3>
+      <pre>
+DAYS 1-30: QUICK WINS
+- AI integration: _______________
+- Success metric: _______________
+- Guardrails: _______________
+
+DAYS 31-60: WORKFLOW INTEGRATION
+- AI integration: _______________
+- Success metric: _______________
+- Team standard: _______________
+
+DAYS 61-90: STRATEGIC EXPANSION
+- AI integration: _______________
+- Success metric: _______________
+- Scale plan: _______________</pre>
+    </div>
+
+    <div class="content-section">
+      <h3>🔒 Data Privacy Quick Reference</h3>
+      <ul>
+        <li><strong>Can share:</strong> Open-source patterns, generic logic, synthetic data, anonymized descriptions</li>
+        <li><strong>Cannot share:</strong> Proprietary client code, real customer data, PII, credentials, NDA-covered requirements</li>
+        <li><strong>Rule:</strong> When in doubt — anonymize or synthesize. Never assume it's safe.</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h3>💼 Business Case Metrics</h3>
+      <ul>
+        <li>Test creation time: 40-60% reduction</li>
+        <li>Defect escape rate: 15-25% reduction</li>
+        <li>Test coverage: +20-30%</li>
+        <li>Regression cycle time: 30-50% faster</li>
+        <li>Onboarding time: 25% reduction</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h3>🎤 Final Presentation Structure (2.5 min)</h3>
+      <ul>
+        <li><strong>App Demo</strong> (30s): Show your micro-app and core features</li>
+        <li><strong>Test Run</strong> (30s): Run Playwright tests live — show green</li>
+        <li><strong>Tool Map Highlight</strong> (30s): Key discovery from Session 1</li>
+        <li><strong>Lessons Learned</strong> (30s): What worked, what surprised you</li>
+        <li><strong>Adoption Roadmap</strong> (30s): Top priority + guardrails + 30-day plan</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h3>🚀 Series Summary</h3>
+      <ul>
+        <li><strong>Session 1:</strong> "I understand what AI can do for QA"</li>
+        <li><strong>Session 2:</strong> "I can use AI tools effectively in my workflow"</li>
+        <li><strong>Session 3:</strong> "I have a plan to transform our QA practice"</li>
+      </ul>
+      <p style="margin-top:12px;color:var(--mint);font-weight:600;">Next step: Implement your top priority within 2 weeks. Check-in scheduled in 4 weeks.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+const HASH = '62f5be691a57e034659fe88de693d218595d55bfbc173230db1a49a35a3960ea';
+async function sha256(t){const e=new TextEncoder().encode(t);const h=await crypto.subtle.digest('SHA-256',e);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('');}
+async function checkPass(){const h=await sha256(document.getElementById('passcode').value);if(h===HASH){document.getElementById('gate').style.display='none';document.getElementById('content').style.display='block';}else{document.getElementById('error').style.display='block';document.getElementById('passcode').value='';document.getElementById('passcode').focus();}}
+document.getElementById('passcode').addEventListener('keyup',e=>{if(e.key==='Enter')checkPass();});
+</script>
+</body>
+</html>

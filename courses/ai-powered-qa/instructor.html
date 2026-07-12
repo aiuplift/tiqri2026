@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Instructor Portal — AI-Powered QA</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<div class="container">
+  <a href="../../index.html" class="back-link">← Back to courses</a>
+
+  <!-- GATE -->
+  <div id="gate" class="gate-overlay">
+    <h2>🔒 Instructor Portal</h2>
+    <p>Enter instructor passcode to access content</p>
+    <input type="password" id="passcode" class="gate-input" placeholder="Passcode" autofocus>
+    <button onclick="checkPass()" class="gate-btn">Unlock</button>
+    <div id="error" class="gate-error">Incorrect passcode. Try again.</div>
+  </div>
+
+  <!-- PROTECTED CONTENT (hidden until unlocked) -->
+  <div id="content" style="display:none;">
+    <h2 style="font-size:24px;font-weight:800;margin-bottom:8px;">Instructor Resources</h2>
+    <p style="font-size:13px;color:var(--text-muted);margin-bottom:24px;">Speaker notes, exercise answers, and facilitation guides</p>
+
+    <div class="content-section">
+      <h3>📋 Session 1: AI Foundations</h3>
+      <ul>
+        <li><strong>Speaker Notes:</strong> Full word-for-word script with click cues and timing</li>
+        <li><strong>Exercise Answers:</strong> Tool map model, spec model, AI expansion evaluation, quiz keys</li>
+        <li><strong>Key Timing:</strong> 52 min theory + 5 min transition + 55 min practical + 5 min close</li>
+      </ul>
+      <details>
+        <summary style="cursor:pointer;color:var(--mint);font-weight:600;margin-top:12px;">View Speaker Notes</summary>
+        <pre id="s1-notes">Loading...</pre>
+      </details>
+      <details>
+        <summary style="cursor:pointer;color:var(--mint);font-weight:600;margin-top:8px;">View Exercise Answers</summary>
+        <pre id="s1-answers">Loading...</pre>
+      </details>
+    </div>
+
+    <div class="content-section">
+      <h3>📋 Session 2: Practical Integration</h3>
+      <ul>
+        <li><strong>Speaker Notes:</strong> SDLC map, prompt engineering demos, Playwright walkthrough</li>
+        <li><strong>Exercise Answers:</strong> App build prompt, test code, validation audit, prompt patterns</li>
+        <li><strong>Key Timing:</strong> 53 min theory + 5 min transition + 55 min practical + 5 min close</li>
+      </ul>
+      <details>
+        <summary style="cursor:pointer;color:var(--mint);font-weight:600;margin-top:12px;">View Speaker Notes</summary>
+        <pre id="s2-notes">Loading...</pre>
+      </details>
+      <details>
+        <summary style="cursor:pointer;color:var(--mint);font-weight:600;margin-top:8px;">View Exercise Answers</summary>
+        <pre id="s2-answers">Loading...</pre>
+      </details>
+    </div>
+
+    <div class="content-section">
+      <h3>📋 Session 3: Process & Roadmap</h3>
+      <ul>
+        <li><strong>Speaker Notes:</strong> Maturity model, guardrails framework, business case</li>
+        <li><strong>Exercise Answers:</strong> Gap analysis, roadmap model, presentation script, cross-group themes</li>
+        <li><strong>Key Timing:</strong> 55 min theory + 2 min transition + 42 min practical + 18 min presentations + 3 min close</li>
+      </ul>
+      <details>
+        <summary style="cursor:pointer;color:var(--mint);font-weight:600;margin-top:12px;">View Speaker Notes</summary>
+        <pre id="s3-notes">Loading...</pre>
+      </details>
+      <details>
+        <summary style="cursor:pointer;color:var(--mint);font-weight:600;margin-top:8px;">View Exercise Answers</summary>
+        <pre id="s3-answers">Loading...</pre>
+      </details>
+    </div>
+
+    <div class="content-section">
+      <h3>✅ Enhancement Checklist</h3>
+      <p>Use this when preparing or updating any session deck.</p>
+      <details>
+        <summary style="cursor:pointer;color:var(--mint);font-weight:600;margin-top:12px;">View Checklist</summary>
+        <pre id="checklist">Loading...</pre>
+      </details>
+    </div>
+  </div>
+</div>
+
+<script>
+// SHA-256 hash of instructor passcode
+const HASH = '1ed221eb3d6b2500c2c415e545bd9eb3ee2c16af9d9ed6a4e63a54c7cb680313';
+
+async function sha256(text) {
+  const encoder = new TextEncoder();
+  const data = encoder.encode(text);
+  const hash = await crypto.subtle.digest('SHA-256', data);
+  return Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2,'0')).join('');
+}
+
+async function checkPass() {
+  const input = document.getElementById('passcode').value;
+  const hashed = await sha256(input);
+  if (hashed === HASH) {
+    document.getElementById('gate').style.display = 'none';
+    document.getElementById('content').style.display = 'block';
+    loadContent();
+  } else {
+    document.getElementById('error').style.display = 'block';
+    document.getElementById('passcode').value = '';
+    document.getElementById('passcode').focus();
+  }
+}
+
+// Enter key support
+document.getElementById('passcode').addEventListener('keyup', function(e) {
+  if (e.key === 'Enter') checkPass();
+});
+
+// Load markdown files into pre elements
+async function loadContent() {
+  const files = {
+    's1-notes': 'content/session1_speaker_notes.md',
+    's1-answers': 'content/session1_exercise_answers.md',
+    's2-notes': 'content/session2_speaker_notes.md',
+    's2-answers': 'content/session2_exercise_answers.md',
+    's3-notes': 'content/session3_speaker_notes.md',
+    's3-answers': 'content/session3_exercise_answers.md',
+    'checklist': 'content/slide_enhancement_checklist.md'
+  };
+  for (const [id, path] of Object.entries(files)) {
+    try {
+      const resp = await fetch(path);
+      const text = await resp.text();
+      document.getElementById(id).textContent = text;
+    } catch(e) {
+      document.getElementById(id).textContent = 'File not found: ' + path;
+    }
+  }
+}
+</script>
+</body>
+</html>

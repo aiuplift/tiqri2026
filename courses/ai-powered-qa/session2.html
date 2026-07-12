@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 2: Practical Integration — AI Uplift</title>
+<link rel="stylesheet" href="../../assets/style.css">
+</head>
+<body>
+<div class="container">
+  <a href="../../index.html" class="back-link">← Back to courses</a>
+
+  <!-- GATE -->
+  <div id="gate" class="gate-overlay">
+    <h2>Session 2: AI in the Testing Workflow</h2>
+    <p>Enter the session passcode shared by your facilitator</p>
+    <input type="password" id="passcode" class="gate-input" placeholder="Session passcode" autofocus>
+    <button onclick="checkPass()" class="gate-btn">Access Materials</button>
+    <div id="error" class="gate-error">Incorrect passcode. Try again.</div>
+  </div>
+
+  <!-- PROTECTED CONTENT -->
+  <div id="content" style="display:none;">
+    <h2 style="font-size:24px;font-weight:800;margin-bottom:4px;">Session 2: AI in the Testing Workflow</h2>
+    <p style="font-size:13px;color:var(--mint);margin-bottom:4px;">Practical Integration</p>
+    <p style="font-size:12px;color:var(--text-muted);margin-bottom:24px;">21st July 2026 • 2 Hours • Theory + Hands-On Build</p>
+
+    <div class="content-section">
+      <h3>🎯 Learning Objectives</h3>
+      <ul>
+        <li>Map where AI delivers value across each SDLC phase</li>
+        <li>Apply prompt engineering techniques for reliable QA output</li>
+        <li>Translate a specification into automated Playwright tests using AI</li>
+        <li>Critically validate AI-generated artifacts and spot hallucinations</li>
+        <li>Build a working micro-app prototype using RAD + AI</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h3>⚡ Prompt Engineering — Anatomy of a Good QA Prompt</h3>
+      <pre>
+┌─────────────────────────────────────────────┐
+│ CONTEXT     │ Role, domain, project context │
+│ SPEC/INPUT  │ User story, acceptance criteria│
+│ CONSTRAINTS │ Tech stack, patterns, limits   │
+│ FORMAT      │ Expected output structure       │
+│ EXAMPLES    │ What good output looks like     │
+└─────────────────────────────────────────────┘</pre>
+    </div>
+
+    <div class="content-section">
+      <h3>🛠️ Prompt Template: Test Case Generation</h3>
+      <pre>
+Role: You are a senior QA engineer specializing in [domain].
+Context: We're testing [feature] in [app description].
+Spec: [paste user story + acceptance criteria]
+Tech stack: Playwright with TypeScript
+Patterns: Page Object Model, AAA (Arrange-Act-Assert)
+
+Generate comprehensive test scenarios including:
+- Positive flows (happy path)
+- Negative flows (invalid inputs, unauthorized access)
+- Boundary conditions (min/max values, empty states)
+- Edge cases (concurrent actions, timing issues)
+
+For each scenario, provide:
+1. Scenario name
+2. Preconditions
+3. Steps
+4. Expected result
+5. Priority (Critical/High/Medium/Low)</pre>
+    </div>
+
+    <div class="content-section">
+      <h3>🛠️ Prompt Template: Spec Review</h3>
+      <pre>
+Review this user story for testability issues:
+[paste story]
+
+Identify:
+1. Ambiguous language that could be interpreted multiple ways
+2. Missing acceptance criteria
+3. Untestable requirements
+4. Missing edge cases and boundary conditions
+5. Implicit assumptions that should be explicit
+
+For each issue, suggest a specific improvement.</pre>
+    </div>
+
+    <div class="content-section">
+      <h3>🔍 5-Dimension Evaluation Framework</h3>
+      <ul>
+        <li><strong>Coverage:</strong> Does this test what the spec requires?</li>
+        <li><strong>Correctness:</strong> Are assertions checking the right things?</li>
+        <li><strong>Completeness:</strong> Are edge cases and negatives covered?</li>
+        <li><strong>Maintainability:</strong> Can a human read and update this?</li>
+        <li><strong>Trustworthiness:</strong> Would you bet on this in production?</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h3>⚠️ Spotting AI Hallucinations</h3>
+      <ul>
+        <li>Tests that check elements exist but not their content</li>
+        <li>Assertions that match expected result to itself (tautologies)</li>
+        <li>Tests with no meaningful assertions (just <code>expect(page).toBeVisible()</code>)</li>
+        <li>Coverage that looks comprehensive but tests nothing meaningful</li>
+        <li>20 tests for login — but none verify authentication actually works</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h3>🚧 Guardrail Principles</h3>
+      <ul>
+        <li>Never commit unreviewed AI-generated code</li>
+        <li>Every test needs at least one meaningful business logic assertion</li>
+        <li>For every positive test → at least one negative/boundary test</li>
+        <li>Every test must link to a spec item (traceability)</li>
+        <li>Manual exploration first — AI generates from spec, exploration finds what spec missed</li>
+      </ul>
+    </div>
+
+    <div class="content-section">
+      <h3>📚 Homework (Optional)</h3>
+      <ul>
+        <li>Add 2 more Playwright tests to your suite</li>
+        <li>Improve your app based on what tests revealed</li>
+        <li>Document 3 prompt patterns that worked well for your domain</li>
+        <li>Bring everything to Session 3 — it's demo time</li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<script>
+const HASH = '9ef25ab4cc2d1d22805b24a1060223b9407aed716d4531d3144515b5cdb006fb';
+async function sha256(t){const e=new TextEncoder().encode(t);const h=await crypto.subtle.digest('SHA-256',e);return Array.from(new Uint8Array(h)).map(b=>b.toString(16).padStart(2,'0')).join('');}
+async function checkPass(){const h=await sha256(document.getElementById('passcode').value);if(h===HASH){document.getElementById('gate').style.display='none';document.getElementById('content').style.display='block';}else{document.getElementById('error').style.display='block';document.getElementById('passcode').value='';document.getElementById('passcode').focus();}}
+document.getElementById('passcode').addEventListener('keyup',e=>{if(e.key==='Enter')checkPass();});
+</script>
+</body>
+</html>
