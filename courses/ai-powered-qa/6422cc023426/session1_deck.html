@@ -1,0 +1,1842 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 1: AI Foundations for QA — Shifting the Mindset</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+<style>
+  /* ===== DESIGN SYSTEM ===== */
+  :root {
+    --navy:      #1B4F72;
+    --blue:      #2E86C1;
+    --mint:      #48C9B0;
+    --dark-bg:   #0D2137;
+    --light-bg:  #F4F9FC;
+    --card-bg:   #163D5C;
+    --text-light:#FFFFFF;
+    --text-muted:#A8C6D8;
+    --font:      system-ui, 'Segoe UI', sans-serif;
+  }
+
+  .reveal { font-family: var(--font); }
+  .reveal .slides section { text-align: left; padding: 0 48px; }
+
+  /* Progress bar */
+  .reveal .progress { height: 4px; color: var(--mint); }
+  .reveal .progress span { background: var(--mint); }
+
+  /* Slide number */
+  .reveal .slide-number {
+    background: rgba(0,0,0,0.4);
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-family: var(--font);
+  }
+
+  /* ===== TYPOGRAPHY ===== */
+  .reveal h1, .reveal h2, .reveal h3 {
+    font-family: var(--font);
+    text-transform: none;
+    letter-spacing: -0.5px;
+  }
+  .slide-title-dark  { color: var(--text-light) !important; }
+  .slide-title-light { color: var(--navy) !important; }
+
+  .accent-bar {
+    width: 80px; height: 4px;
+    background: var(--mint);
+    margin: 8px 0 24px 0;
+    border-radius: 2px;
+  }
+
+  /* ===== CARDS ===== */
+  .card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 18px 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  }
+  .card-light {
+    background: #fff;
+    border-radius: 10px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 12px rgba(27,79,114,0.10);
+  }
+  .card-navy {
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 18px 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+
+  /* ===== GRID HELPERS ===== */
+  .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+  .grid-2x3  { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px; }
+  .flex-row  { display: flex; gap: 16px; align-items: stretch; }
+
+  /* ===== CHAPTER SLIDES ===== */
+  .chapter-num {
+    font-size: 96px;
+    font-weight: 900;
+    color: var(--mint);
+    opacity: 0.85;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .chapter-title {
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--text-light);
+    margin: 0 0 8px 0;
+  }
+  .chapter-sub {
+    font-size: 17px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin: 0;
+  }
+  .chapter-rule {
+    width: 100px; height: 4px;
+    background: var(--mint);
+    border-radius: 2px;
+    margin-top: 20px;
+  }
+
+  /* ===== AGENDA CARDS ===== */
+  .agenda-num {
+    font-size: 26px; font-weight: 800;
+    color: var(--mint); margin-bottom: 6px;
+  }
+  .agenda-title { font-size: 14px; font-weight: 700; color: var(--text-light); margin-bottom: 4px; }
+  .agenda-sub   { font-size: 12px; color: var(--text-muted); }
+
+  /* ===== LEVEL CARDS ===== */
+  .level-card { border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
+  .level-bar  { height: 5px; }
+  .level-body { background: var(--card-bg); padding: 18px 16px; }
+  .level-title { font-size: 15px; font-weight: 700; color: var(--text-light); margin-bottom: 10px; }
+  .level-desc  { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+  /* ===== CAPS CARDS ===== */
+  .cap-badge { font-size: 11px; font-weight: 700; color: var(--mint); margin-bottom: 6px; }
+  .cap-title { font-size: 13px; font-weight: 700; color: var(--text-light); margin-bottom: 6px; }
+  .cap-desc  { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ===== LIMIT ROWS ===== */
+  .limit-row {
+    display: flex; align-items: center;
+    background: var(--card-bg);
+    border-radius: 8px; padding: 12px 18px;
+    margin-bottom: 10px;
+    gap: 14px;
+  }
+  .limit-x  { color: #E74C3C; font-size: 20px; font-weight: 700; flex-shrink:0; }
+  .limit-txt { font-size: 14px; color: var(--text-light); }
+
+  /* ===== TOOL CARDS ===== */
+  .tool-title { font-size: 13px; font-weight: 700; color: var(--mint); margin-bottom: 8px; }
+  .tool-names { font-size: 11px; color: var(--text-light); line-height: 1.6; }
+
+  /* ===== TOOLS vs AGENTS ===== */
+  .tva-label { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+  .tva-flow  { font-size: 13px; color: var(--mint); font-weight: 600; margin-bottom: 12px; }
+  .tva-list  { font-size: 12px; color: var(--text-muted); line-height: 1.9; }
+  .tva-list strong { color: var(--text-light); }
+
+  /* ===== SPEC SLIDES ===== */
+  .banner-mint {
+    background: var(--navy);
+    border-left: 4px solid var(--mint);
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 14px; font-weight: 700;
+    color: var(--mint);
+    margin-bottom: 18px;
+  }
+  .spec-bad  { background: #FEF0EE; border-radius: 10px; padding: 16px; }
+  .spec-good { background: #E8F8F5; border-radius: 10px; padding: 16px; }
+  .spec-bad-label  { font-size: 13px; font-weight: 700; color: #E74C3C; margin-bottom: 8px; }
+  .spec-good-label { font-size: 13px; font-weight: 700; color: #1B8A6B; margin-bottom: 8px; }
+  .spec-text { font-size: 12px; line-height: 1.65; }
+  .spec-text-bad  { color: #7B3529; }
+  .spec-text-good { color: #1B4F40; }
+
+  /* ===== SPEC LOOP ===== */
+  .loop-steps { display: flex; align-items: stretch; gap: 0; }
+  .loop-step {
+    flex: 1;
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 16px 10px;
+    text-align: center;
+  }
+  .loop-step-label { font-size: 11px; font-weight: 800; color: var(--mint); margin-bottom: 10px; letter-spacing: 1px; }
+  .loop-step-desc  { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+  .loop-arrow {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--mint); flex-shrink: 0; padding: 0 6px;
+  }
+  .loop-footer {
+    background: #E8F8F5; border-radius: 8px;
+    padding: 10px 18px; margin-top: 16px;
+    font-size: 12px; color: var(--navy); font-weight: 600;
+    text-align: center;
+  }
+
+  /* ===== CHECKLIST ===== */
+  .check-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 9px 0; border-bottom: 1px solid rgba(27,79,114,0.1);
+    font-size: 14px; color: var(--navy);
+  }
+  .check-icon { color: var(--mint); font-size: 17px; flex-shrink: 0; }
+
+  /* ===== GATEKEEPER ===== */
+  .model-old { background: #FEF0EE; border-radius: 10px; padding: 18px; }
+  .model-new { background: #E8F8F5; border-radius: 10px; padding: 18px; }
+  .model-label { font-size: 13px; font-weight: 800; margin-bottom: 12px; }
+  .model-old .model-label { color: #E74C3C; }
+  .model-new .model-label { color: #1B8A6B; }
+  .model-item { font-size: 12px; line-height: 2; }
+  .model-old .model-item { color: #7B3529; }
+  .model-new .model-item { color: #1B4F40; }
+
+  /* ===== SKILLS MATRIX ===== */
+  .matrix-header {
+    display: grid; grid-template-columns: 90px 130px 1fr;
+    background: var(--navy); border-radius: 8px 8px 0 0;
+    padding: 8px 14px; font-size: 11px; font-weight: 800;
+    color: var(--text-muted); letter-spacing: 1px;
+  }
+  .matrix-row {
+    display: grid; grid-template-columns: 90px 130px 1fr;
+    padding: 10px 14px; border-bottom: 1px solid rgba(27,79,114,0.08);
+    align-items: center;
+  }
+  .matrix-row:nth-child(odd)  { background: rgba(44,134,193,0.08); }
+  .matrix-row:nth-child(even) { background: rgba(44,134,193,0.04); }
+  .matrix-level { font-size: 12px; font-weight: 700; color: var(--blue); }
+  .matrix-role  { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .matrix-desc  { font-size: 12px; color: #4a6785; }
+  .matrix-banner {
+    background: var(--navy); border-radius: 0 0 8px 8px;
+    padding: 12px 16px; font-size: 13px; font-weight: 700;
+    color: var(--mint); text-align: center;
+  }
+
+  /* ===== TRUST ZONES ===== */
+  .zone-card { border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+  .zone-bar  { height: 6px; }
+  .zone-body { padding: 16px 14px; }
+  .zone-label { font-size: 12px; font-weight: 800; letter-spacing: 1px; margin-bottom: 4px; }
+  .zone-sub   { font-size: 12px; font-weight: 700; color: var(--text-light); margin-bottom: 12px; }
+  .zone-items { font-size: 11px; color: var(--text-muted); line-height: 2; }
+  .zone-green { background: #1A3D2E; }
+  .zone-yellow{ background: #3D2E0A; }
+  .zone-red   { background: #3D0A0A; }
+
+  /* ===== EXERCISE TIMELINE ===== */
+  .timeline { display: flex; flex-direction: column; gap: 12px; }
+  .tl-item  {
+    display: flex; align-items: flex-start; gap: 16px;
+    background: var(--navy); border-radius: 10px; padding: 14px 18px;
+  }
+  .tl-time {
+    font-size: 20px; font-weight: 800; color: var(--mint);
+    flex-shrink: 0; min-width: 64px; line-height: 1;
+  }
+  .tl-min  { font-size: 11px; font-weight: 400; color: var(--text-muted); }
+  .tl-title { font-size: 14px; font-weight: 700; color: var(--text-light); margin-bottom: 3px; }
+  .tl-desc  { font-size: 12px; color: var(--text-muted); }
+
+  /* ===== CLOSING CARDS ===== */
+  .closing-card {
+    background: var(--card-bg); border-radius: 10px;
+    padding: 16px 18px; border-left: 3px solid var(--mint);
+    font-size: 13px; color: var(--text-light); line-height: 1.5;
+  }
+
+  /* ===== NAV BAR ===== */
+  #session-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+    display: flex; justify-content: center; align-items: center;
+    gap: 6px; padding: 6px 12px;
+    background: rgba(13,33,55,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(72,201,176,0.2);
+    font-family: var(--font); font-size: 11px;
+  }
+  #session-nav .nav-label {
+    color: var(--text-muted); font-size: 10px; font-weight: 700;
+    letter-spacing: 1px; margin-right: 4px; flex-shrink: 0;
+  }
+  #session-nav a {
+    color: var(--text-muted); text-decoration: none;
+    padding: 3px 10px; border-radius: 20px;
+    border: 1px solid transparent;
+    transition: all 0.2s; font-size: 11px; white-space: nowrap;
+  }
+  #session-nav a:hover {
+    color: var(--mint); border-color: var(--mint);
+    background: rgba(72,201,176,0.1);
+  }
+
+  /* ===== KEYBOARD HINT ===== */
+  .keyboard-hint {
+    position: absolute; bottom: 28px; left: 0; right: 0;
+    font-size: 11px; color: rgba(168,198,216,0.6);
+    display: flex; gap: 14px; align-items: center;
+    justify-content: center;
+  }
+  .key {
+    display: inline-block;
+    border: 1px solid rgba(168,198,216,0.3);
+    border-radius: 4px; padding: 2px 7px;
+    font-size: 11px; color: rgba(168,198,216,0.7);
+  }
+
+  /* ===== TITLE SLIDE ===== */
+  .title-series  { font-size: 34px; font-weight: 800; color: var(--text-light); margin-bottom: 8px; line-height: 1.2; }
+  .title-session { font-size: 19px; font-weight: 600; color: var(--mint); margin-bottom: 8px; }
+  .title-tagline { font-size: 15px; color: var(--text-muted); font-style: italic; margin-bottom: 32px; }
+  .title-rule    { width: 80px; height: 3px; background: var(--mint); border-radius: 2px; margin-bottom: 24px; }
+  .title-author  { font-size: 15px; font-weight: 700; color: var(--text-light); margin-bottom: 4px; }
+  .title-date    { font-size: 13px; color: var(--text-muted); }
+
+  /* ===== FRAGMENT OVERRIDES ===== */
+  .reveal .fragment { opacity: 0.15; transition: opacity 0.4s; }
+  .reveal .fragment.visible { opacity: 1; }
+
+  /* ===== LIGHT SLIDE TEXT OVERRIDES ===== */
+  .light-slide p, .light-slide li { color: var(--navy); }
+
+  /* ===== FOOTER BARS ===== */
+  .footer-bar {
+    background: #E8F8F5; border-radius: 8px;
+    padding: 9px 18px; margin-top: 14px;
+    font-size: 12px; color: var(--navy); font-weight: 600;
+    text-align: center;
+  }
+  .footer-bar-dark {
+    background: var(--card-bg);
+    border-radius: 8px; padding: 9px 18px; margin-top: 14px;
+    font-size: 12px; color: var(--mint); font-weight: 600;
+    text-align: center;
+  }
+
+  /* ===== ARROW VS ===== */
+  .vs-arrow {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: var(--mint); font-weight: 800;
+    flex-shrink: 0; padding: 0 8px;
+  }
+
+  /* teaser box */
+  .teaser {
+    background: var(--card-bg); border-left: 3px solid var(--mint);
+    border-radius: 8px; padding: 10px 16px;
+    font-size: 12px; color: var(--text-muted);
+    margin-top: 12px; font-style: italic;
+  }
+
+  /* ===== TOOLTIPS ===== */
+  .tip {
+    position: relative;
+    border-bottom: 1px dashed var(--mint);
+    cursor: help;
+    color: inherit;
+    font-weight: inherit;
+  }
+  .tip:hover { color: var(--mint); }
+  .tip .tip-content {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--navy);
+    color: var(--text-light);
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.6;
+    width: 320px;
+    max-width: 90vw;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    border: 2px solid var(--mint);
+    z-index: 10000;
+    text-align: left;
+    font-style: normal;
+  }
+  .tip .tip-content::before {
+    content: '💡';
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .tip:hover .tip-content,
+  .tip:focus .tip-content { display: none; }
+  /* On light backgrounds */
+  .light-tip .tip-content { background: #fff; color: var(--navy); border-color: var(--blue); }
+  .light-tip { border-bottom-color: var(--blue); }
+  .light-tip:hover { color: var(--blue); }
+
+  /* ===== QUIZ SLIDES ===== */
+  .quiz-label { font-size: 11px; font-weight: 700; color: var(--mint); letter-spacing: 2px; margin-bottom: 12px; }
+  .quiz-question { font-size: 22px; font-weight: 700; color: var(--text-light); margin-bottom: 24px; line-height: 1.4; }
+  .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .quiz-opt {
+    background: var(--card-bg); border-radius: 10px; padding: 16px 20px;
+    font-size: 14px; color: var(--text-light); cursor: pointer;
+    border: 2px solid transparent; transition: all 0.2s;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .quiz-opt:hover { border-color: var(--mint); background: rgba(72,201,176,0.1); }
+  .quiz-opt.correct { background: #1D4A3A !important; border-color: #27AE60 !important; cursor: default; }
+  .quiz-opt.wrong { background: #4A1D1D !important; border-color: #E74C3C !important; cursor: default; opacity: 0.7; }
+  .quiz-opt.disabled { pointer-events: none; opacity: 0.6; }
+  .quiz-opt .opt-letter {
+    width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; flex-shrink: 0;
+  }
+  .quiz-opt.correct .opt-letter { background: #27AE60; color: #fff; }
+  .quiz-opt.wrong .opt-letter { background: #E74C3C; color: #fff; }
+  .quiz-explain {
+    margin-top: 16px; padding: 12px 18px; border-radius: 8px;
+    background: rgba(72,201,176,0.1); border-left: 3px solid var(--mint);
+    font-size: 12px; color: var(--text-muted); display: none; line-height: 1.6;
+  }
+  .quiz-explain.show { display: block; }
+</style>
+</head>
+<body>
+
+<!-- SESSION NAV BAR -->
+<div id="session-nav">
+  <span class="nav-label">SESSION 1</span>
+  <a href="#" onclick="Reveal.slide(3); return false;">01 AI Testing</a>
+  <a href="#" onclick="Reveal.slide(12); return false;">02 Tool Landscape</a>
+  <a href="#" onclick="Reveal.slide(16); return false;">03 Spec-Driven</a>
+  <a href="#" onclick="Reveal.slide(21); return false;">04 QA Role</a>
+  <a href="#" onclick="Reveal.slide(24); return false;">05 Guardrails</a>
+  <a href="#" onclick="Reveal.slide(26); return false;">06 Exercise</a>
+</div>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ==================== SLIDE 1: TITLE ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top: 40px;">
+    <div style="width:100%;height:4px;background:var(--mint);border-radius:2px;margin-bottom:32px;"></div>
+    <div class="title-series">AI-Powered QA —<br>Rethinking Strategy &amp; Process</div>
+    <div class="title-session">Session 1: AI Foundations for QA — Shifting the Mindset</div>
+    <div class="title-tagline">From testing to transformation — redefine how quality gets built</div>
+    <div class="title-rule"></div>
+    <div class="title-author">Dr. Chathuranga Manamendra</div>
+    <div class="title-date">14th July 2026 &nbsp;|&nbsp; TIQRI QA Team</div>
+    <div class="keyboard-hint">
+      <span><span class="key">←→</span> Navigate</span>
+      <span><span class="key">F</span> Fullscreen</span>
+      <span><span class="key">S</span> Speaker Notes</span>
+      <span><span class="key">O</span> Overview</span>
+    </div>
+  </div>
+  <aside class="notes">Welcome participants. This is Session 1 of 3. Overview: We cover AI landscape, spec-driven development, agent capabilities, and guardrails. 1 hour theory + 1 hour practical. Session 2 on 21st July — hands-on building. Session 3 on 28th July — governance and scaling.</aside>
+</section>
+
+<!-- ==================== SLIDE 2: GROUND RULES ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:24px;">
+    <h2 class="slide-title-dark" style="font-size:26px;font-weight:800;margin-bottom:4px;">Ground Rules</h2>
+    <div class="accent-bar"></div>
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <div class="limit-row fragment">
+        <div style="font-size:1.2rem;flex-shrink:0;">🔧</div>
+        <div class="limit-txt"><strong>Tool-agnostic.</strong> I'm not promoting any specific tool. We explore principles that apply regardless of which AI you use.</div>
+      </div>
+      <div class="limit-row fragment">
+        <div style="font-size:1.2rem;flex-shrink:0;">📷</div>
+        <div class="limit-txt"><strong>Camera on, voice up.</strong> This is a conversation, not a lecture. Your insights are as valuable as my slides.</div>
+      </div>
+      <div class="limit-row fragment">
+        <div style="font-size:1.2rem;flex-shrink:0;">❓</div>
+        <div class="limit-txt"><strong>Ask anything.</strong> I won't pretend to know everything. If I don't have the answer, I'll find it — or show you how to find it yourself.</div>
+      </div>
+      <div class="limit-row fragment">
+        <div style="font-size:1.2rem;flex-shrink:0;">🤝</div>
+        <div class="limit-txt"><strong>Be open and contribute.</strong> The best learning happens when you share your experiences — successes AND failures.</div>
+      </div>
+      <div class="limit-row fragment">
+        <div style="font-size:1.2rem;flex-shrink:0;">🧭</div>
+        <div class="limit-txt"><strong>6 hours ≠ everything.</strong> I can't teach you all of AI in QA. But I will teach you how to keep learning on your own — that's the real skill.</div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Set expectations. These ground rules are about creating psychological safety: it's okay to not know, it's okay to disagree, and participation makes this better for everyone. Read each one aloud, pause briefly after each. The last point is key — this series launches a learning journey, it doesn't complete one.</aside>
+</section>
+
+<!-- ==================== SLIDE 3: AGENDA ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:16px;">
+    <h2 class="slide-title-light" style="font-size:28px;font-weight:800;margin-bottom:4px;">Agenda</h2>
+    <div class="accent-bar"></div>
+    <div class="grid-2x3" style="margin-top:8px;">
+      <div class="card-navy fragment">
+        <div class="agenda-num">01</div>
+        <div class="agenda-title">AI-Driven Testing</div>
+        <div class="agenda-sub">Separating hype from reality</div>
+      </div>
+      <div class="card-navy fragment">
+        <div class="agenda-num">02</div>
+        <div class="agenda-title">Tool Landscape &amp; Agents</div>
+        <div class="agenda-sub">Mapping the ecosystem</div>
+      </div>
+      <div class="card-navy fragment">
+        <div class="agenda-num">03</div>
+        <div class="agenda-title">Spec-Driven Development</div>
+        <div class="agenda-sub">Foundation for AI workflows</div>
+      </div>
+      <div class="card-navy fragment">
+        <div class="agenda-num">04</div>
+        <div class="agenda-title">QA Role &amp; AI Skills</div>
+        <div class="agenda-sub">The evolving QE identity</div>
+      </div>
+      <div class="card-navy fragment">
+        <div class="agenda-num">05</div>
+        <div class="agenda-title">Guardrails for AI</div>
+        <div class="agenda-sub">Trust through boundaries</div>
+      </div>
+      <div class="card-navy fragment">
+        <div class="agenda-num">06</div>
+        <div class="agenda-title">Practical Exercise</div>
+        <div class="agenda-sub">Tool Map + Project Kickoff</div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Walk through the agenda. Theory is 1 hour — 5 topics roughly 12 minutes each. Then 1 hour practical in breakout groups. Encourage questions throughout rather than saving them all to the end.</aside>
+</section>
+
+<!-- ==================== SLIDE 3: CHAPTER 01 ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:30px;">
+    <div class="chapter-num">01</div>
+    <div class="chapter-title">AI-Driven Testing in Practice</div>
+    <div class="chapter-sub">Separating hype from reality</div>
+    <div class="chapter-rule"></div>
+  </div>
+  <aside class="notes">Transition slide. Open with a quick show of hands: How many of you have used an AI tool for testing in the last month? This sets the baseline and makes it immediately personal and relevant.</aside>
+</section>
+
+<!-- ==================== SLIDE 4A: THREE LEVELS — STAIRCASE OVERVIEW ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:10px;">
+    <h2 class="slide-title-dark" style="font-size:26px;font-weight:800;margin-bottom:4px;">Three Levels of AI in Testing</h2>
+    <div class="accent-bar"></div>
+    <p style="font-size:13px;color:var(--text-muted);font-style:italic;margin:0 0 20px 0;">A maturity journey, not a single leap</p>
+
+    <!-- Staircase layout using grid instead of absolute positioning -->
+    <div style="display:grid;grid-template-columns:30% 34% 30%;gap:12px;align-items:end;min-height:300px;">
+      <!-- Level 1: Bottom-left (shortest) -->
+      <div class="fragment" style="align-self:end;">
+        <div style="background:#1A3D5C;border-radius:12px;padding:18px 16px;border-top:5px solid #2E86C1;box-shadow:0 6px 20px rgba(0,0,0,0.3);">
+          <div style="font-size:26px;margin-bottom:6px;">👤✨</div>
+          <div style="font-size:13px;font-weight:700;color:#2E86C1;margin-bottom:6px;"><span class="tip" style="border-bottom-color:#2E86C1;color:#2E86C1;">AI-ASSISTED<span class="tip-content">Human drives the work, AI provides suggestions on demand. Example: Copilot autocomplete while typing code.</span></span></div>
+          <div style="font-size:11px;color:var(--text-muted);line-height:1.5;">Human drives<br>AI helps on demand</div>
+        </div>
+      </div>
+
+      <!-- Level 2: Middle (tallest, highlighted) -->
+      <div class="fragment" style="align-self:center;">
+        <div style="background:#0F3A4F;border-radius:12px;padding:20px 18px;border-top:5px solid var(--mint);border:2px solid var(--mint);box-shadow:0 8px 28px rgba(72,201,176,0.2);">
+          <div style="font-size:26px;margin-bottom:6px;">🤝🤖</div>
+          <div style="font-size:13px;font-weight:700;color:var(--mint);margin-bottom:6px;"><span class="tip" style="border-bottom-color:var(--mint);color:var(--mint);">AI-AUGMENTED<span class="tip-content">AI handles routine tasks end-to-end, human reviews the output before it's used. Example: AI generates a full test suite, you review before committing.</span></span></div>
+          <div style="font-size:11px;color:var(--text-light);line-height:1.5;">AI handles routine<br>Human guides &amp; validates</div>
+          <div style="margin-top:10px;background:var(--mint);border-radius:20px;padding:5px 12px;display:inline-block;font-size:9px;font-weight:800;color:#fff;">★ THE GOAL OF THIS SERIES</div>
+        </div>
+      </div>
+
+      <!-- Level 3: Top-right (medium height) -->
+      <div class="fragment" style="align-self:start;">
+        <div style="background:#1A3D5C;border-radius:12px;padding:18px 16px;border-top:5px solid #E74C3C;box-shadow:0 6px 20px rgba(0,0,0,0.3);">
+          <div style="font-size:26px;margin-bottom:6px;">🤖🧠</div>
+          <div style="font-size:13px;font-weight:700;color:#E74C3C;margin-bottom:6px;"><span class="tip" style="border-bottom-color:#E74C3C;color:#E74C3C;">AI-AUTONOMOUS<span class="tip-content">AI plans, executes, and adapts independently. Human sets goals, AI figures out how. Example: Self-healing tests that fix their own selectors.</span></span></div>
+          <div style="font-size:11px;color:var(--text-muted);line-height:1.5;">AI plans &amp; executes<br>Human sets goals only</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom stats bar -->
+    <div class="footer-bar-dark fragment" style="margin-top:16px;font-size:11px;">
+      94% at Assisted &nbsp;•&nbsp; 37% moving to Augmented &nbsp;•&nbsp; 12% at Autonomous
+    </div>
+  </div>
+  <aside class="notes">ANIMATION: Reveal bottom stair first (Assisted), then middle (Augmented) with glow border, then top (Autonomous). The staircase visual shows progression. Middle level has a highlighted border to emphasize this is our target. Pause on each level to explain with examples. Sources: BrowserStack 2026.</aside>
+</section>
+
+<!-- ==================== SLIDE 4B: LEVEL 1 — AI-ASSISTED ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:10px;">
+    <!-- Header -->
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:4px;">
+      <span style="background:#2E86C1;color:#fff;font-size:12px;font-weight:800;padding:6px 16px;border-radius:6px;">LEVEL 1</span>
+      <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin:0;">AI-Assisted</h2>
+    </div>
+    <p style="font-size:13px;color:#1B6FA8;font-style:italic;margin:0 0 4px 0;">Human drives, AI helps</p>
+    <div class="accent-bar"></div>
+
+    <div class="grid-2col" style="margin-top:4px;align-items:start;">
+      <!-- Left: Visual metaphor -->
+      <div class="card-light fragment" style="text-align:center;padding:20px;">
+        <div style="font-size:56px;margin-bottom:4px;">👤</div>
+        <div style="font-size:11px;color:#666;">⬇️ Directs</div>
+        <div style="font-size:38px;margin:4px 0;">🤖</div>
+        <div style="font-size:11px;color:#888;font-style:italic;">Responds on demand</div>
+      </div>
+
+      <!-- Right: Examples -->
+      <div class="fragment" style="background:#EBF5FB;border-radius:10px;padding:18px 20px;">
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:14px;">Examples in Your Daily Work</div>
+        <div style="font-size:12px;color:#444;line-height:2.2;">
+          ⌨️ &nbsp;Copilot autocomplete as you type tests<br>
+          💬 &nbsp;Ask Claude to generate a test case<br>
+          💡 &nbsp;AI suggests assertion patterns<br>
+          🔍 &nbsp;Code search with AI understanding
+        </div>
+      </div>
+    </div>
+
+    <!-- Status badge -->
+    <div class="fragment" style="margin-top:14px;background:#2E86C1;border-radius:8px;padding:12px 18px;text-align:center;">
+      <span style="font-size:12px;font-weight:700;color:#fff;">📍 Where 94% of teams are today — Source: BrowserStack 2026</span>
+    </div>
+  </div>
+  <aside class="notes">ANIMATION: 1) Level badge flies in from left. 2) Human icon zooms in. 3) Robot icon fades in below. 4) Examples list reveals one by one. 5) Status badge wipes in from left. TALKING POINTS: This is where most of us start. You type, Copilot suggests. You ask Claude a question, it answers. The human decides everything — when to invoke AI, what to do with the output.</aside>
+</section>
+
+<!-- ==================== SLIDE 4C: LEVEL 2 — AI-AUGMENTED ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:10px;">
+    <!-- Header -->
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:4px;">
+      <span style="background:#1A7A6D;color:#fff;font-size:12px;font-weight:800;padding:6px 16px;border-radius:6px;">LEVEL 2</span>
+      <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin:0;">AI-Augmented</h2>
+    </div>
+    <p style="font-size:13px;color:#1A7A6D;font-style:italic;margin:0 0 4px 0;">AI handles routine, human guides &amp; validates</p>
+    <div class="accent-bar"></div>
+
+    <div class="grid-2col" style="margin-top:4px;align-items:start;">
+      <!-- Left: Visual metaphor -->
+      <div class="card-light fragment" style="text-align:center;padding:20px;">
+        <div style="display:flex;align-items:center;justify-content:center;gap:10px;">
+          <span style="font-size:42px;">👤</span>
+          <span style="font-size:28px;">↔️</span>
+          <span style="font-size:42px;">🤖</span>
+        </div>
+        <div style="font-size:12px;font-weight:700;color:#1A7A6D;margin-top:10px;">Collaborative Partnership</div>
+        <div style="font-size:11px;color:#666;margin-top:6px;">AI generates → Human reviews → Iterate</div>
+        <div style="font-size:11px;color:#888;font-style:italic;margin-top:4px;">🔄 Continuous feedback loop</div>
+      </div>
+
+      <!-- Right: Examples -->
+      <div class="fragment" style="background:#E8F8F5;border-radius:10px;padding:18px 20px;">
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:14px;">What This Looks Like</div>
+        <div style="font-size:12px;color:#444;line-height:2.2;">
+          📝 &nbsp;AI generates full test suite from spec<br>
+          🔎 &nbsp;AI auto-triages defects, human confirms<br>
+          🛠️ &nbsp;Self-healing locators in test framework<br>
+          📊 &nbsp;AI identifies flaky tests + root cause
+        </div>
+      </div>
+    </div>
+
+    <!-- Real-world callout -->
+    <div class="fragment" style="margin-top:10px;background:#D5F5E3;border-radius:8px;padding:10px 16px;display:inline-block;">
+      <span style="font-size:11px;color:#1E8449;">🏢 Warehouse team: "Code reviewed by Copilot" in DoD — <em>this is AI-Augmented in action</em></span>
+    </div>
+
+    <!-- Status badge -->
+    <div class="fragment" style="margin-top:10px;background:#1A7A6D;border-radius:8px;padding:12px 18px;text-align:center;">
+      <span style="font-size:12px;font-weight:700;color:#fff;">⭐ This is your target — the sweet spot of human+AI collaboration</span>
+    </div>
+  </div>
+  <aside class="notes">ANIMATION: Human and Robot icons fly in from left and right simultaneously, meeting in the middle. TALKING POINTS: This is the productive zone. AI does the heavy lifting on routine work. But the human provides judgment, context, and validation. Your Warehouse team is already here with Copilot in their DoD. This series takes everyone to this level.</aside>
+</section>
+
+<!-- ==================== SLIDE 4D: LEVEL 3 — AI-AUTONOMOUS ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:10px;">
+    <!-- Header -->
+    <div style="display:flex;align-items:center;gap:14px;margin-bottom:4px;">
+      <span style="background:#E74C3C;color:#fff;font-size:12px;font-weight:800;padding:6px 16px;border-radius:6px;">LEVEL 3</span>
+      <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin:0;">AI-Autonomous</h2>
+    </div>
+    <p style="font-size:13px;color:#E74C3C;font-style:italic;margin:0 0 4px 0;">AI plans &amp; executes, human defines goals only</p>
+    <div class="accent-bar"></div>
+
+    <div class="grid-2col" style="margin-top:4px;align-items:start;">
+      <!-- Left: Visual metaphor -->
+      <div class="card-light fragment" style="text-align:center;padding:20px;">
+        <div style="font-size:60px;margin-bottom:4px;">🤖</div>
+        <div style="font-size:11px;color:#666;">⬇️ Plans &nbsp; ⬇️ Executes &nbsp; ⬇️ Reports</div>
+        <div style="font-size:28px;margin-top:8px;">👤</div>
+        <div style="font-size:11px;color:#888;">Sets goals &amp; monitors</div>
+        <div style="font-size:11px;color:#E74C3C;font-style:italic;margin-top:8px;">🔮 Future state for most teams</div>
+      </div>
+
+      <!-- Right: Examples -->
+      <div class="fragment" style="background:#FDEDEC;border-radius:10px;padding:18px 20px;">
+        <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:14px;">What Full Autonomy Means</div>
+        <div style="font-size:12px;color:#444;line-height:2.2;">
+          🎯 &nbsp;AI plans test strategy from requirements<br>
+          ⚡ &nbsp;Executes, adapts, and retries autonomously<br>
+          📝 &nbsp;Files bugs with evidence &amp; root cause<br>
+          🔄 &nbsp;Multi-agent systems coordinate testing
+        </div>
+      </div>
+    </div>
+
+    <!-- Status badge -->
+    <div class="fragment" style="margin-top:14px;background:#E74C3C;border-radius:8px;padding:12px 18px;text-align:center;">
+      <span style="font-size:12px;font-weight:700;color:#fff;">🚀 Only 12% have reached this level — Advanced Series territory</span>
+    </div>
+  </div>
+  <aside class="notes">ANIMATION: Large robot zooms in dramatically. TALKING POINTS: This is the frontier. Only 12% of orgs are here. Multi-agent systems where different AI agents handle different testing concerns — planning, execution, analysis, reporting. This is Advanced Series material. Teaser: "We will build agents like this in the follow-up series."</aside>
+</section>
+
+<!-- ==================== SLIDE 4E: COMPARISON SUMMARY ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:10px;">
+    <h2 class="slide-title-dark" style="font-size:22px;font-weight:800;margin-bottom:4px;">Your Journey: Assisted → Augmented → Autonomous</h2>
+    <div class="accent-bar"></div>
+
+    <!-- Comparison table -->
+    <table style="width:100%;border-collapse:separate;border-spacing:0;font-size:11px;margin-top:8px;border-radius:10px;overflow:hidden;">
+      <thead>
+        <tr style="background:var(--card-bg);">
+          <th style="padding:10px 12px;text-align:left;color:var(--text-muted);font-weight:700;width:22%;"></th>
+          <th style="padding:10px 12px;text-align:center;color:#2E86C1;font-weight:700;width:26%;">AI-Assisted</th>
+          <th style="padding:10px 12px;text-align:center;color:var(--mint);font-weight:700;width:26%;border:2px solid var(--mint);border-bottom:none;">AI-Augmented</th>
+          <th style="padding:10px 12px;text-align:center;color:#E74C3C;font-weight:700;width:26%;">AI-Autonomous</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="fragment" style="background:#0D2137;">
+          <td style="padding:9px 12px;color:var(--text-muted);font-weight:700;">Who decides?</td>
+          <td style="padding:9px 12px;color:var(--text-light);text-align:center;">Human always</td>
+          <td style="padding:9px 12px;color:var(--text-light);text-align:center;border-left:2px solid var(--mint);border-right:2px solid var(--mint);">Human validates</td>
+          <td style="padding:9px 12px;color:var(--text-light);text-align:center;">AI decides</td>
+        </tr>
+        <tr class="fragment" style="background:#112B42;">
+          <td style="padding:9px 12px;color:var(--text-muted);font-weight:700;">AI initiative</td>
+          <td style="padding:9px 12px;color:var(--text-light);text-align:center;">None (on demand)</td>
+          <td style="padding:9px 12px;color:var(--text-light);text-align:center;border-left:2px solid var(--mint);border-right:2px solid var(--mint);">Proactive suggestions</td>
+          <td style="padding:9px 12px;color:var(--text-light);text-align:center;">Full autonomy</td>
+        </tr>
+        <tr class="fragment" style="background:#0D2137;">
+          <td style="padding:9px 12px;color:var(--text-muted);font-weight:700;">Human effort</td>
+          <td style="padding:9px 12px;text-align:center;"><span style="color:#E74C3C;font-weight:700;">█████ High</span></td>
+          <td style="padding:9px 12px;text-align:center;border-left:2px solid var(--mint);border-right:2px solid var(--mint);"><span style="color:#F39C12;font-weight:700;">███░░ Medium</span></td>
+          <td style="padding:9px 12px;text-align:center;"><span style="color:#2ECC71;font-weight:700;">█░░░░ Low</span></td>
+        </tr>
+        <tr class="fragment" style="background:#112B42;">
+          <td style="padding:9px 12px;color:var(--text-muted);font-weight:700;">Trust required</td>
+          <td style="padding:9px 12px;text-align:center;"><span style="color:#2ECC71;font-weight:700;">█░░░░ Low</span></td>
+          <td style="padding:9px 12px;text-align:center;border-left:2px solid var(--mint);border-right:2px solid var(--mint);"><span style="color:#F39C12;font-weight:700;">███░░ Medium</span></td>
+          <td style="padding:9px 12px;text-align:center;"><span style="color:#E74C3C;font-weight:700;">█████ High</span></td>
+        </tr>
+        <tr class="fragment" style="background:#0D2137;">
+          <td style="padding:9px 12px;color:var(--text-muted);font-weight:700;">Example</td>
+          <td style="padding:9px 12px;color:var(--text-light);text-align:center;">Copilot suggests</td>
+          <td style="padding:9px 12px;color:var(--text-light);text-align:center;border-left:2px solid var(--mint);border-right:2px solid var(--mint);">AI generates suite</td>
+          <td style="padding:9px 12px;color:var(--text-light);text-align:center;">Agent runs full cycle</td>
+        </tr>
+        <tr class="fragment" style="background:#112B42;">
+          <td style="padding:9px 12px;color:var(--text-muted);font-weight:700;">Adoption</td>
+          <td style="padding:9px 12px;color:var(--text-light);text-align:center;">94% of teams</td>
+          <td style="padding:9px 12px;color:var(--text-light);text-align:center;border-left:2px solid var(--mint);border-right:2px solid var(--mint);border-bottom:2px solid var(--mint);">37% moving here</td>
+          <td style="padding:9px 12px;color:var(--text-light);text-align:center;">12% achieved</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- CTA -->
+    <div class="fragment" style="margin-top:16px;text-align:center;">
+      <span style="background:var(--mint);color:#fff;font-size:13px;font-weight:700;padding:10px 28px;border-radius:24px;display:inline-block;">This series moves you from Assisted → Augmented</span>
+    </div>
+  </div>
+  <aside class="notes">ANIMATION: Table rows reveal one by one. Augmented column highlighted with border. CTA flies in from bottom. TALKING POINTS: This table is your reference. Notice the trust column — as AI does more, you need more trust, which means more governance and guardrails (Topic 5). Key question to audience: "Where would YOU place your team today?"</aside>
+</section>
+
+<!-- ==================== SLIDE 5: WHAT AI CAN DO ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:10px;">
+    <h2 class="slide-title-light" style="font-size:26px;font-weight:800;margin-bottom:4px;">What AI Can Do for QA Today</h2>
+    <div class="accent-bar"></div>
+    <p style="font-size:12px;color:#1B6FA8;font-style:italic;margin:0 0 12px 0;">Real capabilities in production — not theory</p>
+
+    <!-- Top row: Big impact stats -->
+    <div class="grid-3col fragment" style="margin-bottom:14px;">
+      <div style="background:var(--navy);border-radius:10px;padding:16px;text-align:center;">
+        <div style="font-size:32px;font-weight:800;color:#48C9B0;">40–70%</div>
+        <div style="font-size:11px;color:#A8C6D8;margin-top:4px;">Reduction in test<br>creation time</div>
+        <div style="font-size:9px;color:#6B9AB5;margin-top:6px;font-style:italic;">Forrester 2025</div>
+      </div>
+      <div style="background:var(--navy);border-radius:10px;padding:16px;text-align:center;">
+        <div style="font-size:32px;font-weight:800;color:#48C9B0;">&gt;30%</div>
+        <div style="font-size:11px;color:#A8C6D8;margin-top:4px;">Test cycle time cut<br>(80% of orgs report)</div>
+        <div style="font-size:9px;color:#6B9AB5;margin-top:6px;font-style:italic;">ZipDo 2026</div>
+      </div>
+      <div style="background:var(--navy);border-radius:10px;padding:16px;text-align:center;">
+        <div style="font-size:32px;font-weight:800;color:#48C9B0;">40%</div>
+        <div style="font-size:11px;color:#A8C6D8;margin-top:4px;">Reduction in manual<br>effort per project</div>
+        <div style="font-size:9px;color:#6B9AB5;margin-top:6px;font-style:italic;">ZipDo 2026</div>
+      </div>
+    </div>
+
+    <!-- Bottom row: Capability cards with icons -->
+    <div class="grid-2x3" style="gap:10px;">
+      <div class="card-light fragment" style="padding:12px 14px;display:flex;align-items:flex-start;gap:10px;">
+        <span style="font-size:22px;">🧪</span>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy);">Test Case Generation</div>
+          <div style="font-size:11px;color:#555;margin-top:3px;">From user stories to full test suites in seconds</div>
+        </div>
+      </div>
+      <div class="card-light fragment" style="padding:12px 14px;display:flex;align-items:flex-start;gap:10px;">
+        <span style="font-size:22px;">🎯</span>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy);">Intelligent Defect Triage</div>
+          <div style="font-size:11px;color:#555;margin-top:3px;">Auto-classify, detect duplicates, suggest assignees</div>
+        </div>
+      </div>
+      <div class="card-light fragment" style="padding:12px 14px;display:flex;align-items:flex-start;gap:10px;">
+        <span style="font-size:22px;">👁️</span>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy);">Visual Regression</div>
+          <div style="font-size:11px;color:#555;margin-top:3px;">AI noise filtering — real changes only</div>
+        </div>
+      </div>
+      <div class="card-light fragment" style="padding:12px 14px;display:flex;align-items:flex-start;gap:10px;">
+        <span style="font-size:22px;">⚡</span>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy);">Risk-Based Test Selection</div>
+          <div style="font-size:11px;color:#555;margin-top:3px;">Run what matters for this change, skip the rest</div>
+        </div>
+      </div>
+      <div class="card-light fragment" style="padding:12px 14px;display:flex;align-items:flex-start;gap:10px;">
+        <span style="font-size:22px;">🔍</span>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy);">Flaky Test Detection</div>
+          <div style="font-size:11px;color:#555;margin-top:3px;">Identify instability + root cause analysis</div>
+        </div>
+      </div>
+      <div class="card-light fragment" style="padding:12px 14px;display:flex;align-items:flex-start;gap:10px;">
+        <span style="font-size:22px;">🧬</span>
+        <div>
+          <div style="font-size:12px;font-weight:700;color:var(--navy);">Synthetic Test Data</div>
+          <div style="font-size:11px;color:#555;margin-top:3px;">Edge cases, boundary values, realistic personas</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">These stats are from real industry reports. 40-70% time savings is significant — hours per sprint returned to higher-value work. Ask: "Which of these would have the biggest impact on YOUR daily work?" Sources: Forrester 2025, ZipDo AI Testing Report 2026.</aside>
+</section>
+
+<!-- ==================== SLIDE 6: WHAT AI CANNOT DO ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:10px;">
+    <h2 class="slide-title-dark" style="font-size:26px;font-weight:800;margin-bottom:4px;">What AI Cannot Do <span style="font-size:16px;color:var(--text-muted);font-weight:400;">(Yet)</span></h2>
+    <div class="accent-bar"></div>
+    <p style="font-size:12px;color:var(--text-muted);font-style:italic;margin:0 0 14px 0;">This is why quality engineers remain essential</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;">
+      <!-- Left: AI Limitations -->
+      <div>
+        <div class="fragment" style="background:#1A2D3D;border-left:4px solid #E74C3C;border-radius:8px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:flex-start;gap:10px;">
+          <span style="font-size:18px;flex-shrink:0;">🏢</span>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#E74C3C;">Can't understand your domain</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">Without clear specs, AI generates plausible noise</div>
+          </div>
+        </div>
+        <div class="fragment" style="background:#1A2D3D;border-left:4px solid #E74C3C;border-radius:8px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:flex-start;gap:10px;">
+          <span style="font-size:18px;flex-shrink:0;">🧠</span>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#E74C3C;">Can't replace testing intuition</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">Years of exploratory instinct can't be encoded</div>
+          </div>
+        </div>
+        <div class="fragment" style="background:#1A2D3D;border-left:4px solid #E74C3C;border-radius:8px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:flex-start;gap:10px;">
+          <span style="font-size:18px;flex-shrink:0;">⚠️</span>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#E74C3C;">Can't guarantee correctness</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">Generates plausible, not provably correct output</div>
+          </div>
+        </div>
+        <div class="fragment" style="background:#1A2D3D;border-left:4px solid #E74C3C;border-radius:8px;padding:12px 14px;margin-bottom:10px;display:flex;align-items:flex-start;gap:10px;">
+          <span style="font-size:18px;flex-shrink:0;">🤝</span>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#E74C3C;">Can't read the room</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">Organizational politics, context, and human factors</div>
+          </div>
+        </div>
+        <div class="fragment" style="background:#1A2D3D;border-left:4px solid #E74C3C;border-radius:8px;padding:12px 14px;display:flex;align-items:flex-start;gap:10px;">
+          <span style="font-size:18px;flex-shrink:0;">⚖️</span>
+          <div>
+            <div style="font-size:12px;font-weight:700;color:#E74C3C;">Can't own risk decisions</div>
+            <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">Accountability requires human judgment</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right: What humans bring (appears after all limitations) -->
+      <div class="fragment" style="background:linear-gradient(135deg,#0F3A4F,#163D5C);border-radius:12px;padding:20px;border:1px solid var(--mint);align-self:start;">
+        <div style="font-size:13px;font-weight:700;color:var(--mint);margin-bottom:14px;">💪 What YOU bring that AI can't</div>
+        <div style="font-size:12px;color:var(--text-light);line-height:2.4;">
+          ✓ &nbsp;Domain expertise &amp; business context<br>
+          ✓ &nbsp;Exploratory instinct &amp; creativity<br>
+          ✓ &nbsp;Judgment on what "good enough" means<br>
+          ✓ &nbsp;Stakeholder communication<br>
+          ✓ &nbsp;Risk acceptance &amp; ethical decisions<br>
+          ✓ &nbsp;Understanding user empathy
+        </div>
+        <div style="margin-top:14px;background:var(--mint);border-radius:6px;padding:10px 14px;text-align:center;">
+          <span style="font-size:11px;font-weight:700;color:#fff;">AI amplifies your expertise — it doesn't replace it</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Balance the optimism of the previous slide with realism. This is exactly why human QEs remain essential and irreplaceable. AI generates plausible output, not provably correct output. The right column is the punchline — these are YOUR superpowers. Discussion prompt: "Which of these limitations is most relevant to your current project?"</aside>
+</section>
+
+<!-- ==================== QUIZ 1: After AI Levels ==================== -->
+<section data-background-color="#0D2137">
+  <div id="quiz-1" style="padding-top:24px;">
+    <div class="quiz-label">🧠 QUICK CHECK</div>
+    <div class="quiz-question">Which level of AI involvement best describes:<br>"AI generates full test suites, human reviews before committing"?</div>
+    <div class="quiz-options">
+      <div class="quiz-opt" onclick="quizAnswer('quiz-1', 0, 1, 'AI-Augmented means AI handles routine execution while humans validate and guide. The human review step is what distinguishes it from Autonomous.')">
+        <span class="opt-letter">A</span> AI-Assisted
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-1', 1, 1, 'AI-Augmented means AI handles routine execution while humans validate and guide. The human review step is what distinguishes it from Autonomous.')">
+        <span class="opt-letter">B</span> AI-Augmented
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-1', 2, 1, 'AI-Augmented means AI handles routine execution while humans validate and guide. The human review step is what distinguishes it from Autonomous.')">
+        <span class="opt-letter">C</span> AI-Autonomous
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-1', 3, 1, 'AI-Augmented means AI handles routine execution while humans validate and guide. The human review step is what distinguishes it from Autonomous.')">
+        <span class="opt-letter">D</span> Manual Testing
+      </div>
+    </div>
+    <div class="quiz-explain"></div>
+  </div>
+  <aside class="notes">Interactive quiz. Let participants discuss briefly before clicking. This reinforces the key concept from the previous section.</aside>
+</section>
+
+<!-- ==================== SLIDE 7: CHAPTER 02 ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:30px;">
+    <div class="chapter-num">02</div>
+    <div class="chapter-title">The AI Tool Landscape &amp;<br>Agent Capabilities</div>
+    <div class="chapter-sub">Mapping the ecosystem &amp; understanding agent architecture</div>
+    <div class="chapter-rule"></div>
+  </div>
+  <aside class="notes">Transition slide. This section maps the full ecosystem and then introduces the critical Tool vs Agent distinction — which changes how QEs think about what AI can do for their workflow.</aside>
+</section>
+
+<!-- ==================== SLIDE 8: TOOL CATEGORIES ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:10px;">
+    <h2 class="slide-title-dark" style="font-size:24px;font-weight:800;margin-bottom:4px;">AI Tool Categories for QA</h2>
+    <div class="accent-bar"></div>
+    <p style="font-size:11px;color:var(--text-muted);font-style:italic;margin:0 0 12px 0;">Your starting point — you'll expand this in the practical exercise</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;">
+      <!-- Row 1 -->
+      <div class="fragment" style="background:linear-gradient(135deg,#163D5C,#1A4D6E);border-radius:10px;padding:14px 16px;border-top:3px solid #2E86C1;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span style="font-size:20px;">🧪</span>
+          <span class="tip" style="font-size:12px;font-weight:700;color:#48C9B0;border-bottom-color:#48C9B0;">Test Generation<span class="tip-content">AI tools that create test cases, scripts, and test data from specifications or code. They translate requirements into executable tests.</span></span>
+        </div>
+        <div style="font-size:11px;color:var(--text-light);line-height:1.5;margin-bottom:8px;">Specs → test cases in seconds</div>
+        <div style="font-size:10px;color:var(--text-muted);border-top:1px solid rgba(255,255,255,0.1);padding-top:6px;">Copilot • Claude • Amazon Q • Codium</div>
+      </div>
+
+      <div class="fragment" style="background:linear-gradient(135deg,#163D5C,#1A4D6E);border-radius:10px;padding:14px 16px;border-top:3px solid #2E86C1;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span style="font-size:20px;">🚀</span>
+          <span class="tip" style="font-size:12px;font-weight:700;color:#48C9B0;border-bottom-color:#48C9B0;">Execution &amp; Orchestration<span class="tip-content">Tools that run tests, manage environments, and coordinate execution across browsers, devices, and configurations.</span></span>
+        </div>
+        <div style="font-size:11px;color:var(--text-light);line-height:1.5;margin-bottom:8px;">Self-healing, cross-browser, smart retry</div>
+        <div style="font-size:10px;color:var(--text-muted);border-top:1px solid rgba(255,255,255,0.1);padding-top:6px;">Playwright • Mabl • TestRigor • Katalon</div>
+      </div>
+
+      <div class="fragment" style="background:linear-gradient(135deg,#163D5C,#1A4D6E);border-radius:10px;padding:14px 16px;border-top:3px solid #2E86C1;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span style="font-size:20px;">🎯</span>
+          <span class="tip" style="font-size:12px;font-weight:700;color:#48C9B0;border-bottom-color:#48C9B0;">Defect Intelligence<span class="tip-content">AI that auto-classifies bugs, detects duplicates, suggests root causes, and predicts which modules are likely to have defects.</span></span>
+        </div>
+        <div style="font-size:11px;color:var(--text-light);line-height:1.5;margin-bottom:8px;">Auto-triage, dedup, root cause</div>
+        <div style="font-size:10px;color:var(--text-muted);border-top:1px solid rgba(255,255,255,0.1);padding-top:6px;">Sentry AI • Linear • Jira AI plugins</div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="fragment" style="background:linear-gradient(135deg,#163D5C,#1A4D6E);border-radius:10px;padding:14px 16px;border-top:3px solid #48C9B0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span style="font-size:20px;">🧬</span>
+          <span class="tip" style="font-size:12px;font-weight:700;color:#48C9B0;border-bottom-color:#48C9B0;">Test Data<span class="tip-content">Tools that generate synthetic, realistic test data including edge cases, boundary values, and user profiles without using real customer data.</span></span>
+        </div>
+        <div style="font-size:11px;color:var(--text-light);line-height:1.5;margin-bottom:8px;">Synthetic, boundary, GDPR-safe</div>
+        <div style="font-size:10px;color:var(--text-muted);border-top:1px solid rgba(255,255,255,0.1);padding-top:6px;">Mostly AI • Tonic • Faker + LLM</div>
+      </div>
+
+      <div class="fragment" style="background:linear-gradient(135deg,#163D5C,#1A4D6E);border-radius:10px;padding:14px 16px;border-top:3px solid #48C9B0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span style="font-size:20px;">👁️</span>
+          <span class="tip" style="font-size:12px;font-weight:700;color:#48C9B0;border-bottom-color:#48C9B0;">Visual Testing<span class="tip-content">AI-powered screenshot comparison that detects real visual changes while filtering out false positives like anti-aliasing and dynamic content.</span></span>
+        </div>
+        <div style="font-size:11px;color:var(--text-light);line-height:1.5;margin-bottom:8px;">Pixel-level diff with noise filtering</div>
+        <div style="font-size:10px;color:var(--text-muted);border-top:1px solid rgba(255,255,255,0.1);padding-top:6px;">Applitools Eyes • Percy • Chromatic</div>
+      </div>
+
+      <div class="fragment" style="background:linear-gradient(135deg,#163D5C,#1A4D6E);border-radius:10px;padding:14px 16px;border-top:3px solid #48C9B0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:8px;">
+          <span style="font-size:20px;">📡</span>
+          <span class="tip" style="font-size:12px;font-weight:700;color:#48C9B0;border-bottom-color:#48C9B0;">Monitoring &amp; Observability<span class="tip-content">AI that watches production systems, detects anomalies in real-time, and correlates issues across logs, metrics, and traces.</span></span>
+        </div>
+        <div style="font-size:11px;color:var(--text-light);line-height:1.5;margin-bottom:8px;">Anomaly detection, correlation, alerts</div>
+        <div style="font-size:10px;color:var(--text-muted);border-top:1px solid rgba(255,255,255,0.1);padding-top:6px;">Datadog AI • PagerDuty • Honeycomb</div>
+      </div>
+    </div>
+
+    <!-- Footer hint -->
+    <div class="footer-bar-dark fragment" style="margin-top:12px;font-size:10px;">
+      🗺️ In the practical session, you'll map these + more tools for your specific projects
+    </div>
+  </div>
+  <aside class="notes">Quick landscape survey — don't deep-dive each tool. Ask: "Which of these categories are you already using tools in? Which has the biggest gap?" This primes the Tool Map exercise. The E-Commerce team uses Playwright, Warehouse uses Selenium + Specflow + Playwright + Copilot, Real Estate uses Cursor.</aside>
+</section>
+
+<!-- ==================== SLIDE 9: TOOLS vs AGENTS ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:10px;">
+    <h2 class="slide-title-light" style="font-size:26px;font-weight:800;margin-bottom:4px;">Tools vs Agents — The Critical Distinction</h2>
+    <div class="accent-bar"></div>
+
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:12px;align-items:stretch;margin-top:8px;">
+      <!-- TOOL card -->
+      <div class="fragment" style="background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 2px 12px rgba(27,79,114,0.1);border-top:4px solid #2E86C1;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <span style="font-size:28px;">🔧</span>
+          <span class="tip light-tip" style="font-size:18px;font-weight:800;color:#2E86C1;">TOOL<span class="tip-content">A single-transaction interaction: you ask, it answers, done. No memory between calls. Like a calculator — powerful but stateless.</span></span>
+        </div>
+        <!-- Flow diagram -->
+        <div style="background:#EBF5FB;border-radius:8px;padding:10px;text-align:center;margin-bottom:14px;">
+          <span style="font-size:11px;font-weight:700;color:#2E86C1;">You ask → It responds → Done ✓</span>
+        </div>
+        <div style="font-size:12px;color:#444;line-height:2.0;">
+          ◻️ &nbsp;Single transaction<br>
+          ◻️ &nbsp;No memory between calls<br>
+          ◻️ &nbsp;Human drives every step<br>
+          ◻️ &nbsp;Predictable &amp; contained
+        </div>
+        <div style="margin-top:12px;background:#F0F7FC;border-radius:6px;padding:10px 12px;">
+          <div style="font-size:10px;font-weight:700;color:#1B6FA8;margin-bottom:4px;">EXAMPLE</div>
+          <div style="font-size:11px;color:#444;">"Generate a test case for login" → AI responds → you decide what's next</div>
+        </div>
+      </div>
+
+      <!-- VS divider -->
+      <div class="fragment" style="display:flex;align-items:center;justify-content:center;">
+        <div style="background:var(--navy);color:#fff;font-size:14px;font-weight:800;width:40px;height:40px;border-radius:50%;display:flex;align-items:center;justify-content:center;">vs</div>
+      </div>
+
+      <!-- AGENT card -->
+      <div class="fragment" style="background:#fff;border-radius:12px;padding:18px 20px;box-shadow:0 2px 12px rgba(27,79,114,0.1);border-top:4px solid #48C9B0;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;">
+          <span style="font-size:28px;">🤖</span>
+          <span class="tip light-tip" style="font-size:18px;font-weight:800;color:#1A7A6D;">AGENT<span class="tip-content">An autonomous system with goals, memory, and planning ability. It can take multiple actions, learn from results, and adapt without human intervention between steps.</span></span>
+        </div>
+        <!-- Flow diagram -->
+        <div style="background:#E8F8F5;border-radius:8px;padding:10px;text-align:center;margin-bottom:14px;">
+          <span style="font-size:11px;font-weight:700;color:#1A7A6D;">Goals → Plans → Executes → Adapts 🔄</span>
+        </div>
+        <div style="font-size:12px;color:#444;line-height:2.0;">
+          ⬛ &nbsp;Multi-step autonomous<br>
+          ⬛ &nbsp;Memory &amp; context awareness<br>
+          ⬛ &nbsp;Self-directed planning<br>
+          ⬛ &nbsp;Chains multiple tools together
+        </div>
+        <div style="margin-top:12px;background:#F0FBF8;border-radius:6px;padding:10px 12px;">
+          <div style="font-size:10px;font-weight:700;color:#1A7A6D;margin-bottom:4px;">EXAMPLE</div>
+          <div style="font-size:11px;color:#444;">"Test this feature end-to-end" → Agent plans, writes tests, runs them, files bugs</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agent capabilities bar -->
+    <div class="fragment" style="margin-top:12px;display:flex;gap:8px;justify-content:center;flex-wrap:wrap;">
+      <span style="background:var(--navy);color:var(--mint);font-size:10px;font-weight:700;padding:5px 12px;border-radius:20px;">🧠 Reasoning</span>
+      <span style="background:var(--navy);color:var(--mint);font-size:10px;font-weight:700;padding:5px 12px;border-radius:20px;">💾 Memory</span>
+      <span style="background:var(--navy);color:var(--mint);font-size:10px;font-weight:700;padding:5px 12px;border-radius:20px;">⚙️ Orchestration</span>
+      <span style="background:var(--navy);color:var(--mint);font-size:10px;font-weight:700;padding:5px 12px;border-radius:20px;">📝 Code Gen</span>
+      <span style="background:var(--navy);color:var(--mint);font-size:10px;font-weight:700;padding:5px 12px;border-radius:20px;">🔍 Analysis</span>
+    </div>
+
+    <!-- Teaser -->
+    <div class="fragment" style="margin-top:10px;text-align:center;font-size:11px;color:#666;font-style:italic;">
+      🔮 Advanced Series: Build custom agents tailored to your QA pipeline
+    </div>
+  </div>
+  <aside class="notes">Critical distinction. A tool is a transaction — you ask, it answers. An agent is a collaborator with its own plan and memory. Understanding this changes how you think about automation scope and guardrails. Current examples: GitHub Copilot Workspace, Amazon Q Developer Agent. Teaser: Advanced Series covers building custom agents from scratch.</aside>
+</section>
+
+<!-- ==================== QUIZ 2: After Tools vs Agents ==================== -->
+<section data-background-color="#0D2137">
+  <div id="quiz-2" style="padding-top:24px;">
+    <div class="quiz-label">🧠 QUICK CHECK</div>
+    <div class="quiz-question">What is the KEY difference between an AI Tool and an AI Agent?</div>
+    <div class="quiz-options">
+      <div class="quiz-opt" onclick="quizAnswer('quiz-2', 0, 2, 'An agent has autonomy — it can set goals, maintain context across interactions, and take multiple actions to achieve an outcome without human intervention between steps.')">
+        <span class="opt-letter">A</span> Agents are more expensive
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-2', 1, 2, 'An agent has autonomy — it can set goals, maintain context across interactions, and take multiple actions to achieve an outcome without human intervention between steps.')">
+        <span class="opt-letter">B</span> Tools use machine learning, agents don&rsquo;t
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-2', 2, 2, 'An agent has autonomy — it can set goals, maintain context across interactions, and take multiple actions to achieve an outcome without human intervention between steps.')">
+        <span class="opt-letter">C</span> Agents have goals, memory, and can plan multi-step actions
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-2', 3, 2, 'An agent has autonomy — it can set goals, maintain context across interactions, and take multiple actions to achieve an outcome without human intervention between steps.')">
+        <span class="opt-letter">D</span> Tools are cloud-based, agents run locally
+      </div>
+    </div>
+    <div class="quiz-explain"></div>
+  </div>
+  <aside class="notes">Interactive quiz. Let participants discuss briefly before clicking. This reinforces the key concept from the previous section.</aside>
+</section>
+
+<!-- ==================== SLIDE 10: CHAPTER 03 ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:30px;">
+    <div class="chapter-num">03</div>
+    <div class="chapter-title">Spec-Driven Development</div>
+    <div class="chapter-sub">The foundation for AI-augmented workflows</div>
+    <div class="chapter-rule"></div>
+  </div>
+  <aside class="notes">This is perhaps the most important concept in the entire series. Emphasize: the quality of your specification determines everything downstream — the quality of the code, the tests, and the AI output. Bad input → bad output, amplified 10x with AI.</aside>
+</section>
+
+<!-- ==================== SLIDE 11: WHY SPECS MATTER ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:10px;">
+    <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin-bottom:4px;">Why Specs Matter More in an AI World</h2>
+    <div class="accent-bar"></div>
+
+    <!-- Key principle banner -->
+    <div class="fragment" style="background:var(--navy);border-radius:8px;padding:12px 18px;margin-bottom:14px;display:flex;align-items:center;gap:12px;">
+      <span style="font-size:22px;">⚡</span>
+      <span style="font-size:13px;font-weight:700;color:var(--mint);">The quality of your specification directly determines the quality of your AI output</span>
+    </div>
+
+    <!-- Before/After comparison -->
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:stretch;">
+      <!-- BAD: Without specs -->
+      <div class="fragment" style="background:#FEF0EE;border-radius:12px;padding:16px 18px;border-left:4px solid #E74C3C;">
+        <div style="font-size:13px;font-weight:700;color:#C0392B;margin-bottom:10px;">❌ Without Clear Specs</div>
+        <div style="font-size:12px;color:#7B3529;font-style:italic;margin-bottom:12px;">"The login should work properly"</div>
+        <div style="font-size:11px;color:#5D2A20;line-height:2.0;">
+          <span style="color:#E74C3C;">↓</span> Vague input to AI<br>
+          <span style="color:#E74C3C;">↓</span> Generic, shallow tests<br>
+          <span style="color:#E74C3C;">↓</span> False confidence<br>
+          <span style="color:#E74C3C;">↓</span> Bugs reach production
+        </div>
+        <div style="margin-top:10px;background:#F8D7DA;border-radius:6px;padding:8px 10px;text-align:center;">
+          <span style="font-size:10px;font-weight:700;color:#721C24;">😰 Coverage theater</span>
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div class="fragment" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:4px;">
+        <span style="font-size:24px;">→</span>
+        <span style="font-size:9px;color:#666;font-weight:700;writing-mode:vertical-lr;transform:rotate(180deg);">REWRITE AS SPEC</span>
+      </div>
+
+      <!-- GOOD: With specs -->
+      <div class="fragment" style="background:#E8F8F5;border-radius:12px;padding:16px 18px;border-left:4px solid #1B8A6B;">
+        <div style="font-size:13px;font-weight:700;color:#1E8449;margin-bottom:10px;">✅ With Clear Specs</div>
+        <div style="font-size:11px;color:#1B4F40;font-style:italic;margin-bottom:12px;line-height:1.5;">"Given valid credentials,<br>When user submits login form,<br>Then redirect to dashboard within 2s"</div>
+        <div style="font-size:11px;color:#1B4F40;line-height:2.0;">
+          <span style="color:#1B8A6B;">↓</span> Precise AI input<br>
+          <span style="color:#1B8A6B;">↓</span> Boundary + negative cases<br>
+          <span style="color:#1B8A6B;">↓</span> Genuine coverage<br>
+          <span style="color:#1B8A6B;">↓</span> Defects caught early
+        </div>
+        <div style="margin-top:10px;background:#D4EFDF;border-radius:6px;padding:8px 10px;text-align:center;">
+          <span style="font-size:10px;font-weight:700;color:#145A32;">🛡️ Real confidence</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom insight -->
+    <div class="fragment" style="margin-top:12px;text-align:center;">
+      <span style="font-size:12px;color:var(--navy);font-weight:600;">💡 Live Demo: Paste a vague requirement → see bad output. Rewrite as spec → see the difference.</span>
+    </div>
+  </div>
+  <aside class="notes">LIVE DEMO OPPORTUNITY: Paste a vague requirement into an AI tool, show mediocre output. Then rewrite as a proper spec with Given/When/Then, show dramatically better output. This 2–3 minute demo is worth more than any slide. The visual difference is immediate and convincing.</aside>
+</section>
+
+<!-- ==================== SLIDE 12: SPEC–TEST LOOP ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:10px;">
+    <h2 class="slide-title-dark" style="font-size:24px;font-weight:800;margin-bottom:4px;">The Spec → Code → Test → Validate Loop</h2>
+    <div class="accent-bar"></div>
+    <p style="font-size:12px;color:var(--text-muted);font-style:italic;margin:0 0 16px 0;">The spec is your single source of truth — for both humans and AI</p>
+
+    <!-- Loop visualization -->
+    <div style="display:flex;align-items:stretch;gap:0;margin-bottom:16px;">
+      <!-- Step 1: SPEC -->
+      <div class="fragment" style="flex:1;background:var(--navy);border-radius:10px 0 0 10px;padding:18px 14px;text-align:center;border-top:4px solid var(--mint);">
+        <div style="font-size:26px;margin-bottom:8px;">📋</div>
+        <div style="font-size:13px;font-weight:800;color:var(--mint);letter-spacing:1px;margin-bottom:8px;">SPEC</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">Human writes<br>acceptance criteria<br>+ edge cases</div>
+      </div>
+      <div class="fragment" style="display:flex;align-items:center;color:var(--mint);font-size:20px;padding:0 4px;">›</div>
+      <!-- Step 2: AI CODE -->
+      <div class="fragment" style="flex:1;background:#163D5C;padding:18px 14px;text-align:center;border-top:4px solid #2E86C1;">
+        <div style="font-size:26px;margin-bottom:8px;">⚙️</div>
+        <div style="font-size:13px;font-weight:800;color:#2E86C1;letter-spacing:1px;margin-bottom:8px;">AI → CODE</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">AI generates<br>implementation<br>from spec</div>
+      </div>
+      <div class="fragment" style="display:flex;align-items:center;color:var(--mint);font-size:20px;padding:0 4px;">›</div>
+      <!-- Step 3: AI TESTS -->
+      <div class="fragment" style="flex:1;background:#163D5C;padding:18px 14px;text-align:center;border-top:4px solid #2E86C1;">
+        <div style="font-size:26px;margin-bottom:8px;">🧪</div>
+        <div style="font-size:13px;font-weight:800;color:#2E86C1;letter-spacing:1px;margin-bottom:8px;">AI → TESTS</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">AI creates<br>Playwright tests<br>from spec</div>
+      </div>
+      <div class="fragment" style="display:flex;align-items:center;color:var(--mint);font-size:20px;padding:0 4px;">›</div>
+      <!-- Step 4: VALIDATE -->
+      <div class="fragment" style="flex:1;background:var(--navy);padding:18px 14px;text-align:center;border-top:4px solid var(--mint);">
+        <div style="font-size:26px;margin-bottom:8px;">👤</div>
+        <div style="font-size:13px;font-weight:800;color:var(--mint);letter-spacing:1px;margin-bottom:8px;">VALIDATE</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">Human reviews<br>&amp; verifies<br>AI output</div>
+      </div>
+      <div class="fragment" style="display:flex;align-items:center;color:var(--mint);font-size:20px;padding:0 4px;">›</div>
+      <!-- Step 5: REFINE -->
+      <div class="fragment" style="flex:1;background:var(--navy);border-radius:0 10px 10px 0;padding:18px 14px;text-align:center;border-top:4px solid var(--mint);">
+        <div style="font-size:26px;margin-bottom:8px;">🔄</div>
+        <div style="font-size:13px;font-weight:800;color:var(--mint);letter-spacing:1px;margin-bottom:8px;">REFINE</div>
+        <div style="font-size:12px;color:var(--text-muted);line-height:1.5;">Iterate on<br>gaps found<br>→ back to spec</div>
+      </div>
+    </div>
+
+    <!-- Feedback loop indicator -->
+    <div class="fragment" style="text-align:center;margin-bottom:16px;">
+      <div style="background:var(--card-bg);border-radius:20px;padding:8px 20px;display:inline-block;border:1px solid var(--mint);">
+        <span style="font-size:12px;font-weight:700;color:var(--mint);">↺ Continuous loop — each iteration improves quality</span>
+      </div>
+    </div>
+
+    <!-- Key points -->
+    <div class="fragment" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:var(--card-bg);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:18px;">📌</span>
+        <span style="font-size:13px;color:var(--text-light);">Spec drives <strong style="color:var(--mint);">both</strong> code gen and test gen</span>
+      </div>
+      <div style="background:var(--card-bg);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:18px;">🔗</span>
+        <span style="font-size:13px;color:var(--text-light);">Every test traces back to a spec item</span>
+      </div>
+      <div style="background:var(--card-bg);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:18px;">🔔</span>
+        <span style="font-size:13px;color:var(--text-light);">Spec changes → AI identifies affected tests</span>
+      </div>
+      <div style="background:var(--card-bg);border-radius:8px;padding:12px 16px;display:flex;align-items:center;gap:10px;">
+        <span style="font-size:18px;">🎯</span>
+        <span style="font-size:13px;color:var(--text-light);">You'll practice this workflow in Session 2</span>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">This is the workflow they will practice in Session 2. Emphasize the LOOP — it's not linear, it's iterative. The spec is living documentation. When you change the spec, AI helps identify what tests need updating. This is how you maintain traceability at scale. Key: Bring your spec to Session 2, polished and ready.</aside>
+</section>
+
+<!-- ==================== SLIDE 13: WRITING TESTABLE SPECS ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:10px;">
+    <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin-bottom:4px;">Writing Testable Specifications</h2>
+    <div class="accent-bar"></div>
+    <p style="font-size:12px;color:#1B6FA8;font-style:italic;margin:0 0 12px 0;">5 principles that make AI output dramatically better</p>
+
+    <!-- 5 Principles as icon cards with examples -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;">
+      <div class="fragment" style="background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 2px 8px rgba(27,79,114,0.08);border-left:4px solid #48C9B0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span style="font-size:20px;">📐</span>
+          <span style="font-size:13px;font-weight:700;color:var(--navy);">Given / When / Then</span>
+        </div>
+        <div style="font-size:11px;color:#555;font-style:italic;background:#F4F9FC;border-radius:4px;padding:6px 10px;">"Given valid credentials, When submit, Then redirect to dashboard"</div>
+      </div>
+      <div class="fragment" style="background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 2px 8px rgba(27,79,114,0.08);border-left:4px solid #48C9B0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span style="font-size:20px;">📏</span>
+          <span style="font-size:13px;font-weight:700;color:var(--navy);">Explicit Boundaries</span>
+        </div>
+        <div style="font-size:11px;color:#555;font-style:italic;background:#F4F9FC;border-radius:4px;padding:6px 10px;">"1–100 characters" not "user enters text"</div>
+      </div>
+      <div class="fragment" style="background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 2px 8px rgba(27,79,114,0.08);border-left:4px solid #48C9B0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span style="font-size:20px;">🚫</span>
+          <span style="font-size:13px;font-weight:700;color:var(--navy);">Negative Cases</span>
+        </div>
+        <div style="font-size:11px;color:#555;font-style:italic;background:#F4F9FC;border-radius:4px;padding:6px 10px;">"Empty email → show error, NOT proceed silently"</div>
+      </div>
+      <div class="fragment" style="background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 2px 8px rgba(27,79,114,0.08);border-left:4px solid #48C9B0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span style="font-size:20px;">🔢</span>
+          <span style="font-size:13px;font-weight:700;color:var(--navy);">Data Constraints</span>
+        </div>
+        <div style="font-size:11px;color:#555;font-style:italic;background:#F4F9FC;border-radius:4px;padding:6px 10px;">"Price: 0.01–99999.99, 2 decimal places, USD only"</div>
+      </div>
+      <div class="fragment" style="grid-column:1 / -1;background:#fff;border-radius:10px;padding:14px 16px;box-shadow:0 2px 8px rgba(27,79,114,0.08);border-left:4px solid #48C9B0;">
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+          <span style="font-size:20px;">💥</span>
+          <span style="font-size:13px;font-weight:700;color:var(--navy);">Error Behaviors</span>
+        </div>
+        <div style="font-size:11px;color:#555;font-style:italic;background:#F4F9FC;border-radius:4px;padding:6px 10px;">"3 failed logins → lock account 15min → show 'Account locked, try again at [time]'"</div>
+      </div>
+    </div>
+
+    <!-- Before/After mini comparison -->
+    <div class="fragment" style="display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;">
+      <div style="background:#FEF0EE;border-radius:8px;padding:12px 14px;border-left:3px solid #E74C3C;">
+        <div style="font-size:11px;font-weight:700;color:#C0392B;margin-bottom:4px;">❌ Untestable</div>
+        <div style="font-size:12px;color:#7B3529;font-style:italic;">"Users can log in"</div>
+      </div>
+      <span style="font-size:18px;color:#48C9B0;">→</span>
+      <div style="background:#E8F8F5;border-radius:8px;padding:12px 14px;border-left:3px solid #1B8A6B;">
+        <div style="font-size:11px;font-weight:700;color:#1E8449;margin-bottom:4px;">✅ Testable</div>
+        <div style="font-size:12px;color:#1B4F40;font-style:italic;">"Given valid email + 8-char password, When submit, Then redirect within 2s. Max 3 attempts → 15min lockout."</div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Practical tips they'll apply directly in the exercise. The spec template in the handout follows these exact principles. Encourage them to look critically at their own past user stories against these five criteria. Show a quick example: bad spec vs good spec side by side.</aside>
+</section>
+
+<!-- ==================== QUIZ 3: After Writing Testable Specs ==================== -->
+<section data-background-color="#0D2137">
+  <div id="quiz-3" style="padding-top:24px;">
+    <div class="quiz-label">🧠 QUICK CHECK</div>
+    <div class="quiz-question">Which specification is MOST useful as input for AI test generation?</div>
+    <div class="quiz-options">
+      <div class="quiz-opt" onclick="quizAnswer('quiz-3', 0, 1, 'Clear boundaries (price range), specific context (logged-in user), and measurable outcomes (sorted by relevance) give AI the precision it needs to generate meaningful tests.')">
+        <span class="opt-letter">A</span> &ldquo;The search feature should work correctly&rdquo;
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-3', 1, 1, 'Clear boundaries (price range), specific context (logged-in user), and measurable outcomes (sorted by relevance) give AI the precision it needs to generate meaningful tests.')">
+        <span class="opt-letter">B</span> &ldquo;Given a logged-in user, When they search for &lsquo;laptop&rsquo; with price filter $200–$500, Then results show only laptops in that range sorted by relevance&rdquo;
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-3', 2, 1, 'Clear boundaries (price range), specific context (logged-in user), and measurable outcomes (sorted by relevance) give AI the precision it needs to generate meaningful tests.')">
+        <span class="opt-letter">C</span> &ldquo;Users can search for products&rdquo;
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-3', 3, 1, 'Clear boundaries (price range), specific context (logged-in user), and measurable outcomes (sorted by relevance) give AI the precision it needs to generate meaningful tests.')">
+        <span class="opt-letter">D</span> &ldquo;Implement search functionality per the PRD&rdquo;
+      </div>
+    </div>
+    <div class="quiz-explain"></div>
+  </div>
+  <aside class="notes">Interactive quiz. Let participants discuss briefly before clicking. This reinforces the key concept from the previous section.</aside>
+</section>
+
+<!-- ==================== SLIDE 14: CHAPTER 04 ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:30px;">
+    <div class="chapter-num">04</div>
+    <div class="chapter-title">The Evolving QA Role &amp;<br>AI Skills</div>
+    <div class="chapter-sub">From execution to strategy — the new QE identity</div>
+    <div class="chapter-rule"></div>
+  </div>
+  <aside class="notes">Transition. Ask: How has your role changed in the last 2 years? What feels different about the work now compared to before AI tools were common? This opens reflection before presenting the framework.</aside>
+</section>
+
+<!-- ==================== SLIDE 15: GATEKEEPER TO STRATEGIST ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:10px;">
+    <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin-bottom:4px;">From Gatekeeper to Strategist</h2>
+    <div class="accent-bar"></div>
+
+    <div style="display:grid;grid-template-columns:1fr auto 1fr;gap:10px;align-items:stretch;margin-top:8px;">
+      <!-- OLD MODEL -->
+      <div class="fragment" style="background:#FEF0EE;border-radius:12px;padding:18px;border-top:4px solid #E74C3C;">
+        <div style="font-size:14px;font-weight:800;color:#E74C3C;margin-bottom:12px;">🚫 OLD MODEL</div>
+        <div style="font-size:12px;color:#5D2A20;line-height:2.2;">
+          ◻️ &nbsp;Reactive — finds bugs after code<br>
+          ◻️ &nbsp;Gate at the end of the cycle<br>
+          ◻️ &nbsp;Manual test execution<br>
+          ◻️ &nbsp;Measured by bug count<br>
+          ◻️ &nbsp;Siloed from development<br>
+          ◻️ &nbsp;Tool operator
+        </div>
+      </div>
+
+      <!-- Arrow -->
+      <div class="fragment" style="display:flex;align-items:center;justify-content:center;flex-direction:column;gap:6px;">
+        <span style="font-size:28px;color:var(--mint);">→</span>
+        <span style="font-size:9px;color:#666;font-weight:700;">EVOLUTION</span>
+      </div>
+
+      <!-- NEW MODEL -->
+      <div class="fragment" style="background:#E8F8F5;border-radius:12px;padding:18px;border-top:4px solid #1B8A6B;">
+        <div style="font-size:14px;font-weight:800;color:#1E8449;margin-bottom:12px;">✅ NEW MODEL</div>
+        <div style="font-size:12px;color:#1B4F40;line-height:2.2;">
+          ⬛ &nbsp;Proactive — influences quality early<br>
+          ⬛ &nbsp;Present at every stage<br>
+          ⬛ &nbsp;AI handles routine execution<br>
+          ⬛ &nbsp;Measured by quality outcomes<br>
+          ⬛ &nbsp;Embedded in delivery team<br>
+          ⬛ &nbsp;AI orchestrator &amp; strategist
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom insight -->
+    <div class="fragment" style="margin-top:14px;background:var(--navy);border-radius:8px;padding:12px 18px;text-align:center;">
+      <span style="font-size:13px;font-weight:700;color:var(--mint);">The most valuable QE knows what to automate — and what NOT to</span>
+    </div>
+  </div>
+  <aside class="notes">The most valuable QE is the one who knows what to automate AND what not to. AI handles execution; humans handle strategy, risk, and judgment. This is not a threat to the role — it is an elevation of it.</aside>
+</section>
+
+<!-- ==================== SLIDE 16: QE AI SKILLS MATRIX ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:10px;">
+    <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin-bottom:4px;">QE AI Skills Matrix</h2>
+    <div class="accent-bar"></div>
+    <p style="font-size:12px;color:#1B6FA8;font-style:italic;margin:0 0 12px 0;">Where are you today? Where will this series take you?</p>
+
+    <div style="display:flex;flex-direction:column;gap:8px;">
+      <!-- Level 1 -->
+      <div class="fragment" style="display:grid;grid-template-columns:80px 1fr;gap:0;border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(27,79,114,0.08);">
+        <div style="background:#2E86C1;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:12px 8px;">
+          <span style="font-size:18px;">🌱</span>
+          <span style="font-size:9px;color:#fff;font-weight:700;margin-top:3px;">LEVEL 1</span>
+        </div>
+        <div style="background:#fff;padding:12px 16px;display:flex;align-items:center;gap:14px;">
+          <span class="tip light-tip" style="font-size:14px;font-weight:700;color:var(--navy);min-width:90px;">Consumer<span class="tip-content">Uses AI tools as provided with default settings. Can follow prompts and templates others have created.</span></span>
+          <span style="font-size:12px;color:#555;">Uses AI tools as provided, follows prompts and templates</span>
+        </div>
+      </div>
+      <!-- Level 2 -->
+      <div class="fragment" style="display:grid;grid-template-columns:80px 1fr;gap:0;border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(27,79,114,0.08);">
+        <div style="background:#2E86C1;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:12px 8px;">
+          <span style="font-size:18px;">⚡</span>
+          <span style="font-size:9px;color:#fff;font-weight:700;margin-top:3px;">LEVEL 2</span>
+        </div>
+        <div style="background:#fff;padding:12px 16px;display:flex;align-items:center;gap:14px;">
+          <span class="tip light-tip" style="font-size:14px;font-weight:700;color:var(--navy);min-width:90px;">Power User<span class="tip-content">Customizes prompts for better results, knows tool limitations, can evaluate AI output quality and iterate effectively.</span></span>
+          <span style="font-size:12px;color:#555;">Crafts effective prompts, evaluates output, iterates for quality</span>
+        </div>
+      </div>
+      <!-- Level 3 (highlighted) -->
+      <div class="fragment" style="display:grid;grid-template-columns:80px 1fr;gap:0;border-radius:10px;overflow:hidden;box-shadow:0 2px 10px rgba(72,201,176,0.2);border:2px solid #48C9B0;">
+        <div style="background:#1A7A6D;display:flex;align-items:center;justify-content:center;flex-direction:column;padding:12px 8px;">
+          <span style="font-size:18px;">🛠️</span>
+          <span style="font-size:9px;color:#fff;font-weight:700;margin-top:3px;">LEVEL 3</span>
+        </div>
+        <div style="background:#E8F8F5;padding:12px 16px;display:flex;align-items:center;gap:14px;">
+          <span class="tip light-tip" style="font-size:14px;font-weight:700;color:#1A7A6D;min-width:90px;">Builder<span class="tip-content">Creates reusable prompt libraries, builds custom AI workflows, integrates tools into team pipelines. Makes AI work for the whole team.</span></span>
+          <span style="font-size:12px;color:#1B4F40;font-weight:600;">Creates workflows, integrates AI into pipelines ← <strong style="color:#1A7A6D;">YOUR TARGET</strong></span>
+        </div>
+      </div>
+      <!-- Level 4 -->
+      <div class="fragment" style="display:grid;grid-template-columns:80px 1fr;gap:0;border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(27,79,114,0.08);opacity:0.7;">
+        <div style="background:var(--navy);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:12px 8px;">
+          <span style="font-size:18px;">🏗️</span>
+          <span style="font-size:9px;color:#fff;font-weight:700;margin-top:3px;">LEVEL 4</span>
+        </div>
+        <div style="background:#fff;padding:12px 16px;display:flex;align-items:center;gap:14px;">
+          <span class="tip light-tip" style="font-size:14px;font-weight:700;color:var(--navy);min-width:90px;">Architect<span class="tip-content">Designs org-wide AI strategy, builds governance frameworks, creates custom AI agents, and sets standards that scale across multiple teams.</span></span>
+          <span style="font-size:12px;color:#555;">Designs AI strategy, builds agents, sets org standards <em style="color:#888;">(Advanced Series)</em></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="fragment" style="margin-top:12px;text-align:center;">
+      <span style="background:var(--mint);color:#fff;font-size:12px;font-weight:700;padding:8px 22px;border-radius:20px;display:inline-block;">🎯 This series: Consumer → Builder (Levels 1–2 → Level 3)</span>
+    </div>
+  </div>
+  <aside class="notes">Ask participants to self-assess silently: where are you today on this matrix? No judgment — it is a growth tool. Most people will be Level 1–2. The goal of this series is to reach Level 3. Level 4 is the Advanced Series.</aside>
+</section>
+
+<!-- ==================== SLIDE 17: CHAPTER 05 ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:30px;">
+    <div class="chapter-num">05</div>
+    <div class="chapter-title">Guardrails for AI in QE</div>
+    <div class="chapter-sub" style="color:var(--mint); font-style:normal; font-size:16px;">Trust = Capability × Predictability × Boundaries</div>
+    <div class="chapter-rule"></div>
+  </div>
+  <aside class="notes">Final theory topic. This sets up the accountability mindset they carry into the practical session and beyond. AI without guardrails is like automation without assertions — it runs, it looks impressive, but you can't trust the results.</aside>
+</section>
+
+<!-- ==================== SLIDE 18: THREE ZONES ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:10px;">
+    <h2 class="slide-title-dark" style="font-size:24px;font-weight:800;margin-bottom:4px;">The Three Zones of AI Trust</h2>
+    <div class="accent-bar"></div>
+    <p style="font-size:12px;color:var(--text-muted);font-style:italic;margin:0 0 12px 0;">Where to let AI run free, where to review, and where to draw the line</p>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;">
+      <!-- GREEN ZONE -->
+      <div class="fragment" style="border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.3);">
+        <div style="height:6px;background:#27AE60;"></div>
+        <div style="background:#1A3D2E;padding:16px;">
+          <div style="font-size:12px;font-weight:800;color:#27AE60;letter-spacing:1px;margin-bottom:4px;">🟢 GREEN ZONE</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text-light);margin-bottom:12px;"><span class="tip" style="border-bottom-color:#27AE60;color:var(--text-light);">Automate Freely<span class="tip-content">AI can do this without human review. Low risk, repetitive tasks where mistakes are easily caught and reversed. Example: test data generation, code formatting.</span></span></div>
+          <div style="font-size:12px;color:var(--text-muted);line-height:2.0;">
+            ✓ &nbsp;Test data generation<br>
+            ✓ &nbsp;Code formatting<br>
+            ✓ &nbsp;Report generation<br>
+            ✓ &nbsp;Environment setup<br>
+            ✓ &nbsp;Log parsing
+          </div>
+        </div>
+      </div>
+
+      <!-- YELLOW ZONE -->
+      <div class="fragment" style="border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.3);">
+        <div style="height:6px;background:#F39C12;"></div>
+        <div style="background:#3D2E0A;padding:16px;">
+          <div style="font-size:12px;font-weight:800;color:#F39C12;letter-spacing:1px;margin-bottom:4px;">🟡 YELLOW ZONE</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text-light);margin-bottom:12px;"><span class="tip" style="border-bottom-color:#F39C12;color:var(--text-light);">Human Reviews<span class="tip-content">AI generates output, but a human must validate before it enters the pipeline. Medium risk, where mistakes could affect quality. Example: test case generation, bug triage.</span></span></div>
+          <div style="font-size:12px;color:var(--text-muted);line-height:2.0;">
+            ⚠️ &nbsp;Test case generation<br>
+            ⚠️ &nbsp;Code suggestions<br>
+            ⚠️ &nbsp;Bug classification<br>
+            ⚠️ &nbsp;Test prioritization<br>
+            ⚠️ &nbsp;Coverage analysis
+          </div>
+        </div>
+      </div>
+
+      <!-- RED ZONE -->
+      <div class="fragment" style="border-radius:12px;overflow:hidden;box-shadow:0 4px 16px rgba(0,0,0,0.3);">
+        <div style="height:6px;background:#E74C3C;"></div>
+        <div style="background:#3D0A0A;padding:16px;">
+          <div style="font-size:12px;font-weight:800;color:#E74C3C;letter-spacing:1px;margin-bottom:4px;">🔴 RED ZONE</div>
+          <div style="font-size:13px;font-weight:700;color:var(--text-light);margin-bottom:12px;"><span class="tip" style="border-bottom-color:#E74C3C;color:var(--text-light);">Human Only<span class="tip-content">AI must not be used here. High risk, compliance-sensitive, or decisions requiring accountability. Example: security sign-offs, production release decisions.</span></span></div>
+          <div style="font-size:12px;color:var(--text-muted);line-height:2.0;">
+            🚫 &nbsp;Security decisions<br>
+            🚫 &nbsp;Compliance sign-off<br>
+            🚫 &nbsp;Risk assessment<br>
+            🚫 &nbsp;Release approval<br>
+            🚫 &nbsp;GDPR data handling
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Discussion prompt -->
+    <div class="fragment" style="margin-top:12px;text-align:center;">
+      <span style="font-size:12px;color:var(--text-muted);">💬 Discussion: What's in <strong style="color:#E74C3C;">your</strong> Red Zone right now?</span>
+    </div>
+  </div>
+  <aside class="notes">Quick group discussion: What would you put in your personal Red Zone right now? This primes them for the practical. GDPR warning: All teams work with Norwegian/EU client data — NEVER paste client acceptance criteria into public AI tools without anonymization. There are no wrong answers — it depends on context and maturity.</aside>
+</section>
+
+<!-- ==================== SLIDE 19: PRACTICAL EXERCISE ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:10px;">
+    <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin-bottom:4px;">Practical Exercise</h2>
+    <div class="accent-bar"></div>
+    <p style="font-size:13px;color:var(--navy);font-weight:600;margin:0 0 12px 0;">Tool Map + Project Kickoff — 60 minutes in teams</p>
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <!-- Task 1 -->
+      <div class="fragment" style="display:grid;grid-template-columns:70px 1fr;gap:0;border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(27,79,114,0.08);">
+        <div style="background:var(--navy);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:12px 8px;">
+          <span style="font-size:20px;font-weight:800;color:var(--mint);">25</span>
+          <span style="font-size:9px;color:var(--text-muted);font-weight:700;">MIN</span>
+        </div>
+        <div style="background:#fff;padding:12px 16px;">
+          <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;">🗺️ Task 1: Build Your Tool Map</div>
+          <div style="font-size:12px;color:#555;">Map current tools to AI categories. Evaluate value, complexity, agent capabilities. Identify top 3 &amp; biggest gap.</div>
+        </div>
+      </div>
+      <!-- Task 2 -->
+      <div class="fragment" style="display:grid;grid-template-columns:70px 1fr;gap:0;border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(27,79,114,0.08);">
+        <div style="background:var(--navy);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:12px 8px;">
+          <span style="font-size:20px;font-weight:800;color:var(--mint);">20</span>
+          <span style="font-size:9px;color:var(--text-muted);font-weight:700;">MIN</span>
+        </div>
+        <div style="background:#fff;padding:12px 16px;">
+          <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;">📋 Task 2: Spec First — Write Your Micro-App Spec</div>
+          <div style="font-size:12px;color:#555;">Choose your app idea. Write user stories + Given/When/Then acceptance criteria + edge cases.</div>
+        </div>
+      </div>
+      <!-- Task 3 -->
+      <div class="fragment" style="display:grid;grid-template-columns:70px 1fr;gap:0;border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(27,79,114,0.08);">
+        <div style="background:var(--navy);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:12px 8px;">
+          <span style="font-size:20px;font-weight:800;color:var(--mint);">10</span>
+          <span style="font-size:9px;color:var(--text-muted);font-weight:700;">MIN</span>
+        </div>
+        <div style="background:#fff;padding:12px 16px;">
+          <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;">🤖 Task 3: AI Story Expansion</div>
+          <div style="font-size:12px;color:#555;">Feed spec to AI. Evaluate: ✅ Keep / ⚠️ Modify / ❌ Reject. Note spec quality → AI output quality.</div>
+        </div>
+      </div>
+      <!-- Debrief -->
+      <div class="fragment" style="display:grid;grid-template-columns:70px 1fr;gap:0;border-radius:10px;overflow:hidden;box-shadow:0 1px 6px rgba(27,79,114,0.08);">
+        <div style="background:var(--mint);display:flex;align-items:center;justify-content:center;flex-direction:column;padding:12px 8px;">
+          <span style="font-size:20px;font-weight:800;color:#fff;">5</span>
+          <span style="font-size:9px;color:#fff;font-weight:700;">MIN</span>
+        </div>
+        <div style="background:#E8F8F5;padding:12px 16px;">
+          <div style="font-size:13px;font-weight:700;color:var(--navy);margin-bottom:3px;">🎤 Debrief &amp; Presentations</div>
+          <div style="font-size:12px;color:#555;">Each group: tool map highlight, app concept in one sentence, one spec→AI insight.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="fragment" style="margin-top:10px;background:var(--navy);border-radius:8px;padding:10px 16px;text-align:center;">
+      <span style="font-size:11px;color:var(--text-muted);">6 teams (5×3 + 1×4) &nbsp;|&nbsp; Deliverables: <strong style="color:var(--mint);">Tool Map + Testable Spec + AI-generated test cases (evaluated)</strong></span>
+    </div>
+  </div>
+  <aside class="notes">Form groups now. Distribute handouts: Tool Map template, Spec template, AI tool access. Set a visible timer. Walk the room — intervene gently if groups are stuck on app choice. Debrief is tight at 1 minute per group.</aside>
+</section>
+
+<!-- ==================== SLIDE 20: CLOSING ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:16px;">
+    <h2 class="slide-title-dark" style="font-size:28px;font-weight:800;margin-bottom:4px;">Next Week: We Build 🚀</h2>
+    <div style="font-size:14px;color:var(--mint);margin-bottom:6px;font-weight:600;">Session 2 — 21st July 2026</div>
+    <div class="accent-bar"></div>
+
+    <!-- Preview cards -->
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px;">
+      <div class="fragment" style="background:var(--card-bg);border-radius:10px;padding:14px 16px;display:flex;align-items:flex-start;gap:10px;">
+        <span style="font-size:22px;">📝</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text-light);">Bring your spec</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">Polished and ready for AI input</div>
+        </div>
+      </div>
+      <div class="fragment" style="background:var(--card-bg);border-radius:10px;padding:14px 16px;display:flex;align-items:flex-start;gap:10px;">
+        <span style="font-size:22px;">🛠️</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text-light);">Micro-app + Playwright</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">Hands-on AI-assisted coding</div>
+        </div>
+      </div>
+      <div class="fragment" style="background:var(--card-bg);border-radius:10px;padding:14px 16px;display:flex;align-items:flex-start;gap:10px;">
+        <span style="font-size:22px;">🧠</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text-light);">Prompt engineering</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">Master the art of AI instruction</div>
+        </div>
+      </div>
+      <div class="fragment" style="background:var(--card-bg);border-radius:10px;padding:14px 16px;display:flex;align-items:flex-start;gap:10px;">
+        <span style="font-size:22px;">⚙️</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--text-light);">Spec to automated tests</div>
+          <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">Full pipeline in 60 minutes</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Advanced series teaser -->
+    <div class="fragment" style="margin-top:16px;background:linear-gradient(135deg,#0F3A4F,#163D5C);border-radius:10px;padding:16px 20px;border:1px solid var(--mint);">
+      <div style="display:flex;align-items:center;gap:12px;">
+        <span style="font-size:24px;">🔮</span>
+        <div>
+          <div style="font-size:13px;font-weight:700;color:var(--mint);margin-bottom:3px;">Advanced Series Preview</div>
+          <div style="font-size:12px;color:var(--text-muted);">Build custom AI agents for your QA workflow — tailored to your codebase, your test patterns, your definition of quality.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Thank you -->
+    <div class="fragment" style="margin-top:14px;text-align:center;">
+      <span style="font-size:14px;color:var(--text-muted);">See you next week 🙌</span>
+    </div>
+  </div>
+  <aside class="notes">Close on a forward-looking high note. Remind them: (1) keep spec template from today, (2) try at least one AI tool from the tool map before next week, (3) come to Session 2 with their spec — polished or rough, we're building. Thank the group for their engagement today.</aside>
+</section>
+
+</div><!-- /.slides -->
+</div><!-- /.reveal -->
+
+<!-- Reveal.js & Initialization -->
+<script type="module">
+  import Reveal from 'https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.esm.js';
+  import RevealNotes from 'https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.esm.js';
+
+  const deck = Reveal.initialize({
+    hash: true,
+    slideNumber: function(slide) {
+      const h = Reveal.getIndices(slide).h + 1;
+      return [h + ' / 28'];
+    },
+    showSlideNumber: 'all',
+    progress: true,
+    keyboard: true,
+    overview: true,
+    center: true,
+    touch: true,
+    loop: false,
+    autoSlide: 0,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    width: 1280,
+    height: 720,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: [ RevealNotes ]
+  });
+
+  // Update nav active state on slide change
+  deck.then(() => {
+    const navLinks = document.querySelectorAll('#session-nav a');
+    const chapters = [3, 8, 12, 17, 20, 22]; // 0-indexed
+
+    function updateNav() {
+      const current = Reveal.getIndices().h;
+      navLinks.forEach((link, i) => {
+        if (i < chapters.length - 1 && current >= chapters[i] && current < chapters[i+1]) {
+          link.style.color = 'var(--mint)';
+          link.style.borderColor = 'rgba(72,201,176,0.4)';
+        } else if (i === chapters.length - 1 && current >= chapters[i]) {
+          link.style.color = 'var(--mint)';
+          link.style.borderColor = 'rgba(72,201,176,0.4)';
+        } else {
+          link.style.color = '';
+          link.style.borderColor = '';
+        }
+      });
+    }
+
+    Reveal.on('slidechanged', updateNav);
+    updateNav();
+  });
+</script>
+
+<!-- Graceful fallback for offline use -->
+<noscript>
+  <style>
+    .reveal .fragment { opacity: 1 !important; }
+    .reveal .slides section { display: block !important; }
+  </style>
+</noscript>
+<script>
+  // Fallback: if Reveal.js fails to load from CDN, show all content
+  window.addEventListener('error', function(e) {
+    if (e.filename && e.filename.includes('reveal')) {
+      document.querySelectorAll('.fragment').forEach(function(el) {
+        el.style.opacity = '1';
+      });
+      document.querySelector('.reveal').style.overflow = 'auto';
+      document.querySelectorAll('.reveal .slides section').forEach(function(s) {
+        s.style.display = 'block';
+        s.style.position = 'relative';
+        s.style.width = '100%';
+        s.style.minHeight = '100vh';
+        s.style.padding = '48px';
+        s.style.boxSizing = 'border-box';
+        s.style.borderBottom = '2px solid rgba(72,201,176,0.3)';
+      });
+    }
+  }, true);
+</script>
+<script>
+  function quizAnswer(slideId, selectedIdx, correctIdx, explanation) {
+    var container = document.getElementById(slideId);
+    if (!container) return;
+    var opts = container.querySelectorAll('.quiz-opt');
+    opts.forEach(function(opt, i) {
+      opt.classList.add('disabled');
+      if (i === correctIdx) {
+        opt.classList.add('correct');
+        opt.querySelector('.opt-letter').textContent = '✓';
+      }
+      if (i === selectedIdx && selectedIdx !== correctIdx) {
+        opt.classList.add('wrong');
+        opt.querySelector('.opt-letter').textContent = '✗';
+      }
+    });
+    var explainEl = container.querySelector('.quiz-explain');
+    if (explainEl) {
+      explainEl.textContent = explanation;
+      explainEl.classList.add('show');
+    }
+  }
+  window.quizAnswer = quizAnswer;
+</script>
+<script>
+// Tooltip system: renders tooltip above the hovered/clicked element
+// Uses body-level overlay to escape Reveal.js transform context
+(function() {
+  var overlay = document.createElement('div');
+  overlay.id = 'tip-overlay';
+  overlay.style.cssText = 'display:none;position:fixed;background:#1B4F72;color:#fff;padding:14px 18px;border-radius:10px;font-size:13px;font-weight:400;line-height:1.6;width:320px;max-width:90vw;box-shadow:0 8px 32px rgba(0,0,0,0.5);border:2px solid #48C9B0;z-index:100000;text-align:left;font-style:normal;pointer-events:none;';
+  document.body.appendChild(overlay);
+
+  var activeEl = null;
+
+  function positionOverlay(el) {
+    var rect = el.getBoundingClientRect();
+    var tipW = 320;
+    // Position above the element, centered horizontally on it
+    var left = rect.left + (rect.width / 2) - (tipW / 2);
+    var top = rect.top - 10; // 10px gap above element
+    // Clamp to viewport
+    if (left < 10) left = 10;
+    if (left + tipW > window.innerWidth - 10) left = window.innerWidth - tipW - 10;
+    overlay.style.left = left + 'px';
+    overlay.style.bottom = (window.innerHeight - top) + 'px';
+    overlay.style.top = 'auto';
+    overlay.style.transform = 'none';
+  }
+
+  function showTip(el) {
+    var content = el.querySelector('.tip-content');
+    if (!content) return;
+    var isLight = el.classList.contains('light-tip');
+    overlay.style.background = isLight ? '#fff' : '#1B4F72';
+    overlay.style.color = isLight ? '#1B4F72' : '#fff';
+    overlay.style.borderColor = isLight ? '#2E86C1' : '#48C9B0';
+    overlay.innerHTML = '<div style="font-size:14px;margin-bottom:6px;">💡</div>' + content.innerHTML;
+    positionOverlay(el);
+    overlay.style.display = 'block';
+    activeEl = el;
+  }
+
+  function hideTip() {
+    overlay.style.display = 'none';
+    activeEl = null;
+  }
+
+  document.querySelectorAll('.tip').forEach(function(el) {
+    el.addEventListener('click', function(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      if (activeEl === el) { hideTip(); } else { showTip(el); }
+    });
+    el.addEventListener('mouseenter', function() { showTip(el); });
+    el.addEventListener('mouseleave', function() { hideTip(); });
+  });
+
+  document.addEventListener('click', function() { hideTip(); });
+})();
+</script>
+</body>
+</html>

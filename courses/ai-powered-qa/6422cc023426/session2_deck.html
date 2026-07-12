@@ -1,0 +1,1340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Session 2: AI in the Testing Workflow — Practical Integration</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5/dist/theme/black.css">
+<style>
+  /* ===== DESIGN SYSTEM ===== */
+  :root {
+    --navy:      #1B4F72;
+    --blue:      #2E86C1;
+    --mint:      #48C9B0;
+    --dark-bg:   #0D2137;
+    --light-bg:  #F4F9FC;
+    --card-bg:   #163D5C;
+    --text-light:#FFFFFF;
+    --text-muted:#A8C6D8;
+    --font:      system-ui, 'Segoe UI', sans-serif;
+  }
+
+  .reveal { font-family: var(--font); }
+  .reveal .slides section { text-align: left; padding: 0 48px; }
+
+  /* Progress bar */
+  .reveal .progress { height: 4px; color: var(--mint); }
+  .reveal .progress span { background: var(--mint); }
+
+  /* Slide number */
+  .reveal .slide-number {
+    background: rgba(0,0,0,0.4);
+    color: var(--text-muted);
+    font-size: 13px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-family: var(--font);
+  }
+
+  /* ===== TYPOGRAPHY ===== */
+  .reveal h1, .reveal h2, .reveal h3 {
+    font-family: var(--font);
+    text-transform: none;
+    letter-spacing: -0.5px;
+  }
+  .slide-title-dark  { color: var(--text-light) !important; }
+  .slide-title-light { color: var(--navy) !important; }
+
+  .accent-bar {
+    width: 80px; height: 4px;
+    background: var(--mint);
+    margin: 8px 0 24px 0;
+    border-radius: 2px;
+  }
+  /* ===== CARDS ===== */
+  .card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    padding: 18px 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.25);
+  }
+  .card-light {
+    background: #fff;
+    border-radius: 10px;
+    padding: 18px 20px;
+    box-shadow: 0 2px 12px rgba(27,79,114,0.10);
+  }
+  .card-navy {
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 18px 20px;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+
+  /* ===== GRID HELPERS ===== */
+  .grid-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .grid-3col { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; }
+  .grid-2x3  { display: grid; grid-template-columns: 1fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px; }
+  .grid-4col { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px; }
+  .flex-row  { display: flex; gap: 16px; align-items: stretch; }
+
+  /* ===== CHAPTER SLIDES ===== */
+  .chapter-num {
+    font-size: 96px;
+    font-weight: 900;
+    color: var(--mint);
+    opacity: 0.85;
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .chapter-title {
+    font-size: 38px;
+    font-weight: 700;
+    color: var(--text-light);
+    margin: 0 0 8px 0;
+  }
+  .chapter-sub {
+    font-size: 17px;
+    color: var(--text-muted);
+    font-style: italic;
+    margin: 0;
+  }
+  .chapter-rule {
+    width: 100px; height: 4px;
+    background: var(--mint);
+    border-radius: 2px;
+    margin-top: 20px;
+  }
+
+  /* ===== AGENDA CARDS ===== */
+  .agenda-num {
+    font-size: 26px; font-weight: 800;
+    color: var(--mint); margin-bottom: 6px;
+  }
+  .agenda-title { font-size: 14px; font-weight: 700; color: var(--text-light); margin-bottom: 4px; }
+  .agenda-sub   { font-size: 12px; color: var(--text-muted); }
+
+  /* ===== LEVEL CARDS ===== */
+  .level-card { border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.25); }
+  .level-bar  { height: 5px; }
+  .level-body { background: var(--card-bg); padding: 18px 16px; }
+  .level-title { font-size: 15px; font-weight: 700; color: var(--text-light); margin-bottom: 10px; }
+  .level-desc  { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+  /* ===== CAPS CARDS ===== */
+  .cap-badge { font-size: 11px; font-weight: 700; color: var(--mint); margin-bottom: 6px; }
+  .cap-title { font-size: 13px; font-weight: 700; color: var(--text-light); margin-bottom: 6px; }
+  .cap-desc  { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+
+  /* ===== LIMIT ROWS ===== */
+  .limit-row {
+    display: flex; align-items: center;
+    background: var(--card-bg);
+    border-radius: 8px; padding: 12px 18px;
+    margin-bottom: 10px;
+    gap: 14px;
+  }
+  .limit-x  { color: #E74C3C; font-size: 20px; font-weight: 700; flex-shrink:0; }
+  .limit-txt { font-size: 14px; color: var(--text-light); }
+
+  /* ===== TOOL CARDS ===== */
+  .tool-title { font-size: 13px; font-weight: 700; color: var(--mint); margin-bottom: 8px; }
+  .tool-names { font-size: 11px; color: var(--text-light); line-height: 1.6; }
+
+  /* ===== TOOLS vs AGENTS ===== */
+  .tva-label { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+  .tva-flow  { font-size: 13px; color: var(--mint); font-weight: 600; margin-bottom: 12px; }
+  .tva-list  { font-size: 12px; color: var(--text-muted); line-height: 1.9; }
+  .tva-list strong { color: var(--text-light); }
+
+  /* ===== SPEC SLIDES ===== */
+  .banner-mint {
+    background: var(--navy);
+    border-left: 4px solid var(--mint);
+    border-radius: 8px;
+    padding: 12px 20px;
+    font-size: 14px; font-weight: 700;
+    color: var(--mint);
+    margin-bottom: 18px;
+  }
+  .spec-bad  { background: #FEF0EE; border-radius: 10px; padding: 16px; }
+  .spec-good { background: #E8F8F5; border-radius: 10px; padding: 16px; }
+  .spec-bad-label  { font-size: 13px; font-weight: 700; color: #E74C3C; margin-bottom: 8px; }
+  .spec-good-label { font-size: 13px; font-weight: 700; color: #1B8A6B; margin-bottom: 8px; }
+  .spec-text { font-size: 12px; line-height: 1.65; }
+  .spec-text-bad  { color: #7B3529; }
+  .spec-text-good { color: #1B4F40; }
+
+  /* ===== SPEC LOOP ===== */
+  .loop-steps { display: flex; align-items: stretch; gap: 0; }
+  .loop-step {
+    flex: 1;
+    background: var(--navy);
+    border-radius: 10px;
+    padding: 16px 10px;
+    text-align: center;
+  }
+  .loop-step-label { font-size: 11px; font-weight: 800; color: var(--mint); margin-bottom: 10px; letter-spacing: 1px; }
+  .loop-step-desc  { font-size: 11px; color: var(--text-muted); line-height: 1.5; }
+  .loop-arrow {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; color: var(--mint); flex-shrink: 0; padding: 0 6px;
+  }
+  .loop-footer {
+    background: #E8F8F5; border-radius: 8px;
+    padding: 10px 18px; margin-top: 16px;
+    font-size: 12px; color: var(--navy); font-weight: 600;
+    text-align: center;
+  }
+
+  /* ===== CHECKLIST ===== */
+  .check-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 9px 0; border-bottom: 1px solid rgba(27,79,114,0.1);
+    font-size: 14px; color: var(--navy);
+  }
+  .check-icon { color: var(--mint); font-size: 17px; flex-shrink: 0; }
+
+  /* ===== GATEKEEPER ===== */
+  .model-old { background: #FEF0EE; border-radius: 10px; padding: 18px; }
+  .model-new { background: #E8F8F5; border-radius: 10px; padding: 18px; }
+  .model-label { font-size: 13px; font-weight: 800; margin-bottom: 12px; }
+  .model-old .model-label { color: #E74C3C; }
+  .model-new .model-label { color: #1B8A6B; }
+  .model-item { font-size: 12px; line-height: 2; }
+  .model-old .model-item { color: #7B3529; }
+  .model-new .model-item { color: #1B4F40; }
+
+  /* ===== SKILLS MATRIX ===== */
+  .matrix-header {
+    display: grid; grid-template-columns: 90px 130px 1fr;
+    background: var(--navy); border-radius: 8px 8px 0 0;
+    padding: 8px 14px; font-size: 11px; font-weight: 800;
+    color: var(--text-muted); letter-spacing: 1px;
+  }
+  .matrix-row {
+    display: grid; grid-template-columns: 90px 130px 1fr;
+    padding: 10px 14px; border-bottom: 1px solid rgba(27,79,114,0.08);
+    align-items: center;
+  }
+  .matrix-row:nth-child(odd)  { background: rgba(44,134,193,0.08); }
+  .matrix-row:nth-child(even) { background: rgba(44,134,193,0.04); }
+  .matrix-level { font-size: 12px; font-weight: 700; color: var(--blue); }
+  .matrix-role  { font-size: 13px; font-weight: 700; color: var(--navy); }
+  .matrix-desc  { font-size: 12px; color: #4a6785; }
+  .matrix-banner {
+    background: var(--navy); border-radius: 0 0 8px 8px;
+    padding: 12px 16px; font-size: 13px; font-weight: 700;
+    color: var(--mint); text-align: center;
+  }
+
+  /* ===== TRUST ZONES ===== */
+  .zone-card { border-radius: 10px; overflow: hidden; box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
+  .zone-bar  { height: 6px; }
+  .zone-body { padding: 16px 14px; }
+  .zone-label { font-size: 12px; font-weight: 800; letter-spacing: 1px; margin-bottom: 4px; }
+  .zone-sub   { font-size: 12px; font-weight: 700; color: var(--text-light); margin-bottom: 12px; }
+  .zone-items { font-size: 11px; color: var(--text-muted); line-height: 2; }
+  .zone-green { background: #1A3D2E; }
+  .zone-yellow{ background: #3D2E0A; }
+  .zone-red   { background: #3D0A0A; }
+
+  /* ===== EXERCISE TIMELINE ===== */
+  .timeline { display: flex; flex-direction: column; gap: 12px; }
+  .tl-item  {
+    display: flex; align-items: flex-start; gap: 16px;
+    background: var(--navy); border-radius: 10px; padding: 14px 18px;
+  }
+  .tl-time {
+    font-size: 20px; font-weight: 800; color: var(--mint);
+    flex-shrink: 0; min-width: 64px; line-height: 1;
+  }
+  .tl-min  { font-size: 11px; font-weight: 400; color: var(--text-muted); }
+  .tl-title { font-size: 14px; font-weight: 700; color: var(--text-light); margin-bottom: 3px; }
+  .tl-desc  { font-size: 12px; color: var(--text-muted); }
+
+  /* ===== CLOSING CARDS ===== */
+  .closing-card {
+    background: var(--card-bg); border-radius: 10px;
+    padding: 16px 18px; border-left: 3px solid var(--mint);
+    font-size: 13px; color: var(--text-light); line-height: 1.5;
+  }
+
+  /* ===== NAV BAR ===== */
+  #session-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9999;
+    display: flex; justify-content: center; align-items: center;
+    gap: 6px; padding: 6px 12px;
+    background: rgba(13,33,55,0.92);
+    backdrop-filter: blur(6px);
+    border-bottom: 1px solid rgba(72,201,176,0.2);
+    font-family: var(--font); font-size: 11px;
+  }
+  #session-nav .nav-label {
+    color: var(--text-muted); font-size: 10px; font-weight: 700;
+    letter-spacing: 1px; margin-right: 4px; flex-shrink: 0;
+  }
+  #session-nav a {
+    color: var(--text-muted); text-decoration: none;
+    padding: 3px 10px; border-radius: 20px;
+    border: 1px solid transparent;
+    transition: all 0.2s; font-size: 11px; white-space: nowrap;
+  }
+  #session-nav a:hover {
+    color: var(--mint); border-color: var(--mint);
+    background: rgba(72,201,176,0.1);
+  }
+
+  /* ===== KEYBOARD HINT ===== */
+  .keyboard-hint {
+    position: absolute; bottom: 28px; right: 0;
+    font-size: 11px; color: rgba(168,198,216,0.6);
+    display: flex; gap: 12px; align-items: center;
+  }
+  .key {
+    display: inline-block;
+    border: 1px solid rgba(168,198,216,0.3);
+    border-radius: 4px; padding: 2px 7px;
+    font-size: 11px; color: rgba(168,198,216,0.7);
+  }
+
+  /* ===== TITLE SLIDE ===== */
+  .title-series  { font-size: 34px; font-weight: 800; color: var(--text-light); margin-bottom: 8px; line-height: 1.2; }
+  .title-session { font-size: 19px; font-weight: 600; color: var(--mint); margin-bottom: 8px; }
+  .title-tagline { font-size: 15px; color: var(--text-muted); font-style: italic; margin-bottom: 32px; }
+  .title-rule    { width: 80px; height: 3px; background: var(--mint); border-radius: 2px; margin-bottom: 24px; }
+  .title-author  { font-size: 15px; font-weight: 700; color: var(--text-light); margin-bottom: 4px; }
+  .title-date    { font-size: 13px; color: var(--text-muted); }
+
+  /* ===== FRAGMENT OVERRIDES ===== */
+  .reveal .fragment { opacity: 0.15; transition: opacity 0.4s; }
+  .reveal .fragment.visible { opacity: 1; }
+
+  /* ===== LIGHT SLIDE TEXT OVERRIDES ===== */
+  .light-slide p, .light-slide li { color: var(--navy); }
+
+  /* ===== FOOTER BARS ===== */
+  .footer-bar {
+    background: #E8F8F5; border-radius: 8px;
+    padding: 9px 18px; margin-top: 14px;
+    font-size: 12px; color: var(--navy); font-weight: 600;
+    text-align: center;
+  }
+  .footer-bar-dark {
+    background: var(--card-bg);
+    border-radius: 8px; padding: 9px 18px; margin-top: 14px;
+    font-size: 12px; color: var(--mint); font-weight: 600;
+    text-align: center;
+  }
+
+  /* ===== ARROW VS ===== */
+  .vs-arrow {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 28px; color: var(--mint); font-weight: 800;
+    flex-shrink: 0; padding: 0 8px;
+  }
+
+  /* teaser box */
+  .teaser {
+    background: var(--card-bg); border-left: 3px solid var(--mint);
+    border-radius: 8px; padding: 10px 16px;
+    font-size: 12px; color: var(--text-muted);
+    margin-top: 12px; font-style: italic;
+  }
+
+  /* ===== TOOLTIPS ===== */
+  .tip {
+    position: relative;
+    border-bottom: 1px dashed var(--mint);
+    cursor: help;
+    color: inherit;
+    font-weight: inherit;
+  }
+  .tip:hover { color: var(--mint); }
+  .tip .tip-content {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: var(--navy);
+    color: var(--text-light);
+    padding: 14px 18px;
+    border-radius: 10px;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.6;
+    width: 320px;
+    max-width: 90vw;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    border: 2px solid var(--mint);
+    z-index: 10000;
+    text-align: left;
+    font-style: normal;
+  }
+  .tip .tip-content::before {
+    content: '💡';
+    display: block;
+    font-size: 14px;
+    margin-bottom: 6px;
+  }
+  .tip:hover .tip-content,
+  .tip:focus .tip-content { display: block; }
+  /* On light backgrounds */
+  .light-tip .tip-content { background: #fff; color: var(--navy); border-color: var(--blue); }
+  .light-tip { border-bottom-color: var(--blue); }
+  .light-tip:hover { color: var(--blue); }
+
+  /* ===== QUIZ SLIDES ===== */
+  .quiz-label { font-size: 11px; font-weight: 700; color: var(--mint); letter-spacing: 2px; margin-bottom: 12px; }
+  .quiz-question { font-size: 22px; font-weight: 700; color: var(--text-light); margin-bottom: 24px; line-height: 1.4; }
+  .quiz-options { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  .quiz-opt {
+    background: var(--card-bg); border-radius: 10px; padding: 16px 20px;
+    font-size: 14px; color: var(--text-light); cursor: pointer;
+    border: 2px solid transparent; transition: all 0.2s;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .quiz-opt:hover { border-color: var(--mint); background: rgba(72,201,176,0.1); }
+  .quiz-opt.correct { background: #1D4A3A !important; border-color: #27AE60 !important; cursor: default; }
+  .quiz-opt.wrong { background: #4A1D1D !important; border-color: #E74C3C !important; cursor: default; opacity: 0.7; }
+  .quiz-opt.disabled { pointer-events: none; opacity: 0.6; }
+  .quiz-opt .opt-letter {
+    width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.1);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 12px; font-weight: 700; flex-shrink: 0;
+  }
+  .quiz-opt.correct .opt-letter { background: #27AE60; color: #fff; }
+  .quiz-opt.wrong .opt-letter { background: #E74C3C; color: #fff; }
+  .quiz-explain {
+    margin-top: 16px; padding: 12px 18px; border-radius: 8px;
+    background: rgba(72,201,176,0.1); border-left: 3px solid var(--mint);
+    font-size: 12px; color: var(--text-muted); display: none; line-height: 1.6;
+  }
+  .quiz-explain.show { display: block; }
+
+  /* ===== CODE BLOCK ===== */
+  .code-block {
+    background: #1E1E2E; border-radius: 8px;
+    padding: 16px 18px; font-family: 'Courier New', monospace;
+    font-size: 11px; color: var(--mint); line-height: 1.7;
+    overflow-x: auto;
+  }
+
+  /* ===== EVAL TABLE ===== */
+  .eval-header {
+    display: grid; grid-template-columns: 1.5fr 3fr 2fr;
+    background: var(--navy); border-radius: 8px 8px 0 0;
+    padding: 10px 16px; font-size: 11px; font-weight: 800;
+    color: var(--text-muted); letter-spacing: 0.5px;
+  }
+  .eval-row {
+    display: grid; grid-template-columns: 1.5fr 3fr 2fr;
+    padding: 10px 16px; border-bottom: 1px solid rgba(27,79,114,0.08);
+    align-items: center; font-size: 12px;
+  }
+  .eval-row:nth-child(odd)  { background: rgba(44,134,193,0.08); }
+  .eval-row:nth-child(even) { background: rgba(44,134,193,0.04); }
+  .eval-dim { font-weight: 700; color: var(--blue); }
+  .eval-q   { color: var(--navy); }
+  .eval-flag { color: #CC3333; font-weight: 600; }
+
+  /* ===== HALLUCINATION ROWS ===== */
+  .hall-row {
+    display: flex; align-items: center;
+    background: var(--card-bg);
+    border-radius: 8px; padding: 12px 18px;
+    margin-bottom: 10px; gap: 14px;
+  }
+  .hall-label { font-size: 12px; font-weight: 700; color: var(--text-light); flex: 1; }
+  .hall-code  { font-size: 11px; font-family: 'Courier New', monospace; color: var(--mint); flex: 1.2; }
+
+  /* ===== PROMPT LAYER ROW ===== */
+  .prompt-row {
+    display: flex; align-items: center;
+    background: #fff; border-radius: 8px;
+    padding: 12px 18px; margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(27,79,114,0.08);
+    gap: 14px;
+  }
+  .prompt-bar {
+    width: 4px; height: 36px;
+    background: var(--mint); border-radius: 2px; flex-shrink: 0;
+  }
+  .prompt-label { font-size: 13px; font-weight: 700; color: var(--navy); min-width: 110px; }
+  .prompt-desc  { font-size: 12px; color: #4a6785; }
+
+  /* ===== TECHNIQUE TABLE ===== */
+  .tech-header {
+    display: grid; grid-template-columns: 2fr 4fr;
+    background: var(--navy); border-radius: 8px 8px 0 0;
+    padding: 10px 16px; font-size: 11px; font-weight: 800;
+    color: var(--text-muted); letter-spacing: 0.5px;
+  }
+  .tech-row {
+    display: grid; grid-template-columns: 2fr 4fr;
+    padding: 10px 16px; border-bottom: 1px solid rgba(27,79,114,0.08);
+    align-items: center; font-size: 12px;
+  }
+  .tech-row:nth-child(odd)  { background: rgba(44,134,193,0.08); }
+  .tech-row:nth-child(even) { background: rgba(44,134,193,0.04); }
+  .tech-name { font-weight: 700; color: var(--navy); }
+  .tech-ex   { color: #4a6785; font-style: italic; }
+
+  /* ===== GUARDRAIL ROWS ===== */
+  .guard-row {
+    display: flex; align-items: center;
+    background: #fff; border-radius: 8px;
+    padding: 12px 18px; margin-bottom: 8px;
+    box-shadow: 0 2px 8px rgba(27,79,114,0.08);
+    gap: 14px;
+  }
+  .guard-num {
+    width: 28px; height: 28px; border-radius: 6px;
+    background: var(--mint); display: flex; align-items: center;
+    justify-content: center; font-size: 12px; font-weight: 800;
+    color: var(--dark-bg); flex-shrink: 0;
+  }
+  .guard-text { font-size: 12px; color: var(--navy); }
+
+  /* ===== FLOW BOXES ===== */
+  .flow-box {
+    border-radius: 10px; padding: 18px 14px; text-align: center;
+    color: #E8F4FD;
+  }
+  .flow-label { font-size: 14px; font-weight: 700; color: var(--text-light); margin-bottom: 10px; }
+  .flow-items { font-size: 11px; line-height: 1.8; }
+  .flow-arrow {
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; color: var(--mint); flex-shrink: 0;
+  }
+
+  /* ===== PITFALL CARDS ===== */
+  .pitfall-card {
+    background: #fff; border-radius: 10px;
+    padding: 16px 18px;
+    box-shadow: 0 2px 12px rgba(27,79,114,0.10);
+  }
+  .pitfall-title { font-size: 12px; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+  .pitfall-desc  { font-size: 11px; color: #555; line-height: 1.5; }
+</style>
+</head>
+<body>
+
+<!-- SESSION NAV BAR -->
+<div id="session-nav">
+  <span class="nav-label">SESSION 2</span>
+  <a href="#" onclick="Reveal.slide(3); return false;">01 AI SDLC</a>
+  <a href="#" onclick="Reveal.slide(7); return false;">02 Prompt Eng</a>
+  <a href="#" onclick="Reveal.slide(12); return false;">03 Spec→Test</a>
+  <a href="#" onclick="Reveal.slide(15); return false;">04 Evaluation</a>
+  <a href="#" onclick="Reveal.slide(20); return false;">05 Pitfalls</a>
+  <a href="#" onclick="Reveal.slide(22); return false;">06 Exercise</a>
+</div>
+
+<div class="reveal">
+<div class="slides">
+
+<!-- ==================== SLIDE 1: TITLE ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top: 40px;">
+    <div style="width:100%;height:4px;background:var(--mint);border-radius:2px;margin-bottom:32px;"></div>
+    <div class="title-series">AI-Powered QA —<br>Practical Integration</div>
+    <div class="title-session">Session 2: AI in the Testing Workflow</div>
+    <div class="title-tagline">From spec to automated test — master the tools that bridge the gap</div>
+    <div class="title-rule"></div>
+    <div class="title-author">Dr. Chathuranga Manamendra</div>
+    <div class="title-date">21st July 2026 &nbsp;|&nbsp; TIQRI</div>
+    <div class="keyboard-hint">
+      <span><span class="key">←→</span> Navigate</span>
+      <span><span class="key">F</span> Fullscreen</span>
+      <span><span class="key">S</span> Speaker Notes</span>
+      <span><span class="key">O</span> Overview</span>
+    </div>
+  </div>
+  <aside class="notes">Welcome back! Recap: Last week we covered AI landscape, spec-driven development, and guardrails. Today: we go hands-on. By end of session you will have a working app + Playwright tests.</aside>
+</section>
+
+<!-- ==================== SLIDE 2: AGENDA ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:16px;">
+    <h2 class="slide-title-light" style="font-size:28px;font-weight:800;margin-bottom:4px;">Agenda</h2>
+    <div class="accent-bar"></div>
+    <div class="grid-2x3" style="margin-top:8px;">
+      <div class="card-navy fragment">
+        <div class="agenda-num">01</div>
+        <div class="agenda-title">AI Across the SDLC</div>
+        <div class="agenda-sub">Mapping AI to every delivery phase</div>
+      </div>
+      <div class="card-navy fragment">
+        <div class="agenda-num">02</div>
+        <div class="agenda-title">Prompt Engineering for QA</div>
+        <div class="agenda-sub">The core skill for AI-augmented testing</div>
+      </div>
+      <div class="card-navy fragment">
+        <div class="agenda-num">03</div>
+        <div class="agenda-title">From Spec to Automated Test</div>
+        <div class="agenda-sub">Playwright + AI workflow</div>
+      </div>
+      <div class="card-navy fragment">
+        <div class="agenda-num">04</div>
+        <div class="agenda-title">Evaluating AI Output</div>
+        <div class="agenda-sub">Critical thinking &amp; guardrails</div>
+      </div>
+      <div class="card-navy fragment">
+        <div class="agenda-num">05</div>
+        <div class="agenda-title">Common Pitfalls</div>
+        <div class="agenda-sub">Warnings from the field</div>
+      </div>
+      <div class="card-navy fragment">
+        <div class="agenda-num">06</div>
+        <div class="agenda-title">Practical: Build &amp; Test</div>
+        <div class="agenda-sub">Spec → App → Playwright tests</div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">1 hour theory focused on practical skills, then 1 hour building your project. Everything today is hands-on applicable — you'll use these techniques in the practical session.</aside>
+</section>
+
+<!-- ==================== RECAP QUIZ: Session 1 Review ==================== -->
+<section data-background-color="#0D2137">
+  <div id="recap-quiz" style="padding-top:24px;">
+    <div class="quiz-label">🔄 LAST WEEK'S RECAP</div>
+    <div class="quiz-question">In spec-driven development, what does "Given / When / Then" describe?</div>
+    <div class="quiz-options">
+      <div class="quiz-opt" onclick="quizAnswer('recap-quiz', 0, 2, 'Given/When/Then is the format for testable acceptance criteria: Given sets context (precondition), When describes the action, Then states the expected result. It makes specs directly translatable to automated tests.')">
+        <span class="opt-letter">A</span> Project planning phases
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('recap-quiz', 1, 2, 'Given/When/Then is the format for testable acceptance criteria: Given sets context (precondition), When describes the action, Then states the expected result. It makes specs directly translatable to automated tests.')">
+        <span class="opt-letter">B</span> CI/CD pipeline stages
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('recap-quiz', 2, 2, 'Given/When/Then is the format for testable acceptance criteria: Given sets context (precondition), When describes the action, Then states the expected result. It makes specs directly translatable to automated tests.')">
+        <span class="opt-letter">C</span> Testable acceptance criteria format (precondition → action → result)
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('recap-quiz', 3, 2, 'Given/When/Then is the format for testable acceptance criteria: Given sets context (precondition), When describes the action, Then states the expected result. It makes specs directly translatable to automated tests.')">
+        <span class="opt-letter">D</span> Bug report structure
+      </div>
+    </div>
+    <div class="quiz-explain"></div>
+  </div>
+  <aside class="notes">Quick recap from Session 1. Gets brains warmed up. If most get it right — great, foundation is solid. If not — brief 30-second refresher before moving on.</aside>
+</section>
+
+<!-- ==================== SLIDE 3: CHAPTER 01 ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:30px;">
+    <div class="chapter-num">01</div>
+    <div class="chapter-title">AI Across the SDLC</div>
+    <div class="chapter-sub">AI is not just for writing tests — it helps at every stage</div>
+    <div class="chapter-rule"></div>
+  </div>
+  <aside class="notes">AI is not just for writing tests - it has applications at every stage of the software delivery lifecycle. Understanding where AI fits helps QE teams identify the highest-value integration points.</aside>
+</section>
+
+<!-- ==================== SLIDE 4: AI-AUGMENTED SDLC MAP ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:12px;">
+    <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin-bottom:4px;">AI-Augmented SDLC Map</h2>
+    <div class="accent-bar"></div>
+    <div style="display:flex;gap:4px;align-items:flex-start;margin-top:4px;">
+      <div class="fragment" style="flex:1;text-align:center;">
+        <div style="background:var(--navy);border-radius:8px;padding:10px 6px;margin-bottom:4px;">
+          <div style="font-size:11px;font-weight:700;color:var(--text-light);"><span class="tip light-tip">Requirements<span class="tip-content">Analyzing user stories and specs for completeness. AI can detect ambiguous language, missing scenarios, and untestable requirements before coding begins.</span></span></div>
+        </div>
+        <div style="font-size:18px;color:var(--mint);">▼</div>
+        <div style="background:#fff;border-radius:8px;padding:10px 6px;box-shadow:0 2px 8px rgba(27,79,114,0.08);margin-top:4px;">
+          <div style="font-size:9px;font-weight:700;color:var(--mint);margin-bottom:4px;">✨ AI</div>
+          <div style="font-size:9px;color:var(--navy);line-height:1.5;">Ambiguity detection<br>Testability scoring</div>
+        </div>
+      </div>
+      <div style="color:var(--mint);font-size:14px;padding-top:10px;">▶</div>
+      <div class="fragment" style="flex:1;text-align:center;">
+        <div style="background:var(--navy);border-radius:8px;padding:10px 6px;margin-bottom:4px;">
+          <div style="font-size:11px;font-weight:700;color:var(--text-light);">Design</div>
+        </div>
+        <div style="font-size:18px;color:var(--mint);">▼</div>
+        <div style="background:#fff;border-radius:8px;padding:10px 6px;box-shadow:0 2px 8px rgba(27,79,114,0.08);margin-top:4px;">
+          <div style="font-size:9px;font-weight:700;color:var(--mint);margin-bottom:4px;">✨ AI</div>
+          <div style="font-size:9px;color:var(--navy);line-height:1.5;">Architecture review<br>Risk assessment</div>
+        </div>
+      </div>
+      <div style="color:var(--mint);font-size:14px;padding-top:10px;">▶</div>
+      <div class="fragment" style="flex:1;text-align:center;">
+        <div style="background:var(--navy);border-radius:8px;padding:10px 6px;margin-bottom:4px;">
+          <div style="font-size:11px;font-weight:700;color:var(--text-light);">Build</div>
+        </div>
+        <div style="font-size:18px;color:var(--mint);">▼</div>
+        <div style="background:#fff;border-radius:8px;padding:10px 6px;box-shadow:0 2px 8px rgba(27,79,114,0.08);margin-top:4px;">
+          <div style="font-size:9px;font-weight:700;color:var(--mint);margin-bottom:4px;">✨ AI</div>
+          <div style="font-size:9px;color:var(--navy);line-height:1.5;">Code generation<br>Code review</div>
+        </div>
+      </div>
+      <div style="color:var(--mint);font-size:14px;padding-top:10px;">▶</div>
+      <div class="fragment" style="flex:1;text-align:center;">
+        <div style="background:var(--navy);border-radius:8px;padding:10px 6px;margin-bottom:4px;">
+          <div style="font-size:11px;font-weight:700;color:var(--text-light);"><span class="tip light-tip">Test<span class="tip-content">Creating and executing test scenarios. AI generates test cases from specs, creates test data, and helps prioritize which tests matter most for each change.</span></span></div>
+        </div>
+        <div style="font-size:18px;color:var(--mint);">▼</div>
+        <div style="background:#fff;border-radius:8px;padding:10px 6px;box-shadow:0 2px 8px rgba(27,79,114,0.08);margin-top:4px;">
+          <div style="font-size:9px;font-weight:700;color:var(--mint);margin-bottom:4px;">✨ AI</div>
+          <div style="font-size:9px;color:var(--navy);line-height:1.5;">Test generation<br>Data synthesis</div>
+        </div>
+      </div>
+      <div style="color:var(--mint);font-size:14px;padding-top:10px;">▶</div>
+      <div class="fragment" style="flex:1;text-align:center;">
+        <div style="background:var(--navy);border-radius:8px;padding:10px 6px;margin-bottom:4px;">
+          <div style="font-size:11px;font-weight:700;color:var(--text-light);">Deploy</div>
+        </div>
+        <div style="font-size:18px;color:var(--mint);">▼</div>
+        <div style="background:#fff;border-radius:8px;padding:10px 6px;box-shadow:0 2px 8px rgba(27,79,114,0.08);margin-top:4px;">
+          <div style="font-size:9px;font-weight:700;color:var(--mint);margin-bottom:4px;">✨ AI</div>
+          <div style="font-size:9px;color:var(--navy);line-height:1.5;">Risk prediction<br>Release validation</div>
+        </div>
+      </div>
+      <div style="color:var(--mint);font-size:14px;padding-top:10px;">▶</div>
+      <div class="fragment" style="flex:1;text-align:center;">
+        <div style="background:var(--navy);border-radius:8px;padding:10px 6px;margin-bottom:4px;">
+          <div style="font-size:11px;font-weight:700;color:var(--text-light);"><span class="tip light-tip">Monitor<span class="tip-content">Watching production systems post-deployment. AI detects anomalies, correlates incidents with recent changes, and suggests root causes automatically.</span></span></div>
+        </div>
+        <div style="font-size:18px;color:var(--mint);">▼</div>
+        <div style="background:#fff;border-radius:8px;padding:10px 6px;box-shadow:0 2px 8px rgba(27,79,114,0.08);margin-top:4px;">
+          <div style="font-size:9px;font-weight:700;color:var(--mint);margin-bottom:4px;">✨ AI</div>
+          <div style="font-size:9px;color:var(--navy);line-height:1.5;">Anomaly detection<br>Incident triage</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bar fragment" style="margin-top:14px;">💡 Where are you currently using AI? Where is the biggest untapped opportunity?</div>
+  </div>
+  <aside class="notes">Walk through each phase. Ask: Where are you currently using AI? Where is the biggest untapped opportunity? Most teams only use AI for test generation — the biggest value might be in requirements or defect management.</aside>
+</section>
+
+<!-- ==================== SLIDE 5: AI IN TESTING PHASES DETAIL ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:16px;">
+    <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin-bottom:4px;">AI in Testing Phases — Detail</h2>
+    <div class="accent-bar"></div>
+    <div class="grid-2col" style="margin-top:4px;">
+      <div class="card-light fragment">
+        <div style="font-size:13px;font-weight:700;color:var(--blue);margin-bottom:8px;">Requirements Analysis</div>
+        <div style="font-size:11px;color:var(--navy);line-height:1.8;">• Ambiguity detection<br>• Testability scoring<br>• Gap identification</div>
+      </div>
+      <div class="card-light fragment">
+        <div style="font-size:13px;font-weight:700;color:var(--blue);margin-bottom:8px;">Test Creation</div>
+        <div style="font-size:11px;color:var(--navy);line-height:1.8;">• Test generation<br>• Data synthesis<br>• Code scaffolding</div>
+      </div>
+      <div class="card-light fragment">
+        <div style="font-size:13px;font-weight:700;color:var(--blue);margin-bottom:8px;">Defect Management</div>
+        <div style="font-size:11px;color:var(--navy);line-height:1.8;">• Classification<br>• Duplicate detection<br>• Root cause analysis</div>
+      </div>
+      <div class="card-light fragment">
+        <div style="font-size:13px;font-weight:700;color:var(--blue);margin-bottom:8px;">Production Monitoring</div>
+        <div style="font-size:11px;color:var(--navy);line-height:1.8;">• Anomaly detection<br>• Log analysis<br>• Trend prediction</div>
+      </div>
+    </div>
+    <div class="footer-bar fragment" style="margin-top:14px;">💡 Key insight: Requirements analysis is often the highest-ROI entry point</div>
+  </div>
+  <aside class="notes">Deep dive into the testing phases since that is most relevant. Key insight: requirements analysis is often the highest-ROI entry point because it prevents defects rather than finding them.</aside>
+</section>
+
+<!-- ==================== QUIZ 1: After AI in Testing Phases ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:24px;" id="quiz-1">
+    <div class="quiz-label">🧠 QUICK CHECK</div>
+    <div class="quiz-question">Which SDLC phase typically has the highest ROI for AI integration in QA?</div>
+    <div class="quiz-options">
+      <div class="quiz-opt" onclick="quizAnswer('quiz-1', 0, 1, 'Requirements analysis prevents defects from ever being created. Catching ambiguity and testability issues at the spec stage has 10-100x more impact than finding bugs later.')">
+        <div class="opt-letter">A</div>
+        <div>Deployment — smart rollback decisions</div>
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-1', 1, 1, 'Requirements analysis prevents defects from ever being created. Catching ambiguity and testability issues at the spec stage has 10-100x more impact than finding bugs later.')">
+        <div class="opt-letter">B</div>
+        <div>Requirements — ambiguity detection and testability scoring</div>
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-1', 2, 1, 'Requirements analysis prevents defects from ever being created. Catching ambiguity and testability issues at the spec stage has 10-100x more impact than finding bugs later.')">
+        <div class="opt-letter">C</div>
+        <div>Monitoring — anomaly detection</div>
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-1', 3, 1, 'Requirements analysis prevents defects from ever being created. Catching ambiguity and testability issues at the spec stage has 10-100x more impact than finding bugs later.')">
+        <div class="opt-letter">D</div>
+        <div>Build — code generation</div>
+      </div>
+    </div>
+    <div class="quiz-explain"></div>
+  </div>
+  <aside class="notes">Interactive quiz — click the answer you think is correct. This reinforces the key takeaway from the SDLC mapping section.</aside>
+</section>
+
+<!-- ==================== SLIDE 7: CHAPTER 02 ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:30px;">
+    <div class="chapter-num">02</div>
+    <div class="chapter-title">Prompt Engineering for QA</div>
+    <div class="chapter-sub">This is THE core skill</div>
+    <div class="chapter-rule"></div>
+  </div>
+  <aside class="notes">This is THE core skill. A good prompt is the difference between useful output and garbage. Everything you learn here, you'll use in the practical session immediately.</aside>
+</section>
+
+<!-- ==================== SLIDE 7: ANATOMY OF A GOOD PROMPT ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:16px;">
+    <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin-bottom:4px;">Anatomy of a Good Prompt</h2>
+    <div class="accent-bar"></div>
+    <div class="prompt-row fragment">
+      <div class="prompt-bar"></div>
+      <div class="prompt-label"><span class="tip light-tip">Context<span class="tip-content">Who is the AI pretending to be? What domain expertise does it need? Example: 'You are a senior QA engineer specializing in financial systems.'</span></span></div>
+      <div class="prompt-desc">Set the role, domain, and background</div>
+    </div>
+    <div class="prompt-row fragment">
+      <div class="prompt-bar"></div>
+      <div class="prompt-label"><span class="tip light-tip">Spec / Input<span class="tip-content">The actual requirement or acceptance criteria you want tested. The more specific, the better the output. Always use Given/When/Then format.</span></span></div>
+      <div class="prompt-desc">Provide the requirement or acceptance criteria</div>
+    </div>
+    <div class="prompt-row fragment">
+      <div class="prompt-bar"></div>
+      <div class="prompt-label"><span class="tip light-tip">Constraints<span class="tip-content">Boundaries the AI must work within: which framework (Playwright/Cypress), which patterns (POM), which languages (TypeScript), what NOT to include.</span></span></div>
+      <div class="prompt-desc">Define boundaries: framework, style, coverage targets</div>
+    </div>
+    <div class="prompt-row fragment">
+      <div class="prompt-bar"></div>
+      <div class="prompt-label"><span class="tip light-tip">Format<span class="tip-content">What structure should the output have? Code? Table? Numbered list? Specifying format prevents the AI from guessing and gives consistent, usable results.</span></span></div>
+      <div class="prompt-desc">Specify output structure: code, table, list</div>
+    </div>
+    <div class="prompt-row fragment">
+      <div class="prompt-bar"></div>
+      <div class="prompt-label"><span class="tip light-tip">Examples<span class="tip-content">Show the AI one good example of what you want. Few-shot examples dramatically improve output quality — the AI mimics the style and depth of your example.</span></span></div>
+      <div class="prompt-desc">Show one good example of expected output</div>
+    </div>
+    <div class="footer-bar fragment">Every prompt you write should include most of these layers</div>
+  </div>
+  <aside class="notes">Show the structure. Every prompt you write should have most of these components. The better your input, the better the output. This is the foundation — techniques come next.</aside>
+</section>
+
+<!-- ==================== SLIDE 8: TECHNIQUES THAT WORK ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:16px;">
+    <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin-bottom:4px;">Techniques That Work</h2>
+    <div class="accent-bar"></div>
+    <div style="border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(27,79,114,0.12);">
+      <div class="tech-header">
+        <span>TECHNIQUE</span><span>QA EXAMPLE</span>
+      </div>
+      <div class="tech-row fragment">
+        <span class="tech-name"><span class="tip light-tip">Role Prompting<span class="tip-content">Assign the AI a specific expert persona. 'You are a senior SDET with 10 years Playwright experience' sets the quality bar higher than a generic request.</span></span></span>
+        <span class="tech-ex">"You are a senior SDET with 10 years Playwright experience..."</span>
+      </div>
+      <div class="tech-row fragment">
+        <span class="tech-name"><span class="tip light-tip">Few-shot Examples<span class="tip-content">Provide 1-2 examples of the exact output format you want. The AI pattern-matches against your examples, producing more consistent results.</span></span></span>
+        <span class="tech-ex">Provide 1-2 example test cases before asking for more</span>
+      </div>
+      <div class="tech-row fragment">
+        <span class="tech-name"><span class="tip light-tip">Chain-of-Thought<span class="tip-content">Ask the AI to reason step by step: 'First analyze the spec, then identify scenarios, then write tests.' Forces structured thinking instead of jumping to code.</span></span></span>
+        <span class="tech-ex">"First analyze the spec, then identify edge cases, then write tests"</span>
+      </div>
+      <div class="tech-row fragment">
+        <span class="tech-name"><span class="tip light-tip">Constraint Anchoring<span class="tip-content">Explicitly state technical boundaries: 'Use Playwright, TypeScript, Page Object Model, data-testid selectors only.' Prevents the AI from using wrong frameworks.</span></span></span>
+        <span class="tech-ex">"Use Page Object Model, max 1 assertion per test"</span>
+      </div>
+      <div class="tech-row fragment">
+        <span class="tech-name"><span class="tip light-tip">Negative Prompting<span class="tip-content">Tell the AI what NOT to do: 'Do NOT use hard-coded waits, do NOT generate generic assertions.' Eliminates common AI bad habits.</span></span></span>
+        <span class="tech-ex">"Do NOT use hard-coded waits or sleep statements"</span>
+      </div>
+    </div>
+    <div class="footer-bar fragment" style="margin-top:14px;">Live demo: same request, bad prompt vs good prompt — dramatic quality difference</div>
+  </div>
+  <aside class="notes">Live demo opportunity: Show the same request with a basic prompt vs. one using these techniques. Dramatic quality difference. These are the techniques they'll use in the practical session.</aside>
+</section>
+
+<!-- ==================== SLIDE 9: PROMPT TEMPLATES ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:16px;">
+    <h2 class="slide-title-dark" style="font-size:24px;font-weight:800;margin-bottom:4px;">Prompt Templates</h2>
+    <div class="accent-bar"></div>
+    <div class="grid-3col" style="margin-top:4px;">
+      <div class="card fragment">
+        <div style="width:32px;height:32px;background:var(--mint);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--dark-bg);margin-bottom:12px;">1</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text-light);margin-bottom:8px;">Test Case Generation</div>
+        <div style="font-size:10px;color:var(--text-muted);line-height:1.6;">Generate Playwright tests from acceptance criteria with POM structure, assertions, and edge cases.</div>
+      </div>
+      <div class="card fragment">
+        <div style="width:32px;height:32px;background:var(--mint);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--dark-bg);margin-bottom:12px;">2</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text-light);margin-bottom:8px;">Spec Review</div>
+        <div style="font-size:10px;color:var(--text-muted);line-height:1.6;">Analyze requirements for ambiguity, missing scenarios, testability gaps, and implicit assumptions.</div>
+      </div>
+      <div class="card fragment">
+        <div style="width:32px;height:32px;background:var(--mint);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:800;color:var(--dark-bg);margin-bottom:12px;">3</div>
+        <div style="font-size:13px;font-weight:700;color:var(--text-light);margin-bottom:8px;">Coverage Gap Analysis</div>
+        <div style="font-size:10px;color:var(--text-muted);line-height:1.6;">Compare existing tests against spec to identify untested paths, boundary conditions, and risk areas.</div>
+      </div>
+    </div>
+    <div class="footer-bar-dark fragment" style="margin-top:18px;">📄 Full templates available in your Session 2 Handout — use them in the practical</div>
+  </div>
+  <aside class="notes">These are in your handout - you will use them in the practical. The prompt library is your team reusable asset. Build it over time.</aside>
+</section>
+
+<!-- ==================== QUIZ 2: After Prompt Templates ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:24px;" id="quiz-2">
+    <div class="quiz-label">🧠 QUICK CHECK</div>
+    <div class="quiz-question">You ask AI to generate tests but get generic, unhelpful output. What's the MOST likely fix?</div>
+    <div class="quiz-options">
+      <div class="quiz-opt" onclick="quizAnswer('quiz-2', 0, 1, 'The quality of your input directly determines output quality. Adding spec context, tech stack constraints, and output format requirements transforms generic output into useful, targeted results.')">
+        <div class="opt-letter">A</div>
+        <div>Switch to a different AI model</div>
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-2', 1, 1, 'The quality of your input directly determines output quality. Adding spec context, tech stack constraints, and output format requirements transforms generic output into useful, targeted results.')">
+        <div class="opt-letter">B</div>
+        <div>Add more specific context: spec, constraints, and format requirements</div>
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-2', 2, 1, 'The quality of your input directly determines output quality. Adding spec context, tech stack constraints, and output format requirements transforms generic output into useful, targeted results.')">
+        <div class="opt-letter">C</div>
+        <div>Ask it to try again</div>
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-2', 3, 1, 'The quality of your input directly determines output quality. Adding spec context, tech stack constraints, and output format requirements transforms generic output into useful, targeted results.')">
+        <div class="opt-letter">D</div>
+        <div>Generate more tests to compensate for low quality</div>
+      </div>
+    </div>
+    <div class="quiz-explain"></div>
+  </div>
+  <aside class="notes">Interactive quiz — reinforces the core lesson of prompt engineering: your input quality determines output quality.</aside>
+</section>
+
+<!-- ==================== SLIDE 12: CHAPTER 03 ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:30px;">
+    <div class="chapter-num">03</div>
+    <div class="chapter-title">From Spec to Automated Test</div>
+    <div class="chapter-sub">Connecting spec-driven development to Playwright automation</div>
+    <div class="chapter-rule"></div>
+  </div>
+  <aside class="notes">This connects Session 1 spec-driven approach directly to Playwright automation. The spec you wrote last week becomes your most powerful prompt ingredient.</aside>
+</section>
+
+<!-- ==================== SLIDE 11: SPEC → TEST WORKFLOW ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:16px;">
+    <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin-bottom:4px;">Spec → Test Workflow</h2>
+    <div class="accent-bar"></div>
+    <div style="display:flex;gap:0;align-items:stretch;margin-top:8px;">
+      <div class="flow-box fragment" style="flex:1;background:var(--navy);">
+        <div class="flow-label">YOUR SPEC</div>
+        <div class="flow-items" style="color:var(--text-muted);">Acceptance criteria<br>Edge cases<br>Business rules</div>
+      </div>
+      <div class="flow-arrow fragment">▶</div>
+      <div class="flow-box fragment" style="flex:1;background:var(--blue);">
+        <div class="flow-label">AI GENERATES</div>
+        <div class="flow-items" style="color:#E8F4FD;">Test file<br>Page objects<br>Fixtures</div>
+      </div>
+      <div class="flow-arrow fragment">▶</div>
+      <div class="flow-box fragment" style="flex:1;background:#1B8A6B;">
+        <div class="flow-label">YOU VALIDATE</div>
+        <div class="flow-items" style="color:#E8F4FD;">Review assertions<br>Run tests<br>Iterate</div>
+      </div>
+    </div>
+    <div class="card-light fragment" style="margin-top:18px;padding:14px 20px;">
+      <div style="font-size:13px;color:var(--navy);font-weight:600;">💡 Better spec = Better AI output. Your Session 1 spec is your most powerful prompt ingredient.</div>
+    </div>
+  </div>
+  <aside class="notes">The spec you wrote last week is your most powerful prompt ingredient. Better spec = better AI output. Show example: acceptance criteria to Playwright code in real-time.</aside>
+</section>
+
+<!-- ==================== SLIDE 12: PLAYWRIGHT + AI ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:16px;">
+    <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin-bottom:4px;">Playwright + AI</h2>
+    <div class="accent-bar"></div>
+    <div class="grid-2col" style="margin-top:4px;">
+      <div class="card-light fragment">
+        <div style="font-size:14px;font-weight:700;color:var(--blue);margin-bottom:10px;">Why Playwright + AI?</div>
+        <div style="font-size:11px;color:var(--navy);line-height:2;">
+          • Auto-wait eliminates flaky tests<br>
+          • Locator strategy = readable selectors<br>
+          • AI models well-trained on PW syntax<br>
+          • Built-in assertions are expressive<br>
+          • Trace viewer for debugging<br>
+          • Multi-browser from single codebase
+        </div>
+      </div>
+      <div class="fragment">
+        <div class="code-block">
+<span style="color:#6A9955;">// Traceability naming</span>
+test('<span style="color:#DCDCAA;">[Story-1] should display
+  login form</span>', async ({ page }) =&gt; {
+  await page.goto('<span style="color:#CE9178;">/login</span>');
+  await expect(
+    page.getByRole('<span style="color:#CE9178;">heading</span>')
+  ).toHaveText('<span style="color:#CE9178;">Sign In</span>');
+  await expect(
+    page.getByLabel('<span style="color:#CE9178;">Email</span>')
+  ).toBeVisible();
+});
+        </div>
+        <div style="font-size:11px;color:var(--blue);margin-top:8px;font-style:italic;">Traceability: test('[Story-ID] should...') links tests back to requirements</div>
+      </div>
+    </div>
+  </div>
+  <aside class="notes">Quick Playwright recap for those less familiar. AI tools are well-trained on Playwright syntax — it's the best-supported framework for AI-assisted test generation. Traceability naming links every test to a spec item.</aside>
+</section>
+
+<!-- ==================== SLIDE 13: CHAPTER 04 ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:30px;">
+    <div class="chapter-num">04</div>
+    <div class="chapter-title">Evaluating AI Output &amp;<br>Setting Guardrails</div>
+    <div class="chapter-sub">AI will confidently generate incorrect output — you need the skills to evaluate critically</div>
+    <div class="chapter-rule"></div>
+  </div>
+  <aside class="notes">AI will confidently generate incorrect output. You need the skills to evaluate critically. This section builds your review muscle.</aside>
+</section>
+
+<!-- ==================== SLIDE 14: 5-DIMENSION EVALUATION FRAMEWORK ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:16px;">
+    <h2 class="slide-title-light" style="font-size:22px;font-weight:800;margin-bottom:4px;">5-Dimension Evaluation Framework</h2>
+    <div class="accent-bar"></div>
+    <div style="border-radius:10px;overflow:hidden;box-shadow:0 2px 12px rgba(27,79,114,0.12);">
+      <div class="eval-header">
+        <span>DIMENSION</span><span>KEY QUESTION</span><span>🚩 RED FLAG</span>
+      </div>
+      <div class="eval-row fragment">
+        <span class="eval-dim"><span class="tip light-tip">Coverage<span class="tip-content">Does the test suite cover ALL acceptance criteria from the spec? If your spec has 5 ACs and only 3 have tests, coverage is incomplete regardless of test count.</span></span></span>
+        <span class="eval-q">Are all acceptance criteria tested?</span>
+        <span class="eval-flag">Happy path only</span>
+      </div>
+      <div class="eval-row fragment">
+        <span class="eval-dim"><span class="tip light-tip">Correctness<span class="tip-content">Do the assertions actually check the RIGHT thing? A test that asserts a button exists is not the same as asserting clicking it performs the correct action.</span></span></span>
+        <span class="eval-q">Do assertions validate the RIGHT thing?</span>
+        <span class="eval-flag">Trivial checks</span>
+      </div>
+      <div class="eval-row fragment">
+        <span class="eval-dim">Completeness</span>
+        <span class="eval-q">Edge cases, boundaries, negatives?</span>
+        <span class="eval-flag">Missing error paths</span>
+      </div>
+      <div class="eval-row fragment">
+        <span class="eval-dim">Maintainability</span>
+        <span class="eval-q">POM, readable, no duplication?</span>
+        <span class="eval-flag">Hard-coded values</span>
+      </div>
+      <div class="eval-row fragment">
+        <span class="eval-dim"><span class="tip light-tip">Trustworthiness<span class="tip-content">Can this test actually FAIL when the feature is broken? If a test can never fail (tautology, phantom selector, try/catch swallowing errors), it provides zero value.</span></span></span>
+        <span class="eval-q">Can this test actually fail?</span>
+        <span class="eval-flag">Always-pass logic</span>
+      </div>
+    </div>
+    <div class="footer-bar fragment" style="margin-top:14px;">📋 Use the Evaluation Checklist handout for every AI-generated test</div>
+  </div>
+  <aside class="notes">This is your review framework. For every AI-generated test, ask these 5 questions. Reference the evaluation checklist handout — you'll use this in the practical session.</aside>
+</section>
+
+<!-- ==================== SLIDE 15: SPOTTING AI HALLUCINATIONS ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:16px;">
+    <h2 class="slide-title-dark" style="font-size:24px;font-weight:800;margin-bottom:4px;">Spotting AI Hallucinations</h2>
+    <div class="accent-bar"></div>
+    <div class="hall-row fragment">
+      <div class="hall-label">🚨 Trivial Assertions</div>
+      <div class="hall-code">expect(true).toBe(true)</div>
+    </div>
+    <div class="hall-row fragment">
+      <div class="hall-label">🚨 <span class="tip">Tautologies<span class="tip-content">Comparing a value to itself: expect(x).toBe(x). This can NEVER fail because x always equals x. It looks like an assertion but validates nothing.</span></span></div>
+      <div class="hall-code">expect(title).toBe(title)</div>
+    </div>
+    <div class="hall-row fragment">
+      <div class="hall-label">🚨 Missing Negatives</div>
+      <div class="hall-code">No error path tests at all</div>
+    </div>
+    <div class="hall-row fragment">
+      <div class="hall-label">🚨 <span class="tip">Phantom Selectors<span class="tip-content">Locators targeting elements that don't exist in the actual DOM: page.locator('.made-up-class'). The AI invents selectors that look plausible but aren't real.</span></span></div>
+      <div class="hall-code">page.locator('.non-existent-class')</div>
+    </div>
+    <div class="hall-row fragment">
+      <div class="hall-label">🚨 Tests That Cannot Fail</div>
+      <div class="hall-code">No real assertion or try/catch swallows</div>
+    </div>
+    <div style="margin-top:18px;font-size:13px;font-weight:700;color:var(--mint);text-align:center;" class="fragment">⚠️ Impressive-looking code ≠ correct code</div>
+  </div>
+  <aside class="notes">These are the most common AI test generation failures. Show real examples from actual AI output. Key message: impressive-looking does not equal correct. Always verify assertions manually.</aside>
+</section>
+
+<!-- ==================== QUIZ 3: After Spotting AI Hallucinations ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:24px;" id="quiz-3">
+    <div class="quiz-label">🧠 QUICK CHECK</div>
+    <div class="quiz-question">Which of these is a HALLUCINATED test assertion?</div>
+    <div class="quiz-options">
+      <div class="quiz-opt" onclick="quizAnswer('quiz-3', 0, 2, 'expect(title).toBe(title) is a tautology — it compares a value to itself and can NEVER fail. This is a classic AI hallucination: it looks like a real assertion but validates nothing.')">
+        <div class="opt-letter">A</div>
+        <div><code>expect(page.getByText('Login')).toBeVisible()</code></div>
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-3', 1, 2, 'expect(title).toBe(title) is a tautology — it compares a value to itself and can NEVER fail. This is a classic AI hallucination: it looks like a real assertion but validates nothing.')">
+        <div class="opt-letter">B</div>
+        <div><code>expect(loginResult.success).toBe(true)</code></div>
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-3', 2, 2, 'expect(title).toBe(title) is a tautology — it compares a value to itself and can NEVER fail. This is a classic AI hallucination: it looks like a real assertion but validates nothing.')">
+        <div class="opt-letter">C</div>
+        <div><code>expect(title).toBe(title)</code></div>
+      </div>
+      <div class="quiz-opt" onclick="quizAnswer('quiz-3', 3, 2, 'expect(title).toBe(title) is a tautology — it compares a value to itself and can NEVER fail. This is a classic AI hallucination: it looks like a real assertion but validates nothing.')">
+        <div class="opt-letter">D</div>
+        <div><code>expect(page.url()).toContain('/dashboard')</code></div>
+      </div>
+    </div>
+    <div class="quiz-explain"></div>
+  </div>
+  <aside class="notes">Interactive quiz — this directly tests whether participants can spot the hallucination pattern we just discussed. The tautology is a classic AI failure mode.</aside>
+</section>
+
+<!-- ==================== SLIDE 18: GUARDRAIL PRINCIPLES ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:16px;">
+    <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin-bottom:4px;">Guardrail Principles</h2>
+    <div class="accent-bar"></div>
+    <div class="guard-row fragment">
+      <div class="guard-num">1</div>
+      <div class="guard-text">Never commit AI-generated code without human review</div>
+    </div>
+    <div class="guard-row fragment">
+      <div class="guard-num">2</div>
+      <div class="guard-text">Assertion audit: verify every expect() checks something meaningful</div>
+    </div>
+    <div class="guard-row fragment">
+      <div class="guard-num">3</div>
+      <div class="guard-text">Negative test requirement: every feature needs at least one failure test</div>
+    </div>
+    <div class="guard-row fragment">
+      <div class="guard-num">4</div>
+      <div class="guard-text">Traceability requirement: every test links to a spec requirement</div>
+    </div>
+    <div class="guard-row fragment">
+      <div class="guard-num">5</div>
+      <div class="guard-text">Manual exploration first: understand the feature before generating tests</div>
+    </div>
+    <div class="footer-bar fragment" style="margin-top:10px;">These become team standards — in Session 3, groups will formalize their own guardrails</div>
+  </div>
+  <aside class="notes">These become team standards. In Session 3, groups will formalize their own guardrails as part of their adoption roadmap. For now, apply these in the practical exercise.</aside>
+</section>
+
+<!-- ==================== SLIDE 17: CHAPTER 05 ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:30px;">
+    <div class="chapter-num">05</div>
+    <div class="chapter-title">Common Pitfalls</div>
+    <div class="chapter-sub">Quick warnings before we go hands-on</div>
+    <div class="chapter-rule"></div>
+  </div>
+  <aside class="notes">Quick warnings before we go hands-on. Each pitfall is drawn from real-world adoption failures.</aside>
+</section>
+
+<!-- ==================== SLIDE 18: PITFALLS TO AVOID ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:16px;">
+    <h2 class="slide-title-light" style="font-size:24px;font-weight:800;margin-bottom:4px;">Pitfalls to Avoid</h2>
+    <div class="accent-bar"></div>
+    <div class="grid-2col" style="margin-top:4px;">
+      <div class="pitfall-card fragment">
+        <div class="pitfall-title">⚠️ Over-reliance Syndrome</div>
+        <div class="pitfall-desc">Accepting AI output without critical review leads to fragile test suites. 40 tests generated, but 30 test the same happy path.</div>
+      </div>
+      <div class="pitfall-card fragment">
+        <div class="pitfall-title">⚠️ Hallucinated Coverage</div>
+        <div class="pitfall-desc">Tests exist but validate nothing meaningful — false sense of security. Green pipeline, zero real assertions.</div>
+      </div>
+      <div class="pitfall-card fragment">
+        <div class="pitfall-title">⚠️ False Confidence</div>
+        <div class="pitfall-desc">Green CI pipeline masks gaps that only manual exploration would find. Professional-looking output discourages questioning.</div>
+      </div>
+      <div class="pitfall-card fragment">
+        <div class="pitfall-title">⚠️ Copy-Paste Trap</div>
+        <div class="pitfall-desc">Duplicated AI patterns without understanding create maintenance nightmares. Treat AI output as a draft, never the final version.</div>
+      </div>
+    </div>
+    <div class="teaser fragment" style="margin-top:14px;background:var(--navy);border-left-color:var(--mint);">
+      <span style="color:var(--mint);font-weight:700;">🔮 Advanced Series Preview:</span>
+      <span style="color:var(--text-muted);"> Self-healing tests, AI-driven maintenance, predictive flakiness detection</span>
+    </div>
+  </div>
+  <aside class="notes">Each pitfall has a real-world mini-story. Key message: AI is an accelerator when guided by strong QA fundamentals. Now let's build!</aside>
+</section>
+
+<!-- ==================== SLIDE 19: PRACTICAL EXERCISE ==================== -->
+<section data-background-color="#F4F9FC">
+  <div style="padding-top:10px;">
+    <h2 class="slide-title-light" style="font-size:22px;font-weight:800;margin-bottom:4px;">Practical: Build &amp; Test with Playwright</h2>
+    <div class="accent-bar"></div>
+    <div class="timeline">
+      <div class="tl-item fragment">
+        <div class="tl-time">20<div class="tl-min">min</div></div>
+        <div>
+          <div class="tl-title">Spec-to-App Build</div>
+          <div class="tl-desc">Use AI to build your web app from spec. RAD principles: functional over perfect.</div>
+        </div>
+      </div>
+      <div class="tl-item fragment">
+        <div class="tl-time">25<div class="tl-min">min</div></div>
+        <div>
+          <div class="tl-title">Spec-to-Test</div>
+          <div class="tl-desc">Generate and refine Playwright test suite from acceptance criteria. Min 5 tests.</div>
+        </div>
+      </div>
+      <div class="tl-item fragment">
+        <div class="tl-time">10<div class="tl-min">min</div></div>
+        <div>
+          <div class="tl-title">Validate &amp; Iterate</div>
+          <div class="tl-desc">Run tests, apply evaluation framework, fix issues, improve coverage.</div>
+        </div>
+      </div>
+      <div class="tl-item fragment">
+        <div class="tl-time">5<div class="tl-min">min</div></div>
+        <div>
+          <div class="tl-title">Debrief</div>
+          <div class="tl-desc">Each group: app demo, one passing test, best prompt, one AI mistake fixed.</div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bar fragment" style="margin-top:10px;">👥 Same groups from Session 1 &nbsp;|&nbsp; 📦 Deliverables: Working app + Playwright test suite (min 5 tests)</div>
+  </div>
+  <aside class="notes">Form your groups from last week. Get your spec out. Environment check: everyone has Node.js, Playwright, AI tool access? Timer starts NOW.</aside>
+</section>
+
+<!-- ==================== SLIDE 20: CLOSING ==================== -->
+<section data-background-color="#0D2137">
+  <div style="padding-top:24px;">
+    <h2 class="slide-title-dark" style="font-size:32px;font-weight:800;margin-bottom:4px;">Next Week: Ship It!</h2>
+    <div style="font-size:15px;color:var(--mint);margin-bottom:6px;font-weight:600;">Session 3 — 28th July 2026</div>
+    <div class="accent-bar"></div>
+    <div style="display:flex;flex-direction:column;gap:10px;margin-top:12px;">
+      <div class="closing-card fragment">✅ &nbsp;<strong>Complete your web application</strong> — polished and fully functional</div>
+      <div class="closing-card fragment">✅ &nbsp;<strong>Achieve full test coverage</strong> — minimum 10 Playwright tests passing</div>
+      <div class="closing-card fragment">✅ &nbsp;<strong>Prepare testing roadmap</strong> — guardrails document + adoption plan</div>
+      <div class="closing-card fragment">✅ &nbsp;<strong>Final group presentations</strong> — 10 minutes each, show your work</div>
+    </div>
+    <div class="card fragment" style="margin-top:18px;border-left:3px solid var(--mint);padding:14px 18px;">
+      🔮 &nbsp;<strong style="color:var(--mint);">Advanced Series Coming Soon:</strong>
+      <span style="color:var(--text-muted); font-size:13px;"> CI/CD Integration, Self-Healing Tests, AI Test Orchestration — custom agents for your QA pipeline.</span>
+    </div>
+  </div>
+  <aside class="notes">Homework: Add 2 more tests, improve app. Next week is the finale — you present your complete project. Bring your best work! Advanced series announcement coming after Session 3.</aside>
+</section>
+
+</div><!-- /.slides -->
+</div><!-- /.reveal -->
+
+<!-- Reveal.js & Initialization -->
+<script type="module">
+  import Reveal from 'https://cdn.jsdelivr.net/npm/reveal.js@5/dist/reveal.esm.js';
+  import RevealNotes from 'https://cdn.jsdelivr.net/npm/reveal.js@5/plugin/notes/notes.esm.js';
+
+  const deck = Reveal.initialize({
+    hash: true,
+    slideNumber: function(slide) {
+      const h = Reveal.getIndices(slide).h + 1;
+      return [h + ' / 24'];
+    },
+    showSlideNumber: 'all',
+    progress: true,
+    keyboard: true,
+    overview: true,
+    center: true,
+    touch: true,
+    loop: false,
+    autoSlide: 0,
+    transition: 'slide',
+    transitionSpeed: 'default',
+    backgroundTransition: 'fade',
+    width: 1280,
+    height: 720,
+    margin: 0.04,
+    minScale: 0.2,
+    maxScale: 2.0,
+    plugins: [ RevealNotes ]
+  });
+
+  // Update nav active state on slide change
+  deck.then(() => {
+    const navLinks = document.querySelectorAll('#session-nav a');
+    const chapters = [3, 7, 12, 15, 20, 22]; // 0-indexed slide positions
+
+    function updateNav() {
+      const current = Reveal.getIndices().h;
+      navLinks.forEach((link, i) => {
+        if (i < chapters.length - 1 && current >= chapters[i] && current < chapters[i+1]) {
+          link.style.color = 'var(--mint)';
+          link.style.borderColor = 'rgba(72,201,176,0.4)';
+        } else if (i === chapters.length - 1 && current >= chapters[i]) {
+          link.style.color = 'var(--mint)';
+          link.style.borderColor = 'rgba(72,201,176,0.4)';
+        } else {
+          link.style.color = '';
+          link.style.borderColor = '';
+        }
+      });
+    }
+
+    Reveal.on('slidechanged', updateNav);
+    updateNav();
+  });
+</script>
+
+<!-- Quiz Interaction Script -->
+<script>
+function quizAnswer(slideId, selectedIdx, correctIdx, explanation) {
+  var container = document.getElementById(slideId);
+  if (!container) return;
+  var opts = container.querySelectorAll('.quiz-opt');
+  opts.forEach(function(opt, i) {
+    opt.classList.add('disabled');
+    if (i === correctIdx) { opt.classList.add('correct'); opt.querySelector('.opt-letter').textContent = '✓'; }
+    if (i === selectedIdx && selectedIdx !== correctIdx) { opt.classList.add('wrong'); opt.querySelector('.opt-letter').textContent = '✗'; }
+  });
+  var explainEl = container.querySelector('.quiz-explain');
+  if (explainEl) { explainEl.textContent = explanation; explainEl.classList.add('show'); }
+}
+window.quizAnswer = quizAnswer;
+</script>
+
+<!-- Graceful fallback for offline use -->
+<noscript>
+  <style>
+    .reveal .fragment { opacity: 1 !important; }
+    .reveal .slides section { display: block !important; }
+  </style>
+</noscript>
+<script>
+  // Fallback: if Reveal.js fails to load from CDN, show all content
+  window.addEventListener('error', function(e) {
+    if (e.filename && e.filename.includes('reveal')) {
+      document.querySelectorAll('.fragment').forEach(function(el) {
+        el.style.opacity = '1';
+      });
+      document.querySelector('.reveal').style.overflow = 'auto';
+      document.querySelectorAll('.reveal .slides section').forEach(function(s) {
+        s.style.display = 'block';
+        s.style.position = 'relative';
+        s.style.width = '100%';
+        s.style.minHeight = '100vh';
+        s.style.padding = '48px';
+        s.style.boxSizing = 'border-box';
+        s.style.borderBottom = '2px solid rgba(72,201,176,0.3)';
+      });
+    }
+  }, true);
+</script>
+<script>
+// Touch support: tap to toggle tooltip on mobile
+document.querySelectorAll('.tip').forEach(function(el) {
+  el.addEventListener('click', function(e) {
+    e.stopPropagation();
+    document.querySelectorAll('.tip .tip-content').forEach(function(t) { t.style.display = 'none'; });
+    var content = el.querySelector('.tip-content');
+    if (content) content.style.display = content.style.display === 'block' ? 'none' : 'block';
+  });
+});
+document.addEventListener('click', function() {
+  document.querySelectorAll('.tip .tip-content').forEach(function(t) { t.style.display = ''; });
+});
+</script>
+</body>
+</html>
