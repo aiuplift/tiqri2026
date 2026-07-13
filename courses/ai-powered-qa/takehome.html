@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Powered QA — Take-Home Summary</title>
+<style>
+  :root {
+    --navy: #1B4F72;
+    --blue: #2E86C1;
+    --mint: #48C9B0;
+    --dark-bg: #0D2137;
+    --light-bg: #F4F9FC;
+    --red: #E74C3C;
+    --amber: #F39C12;
+    --green: #27AE60;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: system-ui, 'Segoe UI', sans-serif;
+    background: #fff;
+    color: #333;
+    line-height: 1.6;
+    padding: 40px;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  h1 { font-size: 28px; color: var(--navy); margin-bottom: 4px; }
+  h2 { font-size: 18px; color: var(--navy); margin: 28px 0 12px 0; padding-bottom: 6px; border-bottom: 2px solid var(--mint); }
+  h3 { font-size: 14px; color: var(--blue); margin: 16px 0 8px 0; }
+  p { margin-bottom: 10px; font-size: 13px; }
+  .subtitle { font-size: 14px; color: var(--mint); font-weight: 600; margin-bottom: 4px; }
+  .meta { font-size: 12px; color: #888; margin-bottom: 20px; }
+  .big-quote { font-size: 14px; font-weight: 600; color: var(--navy); font-style: italic; text-align: center; padding: 16px; background: var(--light-bg); border-radius: 8px; margin: 20px 0; border-left: 4px solid var(--mint); }
+
+  /* Tables */
+  table { width: 100%; border-collapse: collapse; margin: 10px 0 16px 0; font-size: 12px; }
+  th { background: var(--navy); color: #fff; padding: 8px 10px; text-align: left; font-weight: 700; }
+  td { padding: 7px 10px; border-bottom: 1px solid #eee; }
+  tr:nth-child(even) { background: #f9fafb; }
+
+  /* Cards grid */
+  .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin: 12px 0; }
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0; }
+  .card { background: var(--light-bg); border-radius: 8px; padding: 14px 16px; border-top: 3px solid var(--mint); }
+  .card-green { border-top-color: var(--green); }
+  .card-amber { border-top-color: var(--amber); }
+  .card-red { border-top-color: var(--red); }
+  .card h4 { font-size: 13px; color: var(--navy); margin-bottom: 6px; }
+  .card p, .card ul { font-size: 12px; color: #444; }
+  .card ul { padding-left: 16px; }
+  .card li { margin-bottom: 3px; }
+
+  /* Code blocks */
+  pre { background: var(--dark-bg); color: var(--mint); padding: 14px 18px; border-radius: 8px; font-size: 11px; line-height: 1.6; overflow-x: auto; margin: 10px 0; }
+  code { background: rgba(72,201,176,0.12); color: var(--navy); padding: 1px 5px; border-radius: 3px; font-size: 12px; }
+
+  /* Badge */
+  .badge { display: inline-block; background: var(--mint); color: #fff; font-size: 10px; font-weight: 700; padding: 3px 8px; border-radius: 10px; letter-spacing: 0.5px; }
+  .badge-red { background: var(--red); }
+  .badge-amber { background: var(--amber); }
+
+  /* Print styles */
+  @media print {
+    body { padding: 20px; font-size: 11px; }
+    h1 { font-size: 22px; }
+    h2 { font-size: 15px; margin-top: 20px; }
+    .card { break-inside: avoid; }
+    table { font-size: 10px; }
+    pre { font-size: 9px; }
+    .no-print { display: none; }
+  }
+  @page { margin: 1.5cm; }
+</style>
+</head>
+<body>
+
+<h1>AI-Powered QA — Take-Home Summary</h1>
+<div class="subtitle">Rethinking Strategy & Process</div>
+<div class="meta">Dr. Chathuranga Manamendra | July 2026 | TIQRI QA Team</div>
+
+<div class="big-quote">"AI amplifies your expertise — it doesn't replace it."</div>
+
+<!-- ===== SECTION 1 ===== -->
+<h2>1. Three Levels of AI in Testing</h2>
+<table>
+  <tr><th>Level</th><th>How It Works</th><th>Adoption</th></tr>
+  <tr><td><strong>AI-Assisted</strong></td><td>Human drives, AI helps on demand</td><td>94% of teams</td></tr>
+  <tr><td><strong style="color:var(--mint);">AI-Augmented ← TARGET</strong></td><td>AI handles routine, human validates</td><td>37% moving here</td></tr>
+  <tr><td><strong>AI-Autonomous</strong></td><td>AI plans & executes, human sets goals</td><td>12% achieved</td></tr>
+</table>
+
+<!-- ===== SECTION 2 ===== -->
+<h2>2. Spec-Driven Development — 5 Principles</h2>
+<div class="grid-3">
+  <div class="card"><h4>📐 Given/When/Then</h4><p>Structured behavioral expectations</p></div>
+  <div class="card"><h4>📏 Explicit Boundaries</h4><p>"1–100 chars" not "enters text"</p></div>
+  <div class="card"><h4>🚫 Negative Cases</h4><p>What should NOT happen</p></div>
+</div>
+<div class="grid-2">
+  <div class="card"><h4>🔢 Data Constraints</h4><p>Valid formats, ranges, types</p></div>
+  <div class="card"><h4>💥 Error Behaviors</h4><p>What happens when things go wrong</p></div>
+</div>
+<pre>SPEC → AI Code → AI Tests → Human Validates → Refine → repeat</pre>
+
+<!-- ===== SECTION 3 ===== -->
+<h2>3. Prompt Engineering</h2>
+<table>
+  <tr><th>Layer</th><th>Purpose</th><th>Example</th></tr>
+  <tr><td>Context</td><td>Set role & domain</td><td>"You are a senior QA engineer..."</td></tr>
+  <tr><td>Spec/Input</td><td>Acceptance criteria</td><td>Given/When/Then</td></tr>
+  <tr><td>Constraints</td><td>Define boundaries</td><td>"Playwright, TypeScript, POM"</td></tr>
+  <tr><td>Format</td><td>Output structure</td><td>"name, steps, expected, priority"</td></tr>
+  <tr><td>Examples</td><td>Show good output</td><td>One sample test case</td></tr>
+</table>
+<h3>5 Techniques</h3>
+<table>
+  <tr><th>Technique</th><th>When to Use</th></tr>
+  <tr><td>Role prompting</td><td>Set quality bar ("senior SDET with 10 years...")</td></tr>
+  <tr><td>Few-shot examples</td><td>Show 1-2 examples of desired output format</td></tr>
+  <tr><td>Chain-of-thought</td><td>"First analyze, then identify, then write"</td></tr>
+  <tr><td>Constraint anchoring</td><td>Specify tech stack and patterns explicitly</td></tr>
+  <tr><td>Negative prompting</td><td>"Do NOT only test happy path"</td></tr>
+</table>
+
+<!-- ===== SECTION 4 ===== -->
+<h2>4. Evaluating AI Output — 5 Dimensions</h2>
+<table>
+  <tr><th>Dimension</th><th>Question</th><th>🚩 Red Flag</th></tr>
+  <tr><td>Coverage</td><td>Tests what spec requires?</td><td>Happy path only</td></tr>
+  <tr><td>Correctness</td><td>Assertions check the right thing?</td><td>Trivial checks</td></tr>
+  <tr><td>Completeness</td><td>Edge cases + negatives?</td><td>Missing error paths</td></tr>
+  <tr><td>Maintainability</td><td>Readable, structured?</td><td>Hard-coded values</td></tr>
+  <tr><td>Trustworthiness</td><td>Can this test actually fail?</td><td>Always-pass logic</td></tr>
+</table>
+<h3>Hallucination Patterns</h3>
+<ul style="font-size:12px;padding-left:20px;margin-bottom:12px;">
+  <li>Tests that check elements exist but never interact with them</li>
+  <li><code>expect(x).toBe(x)</code> — tautologies that can never fail</li>
+  <li>Phantom selectors targeting non-existent DOM elements</li>
+  <li>Impressive suites with no meaningful assertions</li>
+</ul>
+
+<!-- ===== SECTION 5 ===== -->
+<h2>5. Guardrail Framework</h2>
+<div class="grid-3">
+  <div class="card card-green"><h4>✅ AUTOMATE FREELY</h4>
+    <ul><li>Test data generation</li><li>Code formatting</li><li>Reports</li><li>Log parsing</li><li>Environment setup</li></ul>
+  </div>
+  <div class="card card-amber"><h4>⚠️ GATE (Human Reviews)</h4>
+    <ul><li>Test case generation</li><li>Defect triage</li><li>Spec review</li><li>Code suggestions</li><li>Coverage analysis</li></ul>
+  </div>
+  <div class="card card-red"><h4>🚫 PROHIBIT (Human Only)</h4>
+    <ul><li>Security decisions</li><li>Compliance sign-off</li><li>Risk acceptance</li><li>GDPR data handling</li><li>Release approval</li></ul>
+  </div>
+</div>
+<h3>5 Guardrail Principles</h3>
+<ol style="font-size:12px;padding-left:20px;margin-bottom:12px;">
+  <li>Never commit AI code without human review</li>
+  <li>Every test needs a meaningful business logic assertion</li>
+  <li>Every positive test → at least one negative/boundary test</li>
+  <li>Every test links to a spec requirement (traceability)</li>
+  <li>Manual exploration first — understand before generating</li>
+</ol>
+<div class="big-quote" style="font-size:12px;">If you can't explain what an AI-generated test validates, don't commit it.</div>
+
+<!-- ===== SECTION 6 ===== -->
+<h2>6. Skills Matrix & Maturity</h2>
+<table>
+  <tr><th>Level</th><th>Role</th><th>Capabilities</th></tr>
+  <tr><td>1</td><td>Consumer</td><td>Uses AI tools as provided</td></tr>
+  <tr><td>2</td><td>Power User</td><td>Crafts effective prompts, evaluates output</td></tr>
+  <tr><td style="color:var(--mint);font-weight:700;">3 ← TARGET</td><td style="font-weight:700;">Builder</td><td>Creates workflows, integrates AI into pipelines</td></tr>
+  <tr><td>4</td><td>Architect</td><td>Designs org-wide AI strategy (Advanced Series)</td></tr>
+</table>
+<pre>MANUAL → AUTOMATED → AI-AUGMENTED → AI-NATIVE
+  Don't jump levels. AI works best when there's structure to augment.</pre>
+
+<!-- ===== SECTION 7 ===== -->
+<h2>7. Your 30-60-90 Day Roadmap</h2>
+<div class="grid-3">
+  <div class="card card-green"><h4>🚀 Days 1-30: Quick Wins</h4>
+    <ul><li>AI test gen for 1 feature</li><li>Prompt library created</li><li>Initial guardrails defined</li></ul>
+    <p style="margin-top:8px;"><span class="badge">Metric: 3+ features tested with AI</span></p>
+  </div>
+  <div class="card card-amber"><h4>⚡ Days 31-60: Integration</h4>
+    <ul><li>Expand to 3+ modules</li><li>CI/CD integration</li><li>Team review process</li></ul>
+    <p style="margin-top:8px;"><span class="badge badge-amber">Metric: AI in daily workflow</span></p>
+  </div>
+  <div class="card"><h4>🏗️ Days 61-90: Expansion</h4>
+    <ul><li>Org-wide rollout</li><li>Governance documented</li><li>Metrics dashboards</li></ul>
+    <p style="margin-top:8px;"><span class="badge">Metric: Measurable KPI improvement</span></p>
+  </div>
+</div>
+
+<!-- ===== SECTION 8 ===== -->
+<h2>8. Data Privacy — Quick Rules</h2>
+<div class="grid-2">
+  <div class="card card-green"><h4>✅ Can Share with AI</h4>
+    <ul><li>Open-source patterns</li><li>Generic logic</li><li>Synthetic test data</li><li>Anonymized descriptions</li></ul>
+  </div>
+  <div class="card card-red"><h4>🚫 Cannot Share</h4>
+    <ul><li>Client code (without permission)</li><li>Real customer data / PII</li><li>NDA-covered requirements</li><li>Security vulnerabilities</li></ul>
+  </div>
+</div>
+<p style="font-size:12px;font-weight:600;color:var(--red);">Rule: When in doubt — anonymize or synthesize. Never assume it's safe.</p>
+
+<!-- ===== SECTION 9 ===== -->
+<h2>9. Ready-to-Use Prompt Templates</h2>
+<h3>Template 1: Test Case Generation</h3>
+<pre>Role: Senior QA engineer specializing in [domain].
+Context: Testing [feature] in [app].
+Spec: [paste Given/When/Then]
+Tech stack: Playwright, TypeScript, Page Object Model
+Generate: positive + negative + boundary + edge cases
+Format: name, preconditions, steps, expected result, priority</pre>
+
+<h3>Template 2: Spec Review</h3>
+<pre>Review this user story for testability:
+[paste story]
+Identify: ambiguity, missing ACs, untestable requirements,
+missing edge cases, implicit assumptions.
+For each: suggest specific improvement.</pre>
+
+<h3>Template 3: Coverage Gap Analysis</h3>
+<pre>Spec: [paste full spec]
+Existing tests: [paste test names]
+Question: What scenarios are missing?
+Consider: untested ACs, boundaries, negatives, edge cases.</pre>
+
+<!-- ===== SECTION 10 ===== -->
+<h2>10. Key Industry Stats</h2>
+<table>
+  <tr><th>Stat</th><th>Source</th></tr>
+  <tr><td>94% of teams use AI in testing</td><td>BrowserStack 2026</td></tr>
+  <tr><td>40-70% reduction in test creation time</td><td>Forrester 2025</td></tr>
+  <tr><td>80% of enterprises will use AI testing by 2027</td><td>Gartner</td></tr>
+  <tr><td>Only 12% at autonomous level</td><td>BrowserStack 2026</td></tr>
+  <tr><td>$8.81B → $35.96B market (22.3% CAGR)</td><td>MarketsandMarkets 2025</td></tr>
+</table>
+
+<!-- ===== NEXT STEPS ===== -->
+<h2>What's Next</h2>
+<ul style="font-size:13px;padding-left:20px;line-height:2;">
+  <li>☐ Implement your top 30-day priority within 2 weeks</li>
+  <li>☐ 4-week check-in to review progress</li>
+  <li>☐ Keep building your prompt library</li>
+  <li>☐ Refine guardrails based on experience</li>
+  <li>☐ Course materials: <strong>https://aiuplift.github.io/tiqri2026/</strong></li>
+</ul>
+
+<div class="big-quote" style="margin-top:24px;">You've built the foundation. Now go build great things.</div>
+
+<div style="text-align:center;margin-top:24px;font-size:11px;color:#888;">
+  © 2026 Dr. Chathuranga Manamendra | AI Uplift<br>
+  <span class="no-print">Print this page (Cmd+P → Save as PDF) for your reference.</span>
+</div>
+
+</body>
+</html>
