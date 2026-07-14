@@ -1,0 +1,1812 @@
+<!DOCTYPE html>
+<html lang="en"><head><style id="qw-theme">:root {
+  --color-bg: #faf9fc;
+  --color-text: #131920;
+  --color-navbar-bg: #f9f9fb;
+  --color-bg-chat-view: #fcfcfd;
+  --color-bg-secondary: #ffffff;
+  --color-bg-tertiary: #f9fafb;
+  --color-bg-hover: #f3f4f6;
+  --color-surface: #f9fafb;
+  --color-surface-hover: #f3f4f6;
+  --color-surface-active: #e5e7eb;
+  --color-border: rgba(0, 0, 0, .12);
+  --color-border-light: rgba(0, 0, 0, .06);
+  --color-border-strong: #d1d5db;
+  --color-primary: #4200db;
+  --color-primary-dark: #35009e;
+  --color-primary-light: #8575ff;
+  --color-primary-bg: #e8e6ff;
+  --color-primary-hover-border: #35009e;
+  --color-nav-icon-active: #4200db;
+  --color-nav-hover-border: #4200db;
+  --color-primary-alpha-3: color-mix(in srgb, #4200db 3%, transparent);
+  --color-primary-alpha-5: color-mix(in srgb, #4200db 5%, transparent);
+  --color-primary-alpha-8: color-mix(in srgb, #4200db 8%, transparent);
+  --color-primary-alpha-12: color-mix(in srgb, #4200db 12%, transparent);
+  --color-primary-alpha-15: color-mix(in srgb, #4200db 15%, transparent);
+  --color-primary-alpha-20: color-mix(in srgb, #4200db 20%, transparent);
+  --color-primary-alpha-25: color-mix(in srgb, #4200db 25%, transparent);
+  --color-primary-alpha-30: color-mix(in srgb, #4200db 30%, transparent);
+  --color-primary-alpha-40: color-mix(in srgb, #4200db 40%, transparent);
+  --color-primary-alpha-50: color-mix(in srgb, #4200db 50%, transparent);
+  --color-primary-alpha-60: color-mix(in srgb, #4200db 60%, transparent);
+  --color-primary-subtle: color-mix(in srgb, #4200db 12%, transparent);
+  --color-primary-border: color-mix(in srgb, #4200db 30%, transparent);
+  --color-focus-ring: color-mix(in srgb, #4200db 50%, transparent);
+  --color-sidebar-hover: color-mix(in srgb, #4200db 12%, transparent);
+  --color-accent: #4200db;
+  --color-accent-foreground: #4200db;
+  --color-accent-dark: #35009e;
+  --color-accent-light: #e8e6ff;
+  --color-accent-inverse: #ffffff;
+  --color-link: #4200db;
+  --color-primary-gradient-end: #e8e6ff;
+  --color-primary-bg-solid: #e8e6ff;
+  --color-user-bubble: #F3F3F7;
+  --color-user-bubble-text: #131920;
+  --color-text-secondary: #5e5e5e;
+  --color-text-tertiary: #656871;
+  --color-text-muted: #9ca3af;
+  --color-text-on-primary: #ffffff;
+  --color-success: #00802f;
+  --color-success-dark: #00471e;
+  --color-success-light: #d9ffd6;
+  --color-success-hover: #005c26;
+  --color-success-bg: #e6f5eb;
+  --color-success-border: #b3d9bf;
+  --color-success-foreground: #00802f;
+  --color-success-dark-foreground: #00471e;
+  --color-success-text: #00471e;
+  --color-error: #db0000;
+  --color-error-dark: #700000;
+  --color-error-light: #ffe0e0;
+  --color-error-hover: #ffe0e0;
+  --color-error-bg: #fceaea;
+  --color-error-border: #f2cccc;
+  --color-error-active-border: #db0000;
+  --color-error-foreground: #db0000;
+  --color-error-dark-foreground: #700000;
+  --color-error-inverse: #ffffff;
+  --color-error-text: #700000;
+  --color-warning: #f2b100;
+  --color-warning-dark: #573a00;
+  --color-warning-light: #fffbbd;
+  --color-warning-hover: #db9200;
+  --color-warning-bg: #fef7e6;
+  --color-warning-border: #f9dfa3;
+  --color-warning-foreground: #f2b100;
+  --color-warning-dark-foreground: #573a00;
+  --color-warning-inverse: #573a00;
+  --color-surface-warning: #fffbbd;
+  --color-text-warning: #573a00;
+  --color-info: #006ce0;
+  --color-info-dark: #002a66;
+  --color-info-light: #d1f1ff;
+  --color-info-hover: #003b8f;
+  --color-info-bg: #ebf3fc;
+  --color-info-border: #b3d1f0;
+  --color-info-foreground: #006ce0;
+  --color-info-dark-foreground: #002a66;
+  --color-info-inverse: #ffffff;
+  --color-overlay: rgba(0, 0, 0, .5);
+  --color-shadow: rgba(0, 0, 0, .08);
+  --color-hover: rgba(0, 0, 0, .05);
+  --color-tooltip-bg: rgba(0, 0, 0, .85);
+  --color-tooltip-text: #ffffff;
+  --color-voice-purple: #8575ff;
+  --color-voice-purple-dark: #4200db;
+  --color-voice-purple-light: #8575ff;
+  --color-voice-red: #db0000;
+  --color-voice-red-dark: #700000;
+  --color-voice-amber: #f2b100;
+  --color-voice-purple-glow: rgba(66, 0, 219, .4);
+  --color-voice-red-glow: rgba(219, 0, 0, .4);
+  --font-sans: "Amazon Ember", "Helvetica Neue", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", "Monaco", "Menlo", "Consolas", monospace;
+  --text-2xs: .5625rem;
+  --text-xs: .625rem;
+  --text-sm: .6875rem;
+  --text-base: .75rem;
+  --text-md: .8125rem;
+  --text-lg: .875rem;
+  --text-xl: 1rem;
+  --text-2xl: 1.125rem;
+  --text-3xl: 1.25rem;
+  --text-4xl: 1.5rem;
+  --text-5xl: 2rem;
+  --spacing-1: calc(.25rem * 1);
+  --spacing-1-5: calc(.25rem * 1.5);
+  --spacing-2: calc(.25rem * 2);
+  --spacing-3: calc(.25rem * 3);
+  --spacing-4: calc(.25rem * 4);
+  --spacing-5: calc(.25rem * 5);
+  --spacing-6: calc(.25rem * 6);
+  --spacing-7: calc(.25rem * 7);
+  --spacing-8: calc(.25rem * 8);
+  --spacing-9: calc(.25rem * 9);
+  --spacing-10: calc(.25rem * 10);
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-card: 12px;
+  --radius-lg: 16px;
+  --radius-pill: 8px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, .08);
+  --color-success-bg-solid: #d9ffd6;
+  --color-error-bg-solid: #ffe0e0;
+  --color-error-border-solid: #ffe0e0;
+  --color-warning-bg-solid: #fffbbd;
+  --color-warning-text: #573a00;
+  --color-info-bg-solid: #d1f1ff;
+  --color-info-bg-solid-alt: #d1f1ff;
+  --color-info-text: #002a66;
+  --color-info-text-alt: #002a66;
+  --color-emerald: #10b981;
+  --color-teal: #4ecdc4;
+  --color-code-bg: #F3F3F7;
+  --color-code-header-bg: #f1f3f5;
+  --color-code-text: #24292e;
+  --color-code-border: #e1e4e8;
+  --color-code-muted: #6a737d;
+  --color-inline-code-bg: #F3F3F7;
+  --color-inline-code-text: #24292e;
+  --color-inline-code-border: #e1e4e8;
+  --color-scrollbar-thumb: #d1d5db;
+  --color-scrollbar-track: transparent;
+  --color-graph-node-text: #333333;
+  --color-graph-node-text-dim: #7F8C8D;
+  --color-graph-edge-default: #95A5A6;
+  --color-graph-edge-cross: #E67E22;
+  --color-graph-edge-text: #666666;
+  --color-graph-edge-stroke: #ffffff;
+  --color-graph-highlight-bg: #FF6B6B;
+  --color-graph-highlight-border: #E74C3C;
+  --color-graph-search-bg: #FFD700;
+  --color-graph-search-border: #FFA500;
+  --color-graph-focus-border: #C0392B;
+  --color-graph-external-border: #95A5A6;
+  --color-graph-cat-file: #3498DB;
+  --color-graph-cat-folder: #7F8C8D;
+  --color-graph-cat-file-aggregate: #2980B9;
+  --color-graph-cat-class: #9B59B6;
+  --color-graph-cat-function: #2ECC71;
+  --color-graph-cat-method: #1ABC9C;
+  --color-graph-cat-variable: #F39C12;
+  --color-graph-cat-import: #D35400;
+  --color-graph-cat-module: #5B6ABF;
+  --color-graph-cat-concept: #E74C3C;
+  --color-graph-cat-person: #FF6B6B;
+  --color-graph-cat-org: #4ECDC4;
+  --color-graph-cat-organization: #4ECDC4;
+  --color-graph-cat-product: #A29BFE;
+  --color-graph-cat-metric: #FD79A8;
+  --color-graph-cat-location: #34495E;
+  --color-graph-cat-date: #E056A0;
+  --color-graph-cat-code: #3498DB;
+  --color-graph-cat-doc: #7F8C8D;
+  --color-graph-cat-url: #00B894;
+  --color-graph-cat-email: #6C5CE7;
+  --color-graph-cat-unknown: #BDC3C7;
+  --color-graph-rel-contains: #BDC3C7;
+  --color-graph-rel-extends: #9B59B6;
+  --color-graph-rel-implements: #3498DB;
+  --color-graph-rel-imports: #E67E22;
+  --color-graph-rel-uses: #2ECC71;
+  --color-graph-rel-calls: #27AE60;
+  --color-graph-rel-references: #F39C12;
+  --color-graph-rel-related-to: #95A5A6;
+  --color-graph-rel-works-on: #E74C3C;
+  --color-graph-rel-owns: #1ABC9C;
+  --color-graph-rel-depends-on: #E67E22;
+  --color-graph-rel-parent-of: #BDC3C7;
+  --qs-content: #fff;
+  --qs-main: #fff;
+  --qs-primary-foreground: #131920;
+  --qs-secondary-foreground: #656871;
+  --qs-tertiary-foreground: #9ca3af;
+  --qs-placeholder-foreground: #8c8c94;
+  --qs-divider: #dedee3;
+  --qs-default-border: #8c8c94;
+  --qs-neutral-soft: #b4b4bb;
+  --qs-neutral-gray-50: #f9fafb;
+  --qs-tertiary-background: #f9fafb;
+  --qs-action-hover: #f3f3f7;
+  --qs-primary-default: #4200db;
+  --qs-primary-dark: #35009e;
+  --qs-primary-light: #e8e6ff;
+  --qs-success-default: #00802f;
+  --qs-error-default: #db0000;
+  --qs-font-sans: "Amazon Ember", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
+  --qs-font-family: "Amazon Ember", "Helvetica Neue", "Segoe UI", Helvetica, Arial, sans-serif;
+  --qs-font-base-letter-spacing: .15px;
+  --qs-shadow-sm: 0 0 2px 0 #00000029, 0 0 4px 0 #00000029;
+  --qs-shadow-md: 0 0 2px 0 #00000029, 0 2px 8px 1px #00000029;
+  --qs-shadow-lg: 0 4px 16px 4px #00000029, 0 2px 6px 1px #00000029;
+  --qs-shadow-xl: 0 4px 8px 2px #00000029, 0 6px 20px 4px #00000029;
+  --qs-width-modal-sm: 384px;
+  --qs-width-modal-md: 600px;
+  --qs-width-modal-lg: 1136px;
+  --qs-grid-gap: 16px;
+  --qs-grid-gap-xl: 24px;
+  --qs-primary-medium: #8575ff;
+  --qs-primary-inverse: #fff;
+  --qs-neutral-lightest: #f9f9fb;
+  --qs-neutral-light: #f3f3f7;
+  --qs-neutral-default: #dedee3;
+  --qs-neutral-medium: #8c8c94;
+  --qs-neutral-deep: #656871;
+  --qs-neutral-dark: #333843;
+  --qs-neutral-strong: #131920;
+  --qs-neutral-white: #fff;
+  --qs-neutral-black: #000;
+  --qs-success-medium: #005c26;
+  --qs-success-dark: #00471e;
+  --qs-success-light: #d9ffd6;
+  --qs-success-inverse: #fff;
+  --qs-info-default: #006ce0;
+  --qs-info-medium: #003b8f;
+  --qs-info-dark: #002a66;
+  --qs-info-light: #d1f1ff;
+  --qs-info-inverse: #fff;
+  --qs-warning-default: #f2b100;
+  --qs-warning-medium: #db9200;
+  --qs-warning-dark: #573a00;
+  --qs-warning-light: #fffbbd;
+  --qs-warning-inverse: #573a00;
+  --qs-warning-experimental: #f2b100;
+  --qs-warning-experimental-light: #fffbbd;
+  --qs-warning-experimental-light-foreground: #fffbbd;
+  --qs-error-medium: #900;
+  --qs-error-dark: #700000;
+  --qs-error-light: #ffe0e0;
+  --qs-error-inverse: #fff;
+  --qs-connection-default: #db3300;
+  --qs-connection-soft: #ff997a;
+  --qs-connection-light: #ffe0d6;
+  --qs-connection-dark: #661800;
+  --qs-automation-default: #b3008f;
+  --qs-automation-medium: #d600ba;
+  --qs-automation-soft: #ff94f1;
+  --qs-automation-light: #ffe0fb;
+  --qs-automation-dark: #660052;
+  --qs-insight-default: #a000b8;
+  --qs-insight-soft: #f299ff;
+  --qs-insight-light: #fce6ff;
+  --qs-insight-dark: #590066;
+  --qs-visualization-default: #7300e5;
+  --qs-visualization-soft: #d4a8ff;
+  --qs-visualization-light: #f2e5ff;
+  --qs-visualization-dark: #45008a;
+  --qs-spice: #ff9800;
+  --qs-coachmark: #006ce0;
+  --qs-brand: #fff;
+  --qs-brand-foreground: #131920;
+  --qs-brand-navbar: #131920;
+  --qs-brand-navbar-foreground: #fff;
+  --qs-brand-navbar-light: #dedee3;
+  --qs-brand-navbar-dark: #000;
+  --qs-application-navbar: #4200db;
+  --qs-application-navbar-foreground: #fff;
+  --qs-application-navbar-light: #e8e6ff;
+  --qs-application-navbar-dark: #35009e;
+  --qs-dimension: #4200db;
+  --qs-dimension-foreground: #fff;
+  --qs-dimension-experimental: #4200db;
+  --qs-dimension-experimental-foreground: #4200db;
+  --qs-measure: #00802f;
+  --qs-measure-foreground: #fff;
+  --qs-measure-experimental: #f2b100;
+  --qs-measure-experimental-foreground: #f2b100;
+  --qs-content-inverse: #333843;
+  --qs-content-inverse-active: #131920;
+  --qs-secondary: #dedee3;
+  --qs-disabled: #8c8c94;
+  --qs-divider-light: #f3f3f7;
+  --qs-hover-border: #333843;
+  --qs-active-border: #4200db;
+  --qs-disabled-border: #dedee3;
+  --qs-error-border: #ffe0e0;
+  --qs-error-active-border: #db0000;
+  --qs-disabled-foreground: #b4b4bb;
+  --qs-primary-inverse-foreground: #fff;
+  --qs-error-foreground: #db0000;
+  --qs-contrast-foreground: #131920;
+  --qs-main-foreground: #131920;
+  --qs-main-secondary-foreground: #656871;
+  --qs-action-disabled: #f3f3f7;
+  --qs-action-active: #e8e6ff;
+  --qs-default-badge: #dedee3;
+  --qs-tag-default: #dedee3;
+  --qs-tag-soft-border: #b4b4bb;
+  --qs-focus-offset: 1px;
+  --qs-toggle-tile-sm: calc(.25rem * 8);
+  --qs-toggle-tile-md: calc(.25rem * 12);
+  --qs-toggle-tile-lg: calc(.25rem * 15);
+  --qs-shadow-pin-right: inset 4px 0 4px -4px #00000029;
+  --qs-shadow-pin-left: inset -4px 0 4px -4px #00000029;
+  --react-pdf-text-layer: 1;
+  --highlight-bg-color: rgba(180, 0, 170, 1);
+  --highlight-selected-bg-color: rgba(0, 100, 0, 1);
+  --react-pdf-annotation-layer: 1;
+  --annotation-unfocused-field-background: url("data:image/svg+xml;charset=UTF-8,<svg width='1px' height='1px' xmlns='http://www.w3.org/2000/svg'><rect width='100%' height='100%' style='fill:rgba(0, 54, 255, 0.13);'/></svg>");
+  --input-focus-border-color: Highlight;
+  --input-focus-outline: 1px solid Canvas;
+  --input-unfocused-border-color: transparent;
+  --input-disabled-border-color: transparent;
+  --input-hover-border-color: black;
+  --link-outline: none;
+  color-scheme: light;
+}
+body { background: var(--color-bg); color: var(--color-text); }
+a { color: var(--color-link, var(--color-primary)); }</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI-Powered QA — Exercise Workspace</title>
+<style>
+:root {
+  --primary: #1B4F72;
+  --secondary: #2E86C1;
+  --accent: #48C9B0;
+  --dark-bg: #0D2137;
+  --light-bg: #F4F9FC;
+  --card-bg: #FFFFFF;
+  --text: #1a1a2e;
+  --text-muted: #5a6a7a;
+  --border: #e2e8f0;
+  --success: #27ae60;
+  --warning: #f39c12;
+  --danger: #e74c3c;
+  --radius: 10px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.06);
+  --shadow-lg: 0 4px 20px rgba(0,0,0,0.1);
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif; background: var(--light-bg); color: var(--text); line-height: 1.6; min-height: 100vh; overflow-x: hidden; }
+
+/* Entry Screen */
+.entry-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; background: linear-gradient(135deg, var(--dark-bg) 0%, var(--primary) 100%); padding: 2rem; }
+.entry-screen h1 { color: #fff; font-size: 2.2rem; text-align: center; margin-bottom: 0.3rem; }
+.entry-screen .tagline { color: var(--accent); font-size: 1.1rem; margin-bottom: 0.5rem; font-style: italic; }
+.entry-screen .subtitle { color: #a8c6d8; font-size: 0.95rem; margin-bottom: 2.5rem; }
+.group-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; max-width: 500px; width: 100%; }
+.group-card { background: rgba(255,255,255,0.08); border: 2px solid rgba(72,201,176,0.3); border-radius: var(--radius); padding: 1.5rem 1rem; text-align: center; cursor: pointer; transition: all 0.2s; }
+.group-card:hover { background: rgba(72,201,176,0.15); border-color: var(--accent); transform: translateY(-2px); }
+.group-card .num { font-size: 2rem; font-weight: 700; color: var(--accent); }
+.group-card .label { color: #ccc; font-size: 0.85rem; margin-top: 0.3rem; }
+
+/* Main App */
+.app { display: none; }
+.app.active { display: block; }
+.app-header { background: var(--dark-bg); padding: 0.8rem 1.5rem; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; }
+.app-header .brand { color: #fff; font-size: 1rem; font-weight: 600; }
+.app-header .group-badge { background: var(--accent); color: var(--dark-bg); padding: 0.3rem 0.8rem; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+.save-indicator { color: var(--accent); font-size: 0.75rem; opacity: 0; transition: opacity 0.3s; margin-left: 0.5rem; }
+.save-indicator.show { opacity: 1; }
+.header-actions { display: flex; align-items: center; gap: 0.8rem; }
+.btn-export { background: none; border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 0.3rem 0.7rem; border-radius: 6px; font-size: 0.75rem; cursor: pointer; }
+.btn-export:hover { border-color: var(--accent); color: var(--accent); }
+.btn-switch { background: none; border: none; color: #a8c6d8; font-size: 0.75rem; cursor: pointer; text-decoration: underline; }
+
+/* Session Tabs */
+.session-tabs { display: flex; background: #fff; border-bottom: 1px solid var(--border); padding: 0 1.5rem; overflow-x: auto; }
+.session-tab { padding: 0.9rem 1.2rem; font-size: 0.85rem; font-weight: 600; color: var(--text-muted); cursor: pointer; border-bottom: 3px solid transparent; white-space: nowrap; transition: all 0.2s; }
+.session-tab:hover { color: var(--primary); }
+.session-tab.active { color: var(--primary); border-bottom-color: var(--accent); }
+
+/* Sub Tabs */
+.sub-tabs { display: flex; padding: 0.5rem 1.5rem; gap: 0.5rem; background: #fff; border-bottom: 1px solid var(--border); }
+.sub-tab { padding: 0.5rem 1rem; font-size: 0.8rem; border-radius: 20px; cursor: pointer; border: 1px solid var(--border); color: var(--text-muted); transition: all 0.2s; }
+.sub-tab:hover { border-color: var(--secondary); color: var(--secondary); }
+.sub-tab.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* Content */
+.content { max-width: 1000px; margin: 0 auto; padding: 1.5rem; }
+.section-title { font-size: 1.3rem; font-weight: 700; color: var(--primary); margin-bottom: 0.3rem; }
+.section-desc { color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+/* Cards */
+.card { background: var(--card-bg); border-radius: var(--radius); box-shadow: var(--shadow); padding: 1.2rem; margin-bottom: 1rem; border: 1px solid var(--border); }
+.card-title { font-size: 0.95rem; font-weight: 700; color: var(--primary); margin-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem; }
+.card-title .cat-icon { width: 28px; height: 28px; background: var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; color: var(--dark-bg); font-weight: 700; }
+
+/* Form Elements */
+input[type="text"], input[type="number"], textarea, select {
+  width: 100%; padding: 0.6rem 0.8rem; border: 1px solid var(--border); border-radius: 6px;
+  font-size: 0.85rem; font-family: inherit; transition: border-color 0.2s, box-shadow 0.2s;
+}
+input:focus, textarea:focus, select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px rgba(72,201,176,0.15); }
+textarea { resize: vertical; min-height: 60px; }
+label { font-size: 0.8rem; font-weight: 600; color: var(--text-muted); margin-bottom: 0.3rem; display: block; }
+.field-group { margin-bottom: 0.8rem; }
+.field-row { display: flex; gap: 0.5rem; align-items: flex-end; margin-bottom: 0.5rem; }
+.field-row input { flex: 1; }
+
+/* Rating Buttons */
+.rating-group { display: flex; gap: 0.3rem; }
+.rating-btn { padding: 0.3rem 0.6rem; border: 1px solid var(--border); border-radius: 4px; font-size: 0.7rem; font-weight: 700; cursor: pointer; transition: all 0.15s; background: #fff; }
+.rating-btn:hover { border-color: var(--secondary); }
+.rating-btn.selected-h { background: var(--success); color: #fff; border-color: var(--success); }
+.rating-btn.selected-m { background: var(--warning); color: #fff; border-color: var(--warning); }
+.rating-btn.selected-l { background: var(--danger); color: #fff; border-color: var(--danger); }
+
+/* Buttons */
+.btn { padding: 0.5rem 1rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; }
+.btn-primary { background: var(--accent); color: var(--dark-bg); }
+.btn-primary:hover { background: #3ab89e; transform: translateY(-1px); }
+.btn-outline { background: none; border: 1px solid var(--border); color: var(--text-muted); }
+.btn-outline:hover { border-color: var(--secondary); color: var(--secondary); }
+.btn-danger { background: none; border: 1px solid var(--danger); color: var(--danger); font-size: 0.75rem; padding: 0.3rem 0.6rem; }
+.btn-danger:hover { background: var(--danger); color: #fff; }
+.btn-sm { padding: 0.3rem 0.7rem; font-size: 0.75rem; }
+
+/* Checklist */
+.checklist-item { display: flex; align-items: center; gap: 0.5rem; padding: 0.4rem 0; }
+.checklist-item input[type="checkbox"] { width: 18px; height: 18px; accent-color: var(--accent); cursor: pointer; }
+.checklist-item label { margin: 0; cursor: pointer; font-weight: 400; color: var(--text); }
+
+/* Score Badge */
+.score-badge { display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 36px; border-radius: 50%; font-weight: 700; font-size: 0.9rem; color: #fff; }
+.score-5 { background: var(--success); }
+.score-4 { background: #2ecc71; }
+.score-3 { background: var(--warning); }
+.score-2 { background: #e67e22; }
+.score-1 { background: var(--danger); }
+
+/* Skills Radar */
+.radar-container { display: flex; justify-content: center; margin: 1rem 0; }
+canvas#radarChart { max-width: 350px; max-height: 350px; }
+
+/* Slider */
+.skill-row { display: flex; align-items: center; gap: 0.8rem; padding: 0.6rem 0; border-bottom: 1px solid var(--border); }
+.skill-name { width: 160px; font-size: 0.85rem; font-weight: 600; color: var(--primary); }
+.skill-slider { flex: 1; display: flex; align-items: center; gap: 0.5rem; }
+.skill-slider input[type="range"] { flex: 1; accent-color: var(--accent); }
+.skill-val { width: 20px; text-align: center; font-weight: 700; color: var(--accent); }
+
+/* Matrix */
+.matrix-grid { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 2px; background: var(--border); border-radius: var(--radius); overflow: hidden; height: 250px; margin: 1rem 0; }
+.matrix-cell { background: #fff; padding: 0.8rem; position: relative; }
+.matrix-cell .cell-label { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; }
+.matrix-cell.qw { border-left: 3px solid var(--success); }
+.matrix-cell.st { border-left: 3px solid var(--secondary); }
+.matrix-cell.nth { border-left: 3px solid var(--warning); }
+.matrix-cell.av { border-left: 3px solid var(--danger); }
+.matrix-tag { display: inline-block; background: var(--light-bg); border: 1px solid var(--border); padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.7rem; margin: 0.2rem; cursor: pointer; }
+.matrix-tag:hover { border-color: var(--accent); }
+
+/* Responsive */
+.section-title { font-size: clamp(1.1rem, 2.5vw, 1.3rem); }
+.entry-screen h1 { font-size: clamp(1.5rem, 4vw, 2.2rem); }
+
+@media (max-width: 768px) {
+  .group-grid { grid-template-columns: repeat(2, 1fr); }
+  .session-tabs { -webkit-overflow-scrolling: touch; }
+  .session-tab { padding: 0.7rem 0.8rem; font-size: 0.78rem; min-height: 44px; display: flex; align-items: center; }
+  .sub-tab { min-height: 44px; min-width: 44px; display: inline-flex; align-items: center; justify-content: center; }
+  .content { padding: 1rem; }
+  .field-row { flex-direction: column; }
+  .skill-row { flex-direction: column; align-items: flex-start; gap: 0.4rem; }
+  .skill-name { width: 100%; }
+  .lock-input { width: 100%; max-width: 280px; }
+
+  /* Touch target enforcement — 44px minimum */
+  .btn, .btn-primary, .btn-outline, .btn-danger, .btn-sm,
+  .btn-export, .btn-switch, .lock-btn, .lock-toggle,
+  .rating-btn, .checklist-item input[type="checkbox"] {
+    min-height: 44px;
+    min-width: 44px;
+  }
+  .btn-sm { padding: 0.5rem 0.8rem; }
+  .rating-btn { padding: 0.5rem 0.7rem; }
+
+  /* Full-width inputs on mobile */
+  input[type="text"], input[type="number"], textarea, select {
+    width: 100%;
+    font-size: 16px; /* prevent iOS zoom on focus */
+  }
+
+  /* Grid layouts stack on mobile */
+  .matrix-grid { grid-template-columns: 1fr; grid-template-rows: auto; height: auto; }
+}
+
+/* Utility grid classes for responsive behavior */
+.opp-grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0.5rem; margin-bottom: 0.8rem; padding-bottom: 0.8rem; border-bottom: 1px solid var(--border); }
+.opp-grid-3a { display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 0.5rem; margin-bottom: 1rem; padding-bottom: 0.8rem; border-bottom: 2px solid var(--border); }
+.plan-grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1rem; }
+
+@media (max-width: 768px) {
+  .opp-grid-4 { grid-template-columns: 1fr 1fr; }
+  .opp-grid-3a { grid-template-columns: 1fr 1fr; }
+  .plan-grid-3 { grid-template-columns: 1fr; }
+}
+
+/* PDF Print Frame — hidden on screen, visible only during print */
+#pdf-print-frame { display: none; }
+
+@media print {
+  /* When print frame exists, hide everything else */
+  body.pdf-printing > *:not(#pdf-print-frame) { display: none !important; }
+  #pdf-print-frame { display: block !important; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; color: #000; }
+
+  .pdf-cover { text-align: center; padding: 60px 20px; page-break-after: always; }
+  .pdf-logo { font-size: 28pt; font-weight: 700; color: #1B4F72; margin-bottom: 8px; }
+  .pdf-subtitle { font-size: 14pt; color: #2E86C1; margin-bottom: 24px; font-style: italic; }
+  .pdf-group { font-size: 20pt; font-weight: 700; margin-bottom: 12px; }
+  .pdf-date { font-size: 10pt; color: #666; }
+
+  .pdf-section { page-break-inside: avoid; margin-bottom: 24px; }
+  .pdf-section-header { background: #1B4F72; color: #fff; padding: 6px 12px; font-size: 12pt; font-weight: 700; margin-bottom: 8px; border-radius: 4px; }
+
+  #pdf-print-frame table { width: 100%; border-collapse: collapse; font-size: 9pt; margin: 8px 0; }
+  #pdf-print-frame th { background: #EBF5FB; padding: 5px 8px; text-align: left; border: 1px solid #aaa; font-weight: 700; }
+  #pdf-print-frame td { padding: 4px 8px; border: 1px solid #ccc; vertical-align: top; }
+  #pdf-print-frame p { font-size: 10pt; margin: 4px 0 6px; line-height: 1.5; }
+  #pdf-print-frame ol, #pdf-print-frame ul { padding-left: 18px; margin: 4px 0; }
+  #pdf-print-frame li { font-size: 10pt; margin-bottom: 2px; }
+  .pdf-story { margin-bottom: 8px; padding: 6px 8px; border-left: 3px solid #48C9B0; background: #f9fffe; font-size: 10pt; }
+  .empty { color: #999; font-style: italic; font-size: 9pt; }
+}
+
+/* Print */
+@page {
+  size: A4;
+  margin: 20mm 15mm 20mm 15mm;
+}
+
+@media print {
+  /* Hide all interactive controls and navigation */
+  .app-header, .session-tabs, .sub-tabs, .btn, .btn-primary, .btn-outline, .btn-danger, .btn-sm,
+  .btn-export, .btn-switch, .lock-screen, .lock-btn, .lock-toggle,
+  .entry-screen, .storage-banner, .save-indicator { display: none !important; }
+
+  /* Hide rating buttons but show selected value */
+  .rating-group .rating-btn { display: none !important; }
+  .rating-group .rating-btn.selected-h,
+  .rating-group .rating-btn.selected-m,
+  .rating-group .rating-btn.selected-l {
+    display: inline-block !important;
+    border: 1px solid #333 !important;
+    background: #fff !important;
+    color: #333 !important;
+    cursor: default !important;
+  }
+
+  /* Hide range inputs visually but show slider values */
+  .skill-slider input[type="range"] { display: none !important; }
+  .skill-val {
+    display: inline-block !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+    color: #333 !important;
+    border: 1px solid #ccc;
+    padding: 0.2rem 0.5rem;
+    border-radius: 4px;
+    background: #f9f9f9;
+  }
+
+  /* Content formatting for A4 */
+  body { font-size: 11pt !important; line-height: 1.5 !important; color: #000 !important; background: #fff !important; }
+  .app { display: block !important; }
+  .content { max-width: 100% !important; padding: 0 !important; margin: 0 !important; }
+
+  /* Card styling for print */
+  .card { break-inside: avoid; box-shadow: none !important; border: 1px solid #ccc !important; margin-bottom: 0.8rem !important; }
+
+  /* Force expand collapsible guidelines panels */
+  .guidelines { break-inside: avoid; border-left: 3px solid #333 !important; background: #f9f9f9 !important; }
+  .guidelines.collapsed .guidelines-body { display: block !important; }
+  .guidelines-header { cursor: default !important; }
+  .guidelines-toggle { display: none !important; }
+
+  /* Force expand sample panels */
+  .sample-panel { break-inside: avoid; border: 1px solid #ccc !important; background: #f9f9f9 !important; }
+  .sample-panel.collapsed .sample-body { display: block !important; }
+  .sample-panel .sample-body { display: block !important; }
+  .sample-header { cursor: default !important; }
+  .sample-toggle { display: none !important; }
+
+  /* Radar chart — canvas prints by default, ensure container is visible */
+  .radar-container { break-inside: avoid; }
+  canvas#radarChart { max-width: 300px !important; max-height: 300px !important; }
+
+  /* Skills section formatting */
+  .skill-row { border-bottom: 1px solid #ddd !important; }
+  .skill-name { color: #000 !important; }
+
+  /* Typography adjustments for print */
+  .section-title { font-size: 14pt !important; color: #000 !important; }
+  .section-desc { font-size: 10pt !important; color: #333 !important; }
+  .card-title { font-size: 11pt !important; color: #000 !important; }
+
+  /* Matrix grid for print */
+  .matrix-grid { border: 1px solid #ccc !important; }
+  .matrix-cell { border: 1px solid #ccc !important; }
+
+  /* Remove hover effects and transitions */
+  * { transition: none !important; animation: none !important; }
+
+  /* Hide checkboxes' visual state is fine, just ensure they print */
+  .checklist-item input[type="checkbox"] { accent-color: #333 !important; }
+
+  /* Links should show URL in print */
+  a[href]:after { content: " (" attr(href) ")"; font-size: 0.8em; color: #666; }
+  a[href^="#"]:after, a[href^="javascript"]:after { content: ""; }
+}
+
+/* Insight FAB */
+.insight-fab {
+  position: fixed; bottom: 24px; right: 24px;
+  width: 48px; height: 48px; border-radius: 50%;
+  background: var(--accent); color: var(--dark-bg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.3rem; cursor: pointer; box-shadow: 0 4px 12px rgba(72,201,176,0.4);
+  transition: transform 0.2s; z-index: 200;
+}
+.insight-fab:hover { transform: scale(1.1); }
+.insight-card {
+  position: fixed; bottom: 80px; right: 24px;
+  width: 280px; background: #fff; border-radius: var(--radius);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15); padding: 1rem;
+  z-index: 200; animation: fadeIn 0.2s ease;
+}
+.insight-card.hidden { display: none; }
+
+/* Animations */
+.fade-in { animation: fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+.hidden { display: none !important; }
+
+
+/* Guidelines Panels */
+.guidelines { background: #EBF5FB; border-left: 4px solid var(--accent); border-radius: 0 var(--radius) var(--radius) 0; margin-bottom: 1.5rem; overflow: hidden; box-shadow: var(--shadow); }
+.guidelines-header { display: flex; align-items: center; padding: 0.8rem 1rem; cursor: pointer; user-select: none; transition: background 0.2s; }
+.guidelines-header:hover { background: rgba(72,201,176,0.08); }
+.guidelines-icon { font-size: 1.1rem; margin-right: 0.5rem; }
+.guidelines-title { font-size: 0.9rem; font-weight: 700; color: var(--primary); flex: 1; }
+.guidelines-toggle { font-size: 0.7rem; color: var(--text-muted); transition: transform 0.3s; }
+.guidelines.collapsed .guidelines-toggle { transform: rotate(-90deg); }
+.guidelines-body { padding: 0 1rem 1rem 1rem; }
+.guidelines.collapsed .guidelines-body { display: none; }
+.guidelines-body ul { padding-left: 1.2rem; margin-bottom: 0.8rem; }
+.guidelines-body li { font-size: 0.82rem; color: var(--text); margin-bottom: 0.4rem; line-height: 1.5; }
+.guidelines-body b { color: var(--primary); }
+.guidelines-meta { display: flex; flex-direction: column; gap: 0.3rem; padding-top: 0.6rem; border-top: 1px solid rgba(27,79,114,0.1); }
+.guidelines-meta span { font-size: 0.78rem; color: var(--text-muted); }
+.guidelines-meta b { color: var(--primary); }
+@media (max-width: 768px) { .guidelines-body { padding: 0 0.8rem 0.8rem; } .guidelines-meta { font-size: 0.75rem; } }
+
+
+/* Sample/Example Panels */
+.sample-panel { background: #F8F9FA; border: 2px dashed #d0d7de; border-radius: var(--radius); margin-bottom: 1.5rem; overflow: hidden; }
+.sample-header { display: flex; align-items: center; padding: 0.7rem 1rem; cursor: pointer; user-select: none; transition: background 0.2s; }
+.sample-header:hover { background: rgba(0,0,0,0.03); }
+.sample-icon { font-size: 1rem; margin-right: 0.5rem; }
+.sample-title { font-size: 0.85rem; font-weight: 700; color: #5a6a7a; flex: 1; }
+.sample-toggle { font-size: 0.7rem; color: var(--text-muted); transition: transform 0.3s; }
+.sample-panel.collapsed .sample-toggle { transform: rotate(-90deg); }
+.sample-body { padding: 0 1rem 1rem 1rem; display: none; }
+.sample-panel:not(.collapsed) .sample-body { display: block; }
+.sample-panel.collapsed .sample-body { display: none; }
+.sample-note { font-size: 0.75rem; color: #888; font-style: italic; margin-bottom: 0.8rem; padding: 0.4rem 0.6rem; background: #fff3cd; border-radius: 4px; display: inline-block; }
+.sample-body table { width: 100%; border-collapse: collapse; font-size: 0.78rem; margin: 0.5rem 0; }
+.sample-body th { background: #e9ecef; padding: 0.4rem 0.6rem; text-align: left; font-weight: 600; color: var(--primary); border: 1px solid #d0d7de; }
+.sample-body td { padding: 0.4rem 0.6rem; border: 1px solid #d0d7de; color: #555; }
+.sample-body .sample-section { margin-bottom: 0.8rem; }
+.sample-body .sample-label { font-size: 0.78rem; font-weight: 700; color: var(--primary); margin-bottom: 0.2rem; }
+.sample-body .sample-text { font-size: 0.78rem; color: #555; line-height: 1.5; }
+.sample-body code { background: #e9ecef; padding: 0.1rem 0.3rem; border-radius: 3px; font-size: 0.74rem; font-family: 'SF Mono', Consolas, monospace; }
+.sample-body .sample-checklist { list-style: none; padding: 0; }
+.sample-body .sample-checklist li { font-size: 0.78rem; margin-bottom: 0.2rem; color: #555; }
+
+
+/* Lock Screen */
+.lock-screen { display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 60vh; text-align: center; padding: 2rem; }
+.lock-icon { font-size: 4rem; margin-bottom: 1rem; opacity: 0.6; }
+.lock-title { font-size: 1.3rem; font-weight: 600; color: var(--primary); margin-bottom: 0.5rem; }
+.lock-date { color: var(--text-muted); margin-bottom: 2rem; font-size: 0.95rem; }
+.lock-input-group { display: flex; gap: 0.5rem; align-items: center; margin-bottom: 0.8rem; }
+.lock-input { padding: 0.7rem 1rem; border: 2px solid var(--border); border-radius: 8px; font-size: 1rem; width: 220px; text-align: center; letter-spacing: 2px; text-transform: uppercase; }
+.lock-input:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px rgba(72,201,176,0.15); }
+.lock-toggle { background: none; border: none; color: var(--text-muted); cursor: pointer; font-size: 0.85rem; padding: 0.5rem; }
+.lock-btn { background: var(--accent); color: #fff; border: none; padding: 0.7rem 2rem; border-radius: 8px; font-size: 1rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+.lock-btn:hover { background: #3ab89e; transform: translateY(-1px); }
+.lock-error { color: var(--danger); font-size: 0.85rem; margin-top: 0.8rem; min-height: 1.2rem; }
+.tab-lock { opacity: 0.7; }
+.tab-lock::after { content: ' 🔒'; font-size: 0.75rem; }
+.tab-unlocked::after { content: ' ✅'; font-size: 0.75rem; }
+
+
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
+.shake { animation: shake 0.3s ease; }
+
+/* Storage unavailable banner */
+.storage-banner { background: #fff3cd; color: #856404; border: 1px solid #ffc107; padding: 0.6rem 1rem; text-align: center; font-size: 0.85rem; position: sticky; top: 0; z-index: 200; display: none; }
+.storage-banner.show { display: block; }
+</style>
+</head>
+<body>
+
+<!-- Storage unavailable banner -->
+<div class="storage-banner" id="storageBanner">⚠️ Storage unavailable — data will not persist across page reloads.</div>
+
+<!-- Entry Screen -->
+<div class="entry-screen" id="entryScreen">
+  <h1>AI-Powered QA</h1>
+  <div class="tagline">Rethinking Strategy &amp; Process</div>
+  <div style="color:#a8c6d8;font-size:0.85rem;margin-bottom:0.3rem;">Facilitator: TIQRI QA Training Team</div>
+  <div class="subtitle">Exercise Workspace — Select Your Group</div>
+  <div class="group-grid">
+    <div class="group-card" onclick="selectGroup(1)"><div class="num">1</div><div class="label">Group One</div></div>
+    <div class="group-card" onclick="selectGroup(2)"><div class="num">2</div><div class="label">Group Two</div></div>
+    <div class="group-card" onclick="selectGroup(3)"><div class="num">3</div><div class="label">Group Three</div></div>
+    <div class="group-card" onclick="selectGroup(4)"><div class="num">4</div><div class="label">Group Four</div></div>
+    <div class="group-card" onclick="selectGroup(5)"><div class="num">5</div><div class="label">Group Five</div></div>
+    <div class="group-card" onclick="selectGroup(6)"><div class="num">6</div><div class="label">Group Six</div></div>
+  </div>
+</div>
+
+<!-- Main App -->
+<div class="app" id="mainApp">
+  <header class="app-header">
+    <div style="display:flex;align-items:center;gap:0.8rem;">
+      <span class="brand">AI-Powered QA</span>
+      <span class="group-badge" id="groupBadge">Group 1</span>
+      <span class="save-indicator" id="saveInd">✓ Saved</span>
+    </div>
+    <div class="header-actions">
+      <button class="btn-export" onclick="exportData()">⬇ Export JSON</button>
+      <button class="btn-export" onclick="exportPDF()" style="background:rgba(72,201,176,0.15);border-color:var(--accent);color:var(--accent);">🖨 Export PDF</button>
+      <button class="btn-switch" onclick="switchGroup()">Switch Group</button>
+    </div>
+  </header>
+
+  <nav class="session-tabs" id="sessionTabs">
+    <div class="session-tab active" data-session="1">Session 1</div>
+    <div class="session-tab" data-session="2">Session 2</div>
+    <div class="session-tab" data-session="3">Session 3</div>
+  </nav>
+
+  <div id="subTabsContainer"></div>
+  <div class="content" id="mainContent"></div>
+  <div class="insight-fab" id="insightFab" onclick="toggleInsight()">💡</div>
+  <div class="insight-card hidden" id="insightCard">
+    <div style="font-size:0.85rem;font-weight:700;color:var(--primary);margin-bottom:0.5rem;">💡 What's your #1 insight so far?</div>
+    <textarea id="insightText" placeholder="Share your biggest aha moment..." style="width:100%;min-height:60px;margin-bottom:0.5rem;font-size:0.85rem;padding:0.5rem;border:1px solid var(--border);border-radius:6px;resize:vertical;"></textarea>
+    <button class="btn btn-primary btn-sm" onclick="saveInsight()">Save Insight</button>
+    <span id="insightSaved" style="font-size:0.75rem;color:var(--success);margin-left:0.5rem;display:none;">✓ Saved!</span>
+  </div>
+</div>
+
+<script>
+// localStorage fallback for sandboxed iframes
+var _storage = {};
+var _storageAvailable = true;
+try { localStorage.setItem('_test', '1'); localStorage.removeItem('_test'); }
+catch(e) {
+  _storageAvailable = false;
+  window.localStorage = {
+    getItem: function(k) { return _storage[k] || null; },
+    setItem: function(k, v) { _storage[k] = String(v); },
+    removeItem: function(k) { delete _storage[k]; }
+  };
+  // Show storage unavailable banner — DOM is available since script is at end of body
+  var banner = document.getElementById('storageBanner');
+  if (banner) {
+    banner.classList.add('show');
+  } else {
+    document.addEventListener('DOMContentLoaded', function() {
+      var b = document.getElementById('storageBanner');
+      if (b) b.classList.add('show');
+    });
+  }
+}
+
+
+window.onerror = function(msg, url, line, col, error) {
+  console.error('Exercise App Error:', msg, 'at line', line);
+  return true;
+};
+
+
+
+function toggleGuide(header) {
+  const panel = header.parentElement;
+  panel.classList.toggle('collapsed');
+}
+
+function toggleSample(header) {
+  const panel = header.parentElement;
+  panel.classList.toggle('collapsed');
+}
+
+
+
+// === PASSCODE SYSTEM ===
+// Passcodes are stored as SHA-256 hashes — never in plaintext.
+var SESSION_HASHES = {
+  '1': '54da29828216ccf142b8116875898fdd09590bedd9ae303cda2af1df52a32d89',
+  '2': '2e2087e7b19ecc01b5186353f3e176d049babad1e1e3c2abcb66d57ddbac370e',
+  '3': '00c9bf50c91c2d07e9851cd554537678521499b657fdb1ab629452bdaaaf4f10'
+};
+var SESSION_DATES = { '1': '14th July 2026', '2': '21st July 2026', '3': '28th July 2026' };
+var SESSION_NAMES = { '1': 'AI Foundations for QA', '2': 'Practical Integration', '3': 'Strategy & Process' };
+
+function isSessionUnlocked(sessionNum) {
+  return localStorage.getItem('tiqri_qa_unlocked_s' + sessionNum) === 'true';
+}
+
+async function sha256(str) {
+  var buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(str));
+  return Array.from(new Uint8Array(buf)).map(function(b) { return b.toString(16).padStart(2, '0'); }).join('');
+}
+
+function unlockSession(sessionNum) {
+  var input = document.getElementById('lock-input-' + sessionNum);
+  var error = document.getElementById('lock-error-' + sessionNum);
+  var btn = document.getElementById('lock-btn-' + sessionNum);
+  if (!input) return;
+  var entered = input.value.trim().toUpperCase();
+  if (btn) btn.disabled = true;
+  sha256(entered).then(function(hash) {
+    if (btn) btn.disabled = false;
+    if (hash === SESSION_HASHES[sessionNum]) {
+      localStorage.setItem('tiqri_qa_unlocked_s' + sessionNum, 'true');
+      error.textContent = '';
+      renderContent();
+      updateTabStates();
+    } else {
+      error.textContent = 'Incorrect passcode. Your facilitator will share this on the day.';
+      input.classList.add('shake');
+      setTimeout(function() { input.classList.remove('shake'); }, 500);
+    }
+  });
+}
+
+function togglePasscodeVisibility(sessionNum) {
+  var input = document.getElementById('lock-input-' + sessionNum);
+  var btn = document.getElementById('lock-toggle-' + sessionNum);
+  if (input.type === 'password') {
+    input.type = 'text';
+    btn.textContent = '🙈 Hide';
+  } else {
+    input.type = 'password';
+    btn.textContent = '👁️ Show';
+  }
+}
+
+function renderLockScreen(sessionNum) {
+  var sn = String(sessionNum);
+  var html = [];
+  html.push('<div class="lock-screen">');
+  html.push('<div style="font-size:4rem;margin-bottom:1rem;opacity:0.6">&#128274;</div>');
+  html.push('<div class="lock-title">Session ' + sn + ': ' + SESSION_NAMES[sn] + '</div>');
+  html.push('<div class="lock-date">This session will be unlocked on <strong>' + SESSION_DATES[sn] + '</strong></div>');
+  html.push('<div style="margin:1.5rem 0">');
+  html.push('<input type="password" id="lock-input-' + sn + '" class="lock-input" placeholder="Enter passcode" maxlength="20">');
+  html.push('</div>');
+  html.push('<div style="margin-bottom:0.8rem"><button type="button" class="lock-toggle" id="lock-toggle-' + sn + '">Show passcode</button></div>');
+  html.push('<button type="button" class="lock-btn" id="lock-btn-' + sn + '">Unlock Session</button>');
+  html.push('<div id="lock-error-' + sn + '" class="lock-error"></div>');
+  html.push('</div>');
+  
+  setTimeout(function() {
+    var inp = document.getElementById('lock-input-' + sn);
+    var btn = document.getElementById('lock-btn-' + sn);
+    var tog = document.getElementById('lock-toggle-' + sn);
+    if (inp) inp.addEventListener('keydown', function(e) { if (e.key === 'Enter') unlockSession(sn); });
+    if (btn) btn.addEventListener('click', function() { unlockSession(sn); });
+    if (tog) tog.addEventListener('click', function() { togglePasscodeVisibility(sn); });
+  }, 50);
+  
+  return html.join('');
+}
+
+function updateTabStates() {
+  var tabs = document.querySelectorAll('.session-tab');
+  if (!tabs) return;
+  tabs.forEach(function(tab) {
+    var sn = tab.getAttribute('data-session');
+    tab.classList.remove('tab-lock', 'tab-unlocked');
+    if (isSessionUnlocked(sn)) {
+      tab.classList.add('tab-unlocked');
+    } else {
+      tab.classList.add('tab-lock');
+    }
+  });
+}
+
+window.unlockSession = unlockSession;
+window.togglePasscodeVisibility = togglePasscodeVisibility;
+window.updateTabStates = updateTabStates;
+
+
+// === STATE ===
+var currentGroup = null;
+var currentSession = '1';
+var currentSubTab = 'a';
+var data = {};
+
+// === INSIGHT FAB ===
+function toggleInsight() {
+  var card = document.getElementById('insightCard');
+  card.classList.toggle('hidden');
+  // Load existing insight
+  if (!card.classList.contains('hidden')) {
+    var saved = localStorage.getItem('tiqri_qa_insight_' + currentGroup);
+    if (saved) document.getElementById('insightText').value = saved;
+  }
+}
+function saveInsight() {
+  var text = document.getElementById('insightText').value.trim();
+  if (text) {
+    localStorage.setItem('tiqri_qa_insight_' + currentGroup, text);
+    document.getElementById('insightSaved').style.display = 'inline';
+    setTimeout(function() { document.getElementById('insightSaved').style.display = 'none'; }, 2000);
+  }
+}
+window.toggleInsight = toggleInsight;
+window.saveInsight = saveInsight;
+
+// === ENTRY ===
+function selectGroup(g) {
+  currentGroup = g;
+  localStorage.setItem('tiqri_qa_group', String(g));
+  document.getElementById('entryScreen').style.display = 'none';
+  document.getElementById('mainApp').classList.add('active');
+  document.getElementById('groupBadge').textContent = 'Group ' + g;
+  loadData();
+  renderSession();
+  updateTabStates();
+}
+
+function switchGroup() {
+  if (currentGroup) saveData();
+  localStorage.removeItem('tiqri_qa_group');
+  currentGroup = null;
+  document.getElementById('mainApp').classList.remove('active');
+  document.getElementById('entryScreen').style.display = 'flex';
+}
+
+// === INIT: Check localStorage for stored group on page load ===
+function initApp() {
+  var storedGroup = localStorage.getItem('tiqri_qa_group');
+  if (storedGroup && storedGroup >= 1 && storedGroup <= 6) {
+    selectGroup(parseInt(storedGroup));
+  }
+  // Otherwise, landing page is already visible by default
+}
+
+
+// === DATA ===
+function getKey() { return 'tiqri_qa_g' + currentGroup; }
+function loadData() {
+  var saved = localStorage.getItem(getKey());
+  if (saved) {
+    try {
+      data = JSON.parse(saved);
+    } catch (e) {
+      console.warn('Corrupt localStorage data for ' + getKey() + ', resetting to defaults.', e);
+      data = getDefaultData();
+      // Overwrite corrupted data with fresh defaults
+      localStorage.setItem(getKey(), JSON.stringify(data));
+      // Warn user briefly
+      showCorruptDataWarning();
+    }
+  } else {
+    data = getDefaultData();
+  }
+}
+function showCorruptDataWarning() {
+  var banner = document.getElementById('storageBanner');
+  if (banner) {
+    banner.textContent = '⚠️ Saved data was corrupted and has been reset to defaults.';
+    banner.classList.add('show');
+    setTimeout(function() { banner.classList.remove('show'); banner.textContent = '⚠️ Storage unavailable — data will not persist across page reloads.'; }, 5000);
+  }
+}
+function saveData() {
+  try {
+    localStorage.setItem(getKey(), JSON.stringify(data));
+    showSaved();
+  } catch (e) {
+    // Storage quota exceeded or other write failure
+    console.error('Failed to save data:', e);
+    var banner = document.getElementById('storageBanner');
+    if (banner) {
+      banner.textContent = '⚠️ Storage full — data could not be saved. Consider exporting your data.';
+      banner.classList.add('show');
+      setTimeout(function() { banner.classList.remove('show'); }, 5000);
+    }
+  }
+}
+function showSaved() {
+  const el = document.getElementById('saveInd');
+  el.classList.add('show');
+  setTimeout(() => el.classList.remove('show'), 1500);
+}
+function exportData() {
+  // Check if data has any meaningful content beyond defaults
+  if (!hasExportableData(data)) {
+    alert('No data to export');
+    return;
+  }
+  data.insight = localStorage.getItem('tiqri_qa_insight_' + currentGroup) || '';
+  const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'group-' + currentGroup + '-export.json';
+  a.click(); URL.revokeObjectURL(url);
+}
+
+function exportPDF() {
+  if (!hasExportableData(data)) {
+    alert('No data to export yet. Complete some exercises first.');
+    return;
+  }
+
+  // Remove any existing print frame
+  var old = document.getElementById('pdf-print-frame');
+  if (old) old.remove();
+
+  var d = data;
+  var groupNum = currentGroup;
+  var e = function(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); };
+  var val = function(v, fallback) { return (v && String(v).trim()) ? e(String(v)) : (fallback || '—'); };
+  var ratingLabel = function(v) { return v === 'H' ? 'High' : v === 'M' ? 'Medium' : v === 'L' ? 'Low' : '—'; };
+  var skillLevel = function(n) { return ['','Consumer','Power User','Builder','Architect'][n] || n; };
+
+  var sections = [];
+
+  // ── COVER ──
+  sections.push('<div class="pdf-cover">' +
+    '<div class="pdf-logo">AI-Powered QA</div>' +
+    '<div class="pdf-subtitle">Rethinking Strategy &amp; Process</div>' +
+    '<div class="pdf-group">Group ' + groupNum + ' — Exercise Outcomes</div>' +
+    '<div class="pdf-date">Exported: ' + new Date().toLocaleDateString('en-GB', {day:'numeric',month:'long',year:'numeric'}) + '</div>' +
+  '</div>');
+
+  // ── SESSION 1A: TOOL MAP ──
+  if (isSessionUnlocked('1')) {
+    var tm = d.toolMap;
+    var tmRows = '';
+    (tm.categories || []).forEach(function(cat) {
+      var tools = (cat.tools || []).filter(function(t) { return t.name && t.name.trim(); });
+      if (!tools.length) return;
+      tmRows += '<tr><td colspan="4" style="background:#f0f8ff;font-weight:700;padding:4px 8px">' + e(cat.name) + '</td></tr>';
+      tools.forEach(function(t) {
+        tmRows += '<tr><td>' + e(t.name) + '</td><td>' + ratingLabel(t.value) + '</td><td>' + ratingLabel(t.complexity) + '</td><td>' + (t.agent ? '✅ Yes' : 'No') + '</td></tr>';
+      });
+    });
+    var top3 = (Array.isArray(tm.top3) ? tm.top3 : [tm.top3||'','','']).filter(function(x){return x&&x.trim();});
+
+    sections.push('<div class="pdf-section">' +
+      '<div class="pdf-section-header">Session 1A — Tool Map</div>' +
+      (tmRows ? '<table><thead><tr><th>Tool</th><th>Value</th><th>Complexity</th><th>Agent?</th></tr></thead><tbody>' + tmRows + '</tbody></table>' : '<p class="empty">No tools added yet.</p>') +
+      (top3.length ? '<p><strong>Top Tools:</strong> ' + top3.map(e).join(' · ') + '</p>' : '') +
+      (tm.gap && tm.gap.trim() ? '<p><strong>Biggest Gap:</strong> ' + e(tm.gap) + '</p>' : '') +
+    '</div>');
+  }
+
+  // ── SESSION 1B: SPEC BUILDER ──
+  if (isSessionUnlocked('1')) {
+    var sp = d.spec;
+    var storiesHtml = '';
+    (sp.stories || []).forEach(function(s, i) {
+      var hasContent = s.asA.trim() || s.iWant.trim() || s.soThat.trim();
+      if (!hasContent) return;
+      storiesHtml += '<div class="pdf-story"><strong>Story ' + (i+1) + ':</strong> As a <em>' + e(s.asA) + '</em>, I want to <em>' + e(s.iWant) + '</em>, so that <em>' + e(s.soThat) + '</em>';
+      var criteria = (s.criteria || []).filter(function(c){return c&&c.trim();});
+      if (criteria.length) {
+        storiesHtml += '<ul>' + criteria.map(function(c){return '<li>' + e(c) + '</li>';}).join('') + '</ul>';
+      }
+      var edges = (s.edgeCases || []).filter(function(c){return c&&c.trim();});
+      if (edges.length) {
+        storiesHtml += '<p><em>Edge cases:</em> ' + edges.map(e).join('; ') + '</p>';
+      }
+      storiesHtml += '</div>';
+    });
+
+    var constraintRows = '';
+    (sp.constraints || []).filter(function(c){return c.field&&c.field.trim();}).forEach(function(c) {
+      constraintRows += '<tr><td>' + e(c.field) + '</td><td>' + e(c.type) + '</td><td>' + e(c.range) + '</td><td>' + (c.required ? 'Yes' : 'No') + '</td></tr>';
+    });
+
+    var checkLabels = ['Completeness','Testability','Clarity','Feasibility','No Ambiguity','Edge Cases Covered'];
+    var checkedItems = (sp.checklist||[]).map(function(v,i){return v ? '✅ ' + checkLabels[i] : null;}).filter(Boolean);
+
+    sections.push('<div class="pdf-section">' +
+      '<div class="pdf-section-header">Session 1B — Spec Builder</div>' +
+      (sp.appName || sp.purpose ? '<p><strong>' + val(sp.appName,'Unnamed App') + '</strong> — ' + val(sp.purpose) + (sp.targetUser ? ' · <em>User: ' + e(sp.targetUser) + '</em>' : '') + '</p>' : '') +
+      (storiesHtml || '<p class="empty">No user stories added yet.</p>') +
+      (constraintRows ? '<table><thead><tr><th>Field</th><th>Type</th><th>Range</th><th>Required</th></tr></thead><tbody>' + constraintRows + '</tbody></table>' : '') +
+      (sp.aiKeep&&sp.aiKeep.trim() ? '<p><strong>Keep:</strong> ' + e(sp.aiKeep) + '</p>' : '') +
+      (sp.aiModify&&sp.aiModify.trim() ? '<p><strong>Modify:</strong> ' + e(sp.aiModify) + '</p>' : '') +
+      (sp.aiReject&&sp.aiReject.trim() ? '<p><strong>Reject:</strong> ' + e(sp.aiReject) + '</p>' : '') +
+      (checkedItems.length ? '<p>' + checkedItems.join(' &nbsp; ') + '</p>' : '') +
+    '</div>');
+  }
+
+  // ── SESSION 2A: PROMPT LAB ──
+  if (isSessionUnlocked('2')) {
+    var pl = d.promptLab;
+    var templateNames = ['Test Case Generation','Playwright Test Code','Spec Review','Test Data Generation','Coverage Gap Analysis'];
+    var patternsHtml = '';
+    (pl.patterns || []).filter(function(p){return p.name&&p.name.trim();}).forEach(function(p) {
+      patternsHtml += '<tr><td>' + e(p.name) + '</td><td>' + e(p.note||'') + '</td><td>' + (p.rating||'—') + '/5</td></tr>';
+    });
+    var hasFields = pl.fields && Object.values(pl.fields).some(function(v){return v&&v.trim();});
+
+    sections.push('<div class="pdf-section">' +
+      '<div class="pdf-section-header">Session 2A — Prompt Lab</div>' +
+      '<p><strong>Template used:</strong> ' + (templateNames[pl.selectedTemplate] || 'Test Case Generation') + '</p>' +
+      (hasFields ? '<p><strong>Fields filled:</strong> ' + Object.entries(pl.fields||{}).filter(function(kv){return kv[1]&&kv[1].trim();}).map(function(kv){return '<em>'+e(kv[0])+':</em> '+e(kv[1]);}).join(' · ') + '</p>' : '') +
+      (pl.notes&&pl.notes.trim() ? '<p><strong>What worked:</strong> ' + e(pl.notes) + '</p>' : '') +
+      (pl.improvements&&pl.improvements.trim() ? '<p><strong>To improve:</strong> ' + e(pl.improvements) + '</p>' : '') +
+      (patternsHtml ? '<table><thead><tr><th>Pattern</th><th>Notes</th><th>Rating</th></tr></thead><tbody>' + patternsHtml + '</tbody></table>' : '<p class="empty">No patterns logged yet.</p>') +
+    '</div>');
+  }
+
+  // ── SESSION 2B: TEST EVALUATOR ──
+  if (isSessionUnlocked('2')) {
+    var te = d.testEval;
+    var checkNames = ['Spec traceability','Meaningful assertion','Bug detection','Independence','No hallucination','Readable','Maintainable'];
+    var testRows = '';
+    (te.tests || []).forEach(function(t, i) {
+      var passed = (t.checks||[]).filter(Boolean).length;
+      var score = passed===0?1:passed<=2?2:passed<=4?3:passed<=6?4:5;
+      var checked = checkNames.filter(function(_,ci){return t.checks&&t.checks[ci];});
+      testRows += '<tr><td>' + e(t.name||'Test '+(i+1)) + '</td><td style="text-align:center;font-weight:700">' + score + '/5</td><td style="font-size:0.75em">' + (checked.join(', ')||'—') + '</td></tr>';
+    });
+    var avgScore = te.tests&&te.tests.length ? (te.tests.reduce(function(s,t){var p=(t.checks||[]).filter(Boolean).length;return s+(p===0?1:p<=2?2:p<=4?3:p<=6?4:5);},0)/te.tests.length).toFixed(1) : null;
+
+    sections.push('<div class="pdf-section">' +
+      '<div class="pdf-section-header">Session 2B — Test Evaluator</div>' +
+      (testRows ? '<table><thead><tr><th>Test Name</th><th>Score</th><th>Checks Passed</th></tr></thead><tbody>' + testRows + '</tbody></table>' : '<p class="empty">No tests evaluated yet.</p>') +
+      (avgScore ? '<p><strong>Suite average:</strong> ' + avgScore + '/5 across ' + te.tests.length + ' test(s)</p>' : '') +
+      (te.gapNotes&&te.gapNotes.trim() ? '<p><strong>Gap notes:</strong> ' + e(te.gapNotes) + '</p>' : '') +
+    '</div>');
+  }
+
+  // ── SESSION 3A: ADOPTION ROADMAP ──
+  if (isSessionUnlocked('3')) {
+    var rm = d.roadmap;
+    var stepsHtml = (rm.steps||[]).filter(function(s){return s.name&&s.name.trim();}).map(function(s,i) {
+      return '<li>' + e(s.name) + (s.hasPain&&s.pain ? ' <span style="color:#e74c3c">⚠ ' + e(s.pain) + '</span>' : '') + '</li>';
+    }).join('');
+
+    var oppRows = '';
+    (rm.opportunities||[]).filter(function(o){return o.step||o.solution;}).forEach(function(o) {
+      oppRows += '<tr><td>' + e(o.step||'') + '</td><td>' + e(o.solution||'') + '</td><td>' + ratingLabel(o.effort) + '</td><td>' + ratingLabel(o.impact) + '</td><td>' + e(o.quadrant||'—') + '</td></tr>';
+    });
+
+    var p30=rm.plan&&rm.plan.d30, p60=rm.plan&&rm.plan.d60, p90=rm.plan&&rm.plan.d90;
+
+    sections.push('<div class="pdf-section">' +
+      '<div class="pdf-section-header">Session 3A — Adoption Roadmap</div>' +
+      (stepsHtml ? '<p><strong>Process Steps:</strong></p><ol>' + stepsHtml + '</ol>' : '') +
+      (oppRows ? '<table><thead><tr><th>Step</th><th>AI Solution</th><th>Effort</th><th>Impact</th><th>Quadrant</th></tr></thead><tbody>' + oppRows + '</tbody></table>' : '') +
+      (rm.guardrails&&(rm.guardrails.automate||rm.guardrails.gate||rm.guardrails.prohibit) ?
+        '<p><strong>🟢 Automate freely:</strong> ' + val(rm.guardrails.automate) + '</p>' +
+        '<p><strong>🟡 Human reviews:</strong> ' + val(rm.guardrails.gate) + '</p>' +
+        '<p><strong>🔴 Prohibit:</strong> ' + val(rm.guardrails.prohibit) + '</p>' : '') +
+      (p30&&(p30.focus||p30.actions) ?
+        '<table><thead><tr><th>Period</th><th>Focus</th><th>Actions</th><th>Metrics</th></tr></thead><tbody>' +
+        '<tr><td><strong>Days 1-30</strong></td><td>' + val(p30.focus) + '</td><td>' + val(p30.actions) + '</td><td>' + val(p30.metrics) + '</td></tr>' +
+        '<tr><td><strong>Days 31-60</strong></td><td>' + val(p60&&p60.focus) + '</td><td>' + val(p60&&p60.actions) + '</td><td>' + val(p60&&p60.metrics) + '</td></tr>' +
+        '<tr><td><strong>Days 61-90</strong></td><td>' + val(p90&&p90.focus) + '</td><td>' + val(p90&&p90.actions) + '</td><td>' + val(p90&&p90.metrics) + '</td></tr>' +
+        '</tbody></table>' : '') +
+    '</div>');
+  }
+
+  // ── SESSION 3B: SKILLS ASSESSMENT ──
+  if (isSessionUnlocked('3')) {
+    var sk = d.skills;
+    var skillNames = ['Prompt Engineering','Spec Writing','Tool Evaluation','Critical Validation','Agent Understanding','Guardrail Thinking','Playwright / Automation','AI-Assisted Development'];
+    var skillRows = skillNames.map(function(name, i) {
+      var now = (sk.now&&sk.now[i]) || 1;
+      var tgt = (sk.target&&sk.target[i]) || 1;
+      var bar = function(v) { return '<span style="display:inline-block;background:#48C9B0;width:' + (v*20) + 'px;height:10px;border-radius:3px;vertical-align:middle"></span> ' + v + ' (' + skillLevel(v) + ')'; };
+      return '<tr><td>' + name + '</td><td>' + bar(now) + '</td><td>' + bar(tgt) + '</td></tr>';
+    }).join('');
+
+    var weekRows = (sk.weekPlan||[]).filter(function(w){return w.focus||w.action;}).map(function(w,i){
+      return '<tr><td>Week ' + (i+1) + '</td><td>' + val(w.focus) + '</td><td>' + val(w.action) + '</td><td>' + (w.done?'✅':'⬜') + '</td></tr>';
+    }).join('');
+
+    sections.push('<div class="pdf-section">' +
+      '<div class="pdf-section-header">Session 3B — Skills Self-Assessment</div>' +
+      '<table><thead><tr><th>Skill</th><th>Current</th><th>Target (90d)</th></tr></thead><tbody>' + skillRows + '</tbody></table>' +
+      (sk.strongest&&sk.strongest.trim() ? '<p><strong>Strongest skill:</strong> ' + e(sk.strongest) + '</p>' : '') +
+      (sk.growth&&sk.growth.trim() ? '<p><strong>Growth area:</strong> ' + e(sk.growth) + '</p>' : '') +
+      (sk.surprise&&sk.surprise.trim() ? '<p><strong>Biggest surprise:</strong> ' + e(sk.surprise) + '</p>' : '') +
+      (sk.monday&&sk.monday.trim() ? '<p><strong>Monday action:</strong> ' + e(sk.monday) + '</p>' : '') +
+      (weekRows ? '<table><thead><tr><th>Week</th><th>Focus Skill</th><th>Action</th><th>Done</th></tr></thead><tbody>' + weekRows + '</tbody></table>' : '') +
+    '</div>');
+  }
+
+  // Build the print frame
+  var frame = document.createElement('div');
+  frame.id = 'pdf-print-frame';
+  frame.innerHTML = sections.join('');
+  document.body.appendChild(frame);
+
+  // Add class to body so only the print frame shows
+  document.body.classList.add('pdf-printing');
+
+  // Trigger print, then clean up
+  setTimeout(function() {
+    window.print();
+    setTimeout(function() {
+      document.body.classList.remove('pdf-printing');
+      var f = document.getElementById('pdf-print-frame');
+      if (f) f.remove();
+    }, 1000);
+  }, 100);
+}
+window.exportPDF = exportPDF;
+
+function hasExportableData(d) {
+  // Check toolMap: any tool with a non-empty name?
+  const hasTools = d.toolMap && d.toolMap.categories && d.toolMap.categories.some(cat =>
+    cat.tools && cat.tools.some(t => t.name && t.name.trim() !== '')
+  );
+  if (hasTools) return true;
+  // Check toolMap summary
+  if (d.toolMap && d.toolMap.top3 && d.toolMap.top3.some(t => t.trim() !== '')) return true;
+  if (d.toolMap && d.toolMap.gap && d.toolMap.gap.trim() !== '') return true;
+  // Check spec
+  if (d.spec && (d.spec.appName.trim() || d.spec.purpose.trim() || d.spec.targetUser.trim())) return true;
+  if (d.spec && d.spec.stories && d.spec.stories.some(s => s.asA.trim() || s.iWant.trim() || s.soThat.trim())) return true;
+  // Check promptLab
+  if (d.promptLab && d.promptLab.patterns && d.promptLab.patterns.length > 0) return true;
+  if (d.promptLab && d.promptLab.fields && Object.values(d.promptLab.fields).some(v => v && v.trim && v.trim() !== '')) return true;
+  // Check testEval
+  if (d.testEval && d.testEval.tests && d.testEval.tests.length > 0) return true;
+  if (d.testEval && d.testEval.gapNotes && d.testEval.gapNotes.trim() !== '') return true;
+  // Check roadmap
+  if (d.roadmap && d.roadmap.steps && d.roadmap.steps.some(s => s.name && s.name.trim() !== '')) return true;
+  if (d.roadmap && d.roadmap.opportunities && d.roadmap.opportunities.some(o => o.step.trim() || o.pain.trim() || o.solution.trim())) return true;
+  if (d.roadmap && d.roadmap.guardrails && (d.roadmap.guardrails.automate.trim() || d.roadmap.guardrails.gate.trim() || d.roadmap.guardrails.prohibit.trim())) return true;
+  if (d.roadmap && d.roadmap.plan) {
+    const p = d.roadmap.plan;
+    if ((p.d30.focus.trim() || p.d30.actions.trim() || p.d30.metrics.trim()) ||
+        (p.d60.focus.trim() || p.d60.actions.trim() || p.d60.metrics.trim()) ||
+        (p.d90.focus.trim() || p.d90.actions.trim() || p.d90.metrics.trim())) return true;
+  }
+  // Check skills - non-default slider values or filled reflections
+  if (d.skills) {
+    if (d.skills.strongest && d.skills.strongest.trim() !== '') return true;
+    if (d.skills.growth && d.skills.growth.trim() !== '') return true;
+    if (d.skills.surprise && d.skills.surprise.trim() !== '') return true;
+    if (d.skills.monday && d.skills.monday.trim() !== '') return true;
+    if (d.skills.weekPlan && d.skills.weekPlan.some(w => (w.focus && w.focus.trim() !== '') || (w.action && w.action.trim() !== '') || w.done)) return true;
+  }
+  return false;
+}
+
+function getDefaultData() {
+  return {
+    toolMap: { categories: [
+      { name: 'Test Generation', tools: [{ name: '', value: '', complexity: '', agent: false }] },
+      { name: 'Test Execution & Automation', tools: [{ name: '', value: '', complexity: '', agent: false }] },
+      { name: 'Defect Intelligence', tools: [{ name: '', value: '', complexity: '', agent: false }] },
+      { name: 'Test Data Generation', tools: [{ name: '', value: '', complexity: '', agent: false }] },
+      { name: 'CI/CD Integration', tools: [{ name: '', value: '', complexity: '', agent: false }] },
+      { name: 'Monitoring & Observability', tools: [{ name: '', value: '', complexity: '', agent: false }] },
+      { name: 'AI Agents', tools: [{ name: '', value: '', complexity: '', agent: false }] }
+    ], top3: ['', '', ''], gap: '' },
+    spec: { appName: '', purpose: '', targetUser: '', stories: [{ asA: '', iWant: '', soThat: '', criteria: [''], edgeCases: [''] }], constraints: [{ field: '', type: '', range: '', required: false }], aiKeep: '', aiModify: '', aiReject: '', checklist: [false,false,false,false,false,false] },
+    promptLab: { selectedTemplate: 0, fields: {}, generatedPrompt: '', notes: '', improvements: '', patterns: [] },
+    testEval: { tests: [], gapNotes: '' },
+    roadmap: { steps: [{ name: '', pain: '', hasPain: false }], opportunities: [{ step: '', pain: '', solution: '', metric: '', effort: '', impact: '', quadrant: '' }], guardrails: { automate: '', gate: '', prohibit: '' }, plan: { d30: { focus: '', actions: '', metrics: '' }, d60: { focus: '', actions: '', metrics: '' }, d90: { focus: '', actions: '', metrics: '' } } },
+    skills: { now: [2,2,2,2,1,1,2,2], target: [3,3,3,3,2,3,3,3], strongest: '', growth: '', surprise: '', monday: '', weekPlan: [{focus:'',action:'',done:false},{focus:'',action:'',done:false},{focus:'',action:'',done:false},{focus:'',action:'',done:false}] }
+  };
+}
+
+// === TABS ===
+document.getElementById('sessionTabs').addEventListener('click', e => {
+  if (e.target.classList.contains('session-tab')) {
+    document.querySelectorAll('.session-tab').forEach(t => t.classList.remove('active'));
+    e.target.classList.add('active');
+    currentSession = e.target.dataset.session;
+    currentSubTab = 'a';
+    renderSession();
+  }
+});
+
+function renderSession() {
+  // Check session lock
+  if (!isSessionUnlocked(currentSession)) {
+    document.getElementById('subTabsContainer').innerHTML = '';
+    var contentEl = document.getElementById('mainContent');
+    if (contentEl) contentEl.innerHTML = renderLockScreen(currentSession);
+    updateTabStates();
+    return;
+  }
+  updateTabStates();
+
+  const subTabs = { '1': [['a','Tool Map'],['b','Spec Builder']], '2': [['a','Prompt Lab'],['b','Test Evaluator']], '3': [['a','Adoption Roadmap'],['b','Skills Assessment']] };
+  const tabs = subTabs[currentSession];
+  let html = '<div class="sub-tabs">';
+  tabs.forEach(([id, label]) => { html += '<div class="sub-tab' + (id === currentSubTab ? ' active' : '') + '" data-sub="' + id + '">' + label + '</div>'; });
+  html += '</div>';
+  document.getElementById('subTabsContainer').innerHTML = html;
+  document.querySelectorAll('.sub-tab').forEach(t => t.addEventListener('click', e => { currentSubTab = e.target.dataset.sub; renderSession(); }));
+  renderContent();
+}
+
+function renderContent() {
+  // Check if current session is unlocked
+  if (!isSessionUnlocked(currentSession)) {
+    var contentEl = document.getElementById('mainContent');
+    if (contentEl) {
+      contentEl.innerHTML = renderLockScreen(currentSession);
+    }
+    updateTabStates();
+    return;
+  }
+  updateTabStates();
+
+  const key = currentSession + currentSubTab;
+  const renderers = { '1a': renderToolMap, '1b': renderSpec, '2a': renderPromptLab, '2b': renderTestEval, '3a': renderRoadmap, '3b': renderSkills };
+  const el = document.getElementById('mainContent');
+  el.innerHTML = '';
+  if (renderers[key]) renderers[key](el);
+  el.classList.add('fade-in');
+  setTimeout(() => el.classList.remove('fade-in'), 300);
+}
+
+// === SESSION 1A: TOOL MAP ===
+function renderToolMap(container) {
+  let html = '<h2 class="section-title">🗺️ Tool Map Builder</h2><p class="section-desc">Map and evaluate AI + testing tools across 7 categories.</p>';
+  html += '<div class="guidelines" id="guide-toolmap"><div class="guidelines-header" onclick="toggleGuide(this)"><span class="guidelines-icon">📋</span><span class="guidelines-title">Build Your Team\'s AI Tool Map</span><span class="guidelines-toggle">▼</span></div><div class="guidelines-body"><ul><li>Evaluate AI and testing tools across 7 categories</li><li>For each tool: rate its <b>Value</b> (H=High, M=Medium, L=Low) and <b>Complexity</b> to adopt</li><li>Mark if it has <b>Agent capabilities</b> (autonomous, multi-step)</li><li>Aim for 2-3 tools per category minimum</li><li>After mapping, identify your Top 3 tools and the biggest gap</li></ul><div class="guidelines-meta"><span>⏱️ <b>Time:</b> 25 minutes</span><span>🎯 <b>Deliverable:</b> Complete tool map with ratings + summary</span><span>💡 <b>Tip:</b> Use AI (Claude/Copilot) to research tools you\'re unsure about!</span></div></div></div>';
+  html += '<div class="sample-panel collapsed"><div class="sample-header" onclick="toggleSample(this)"><span class="sample-icon">📋</span><span class="sample-title">Example (click to show)</span><span class="sample-toggle">▼</span></div><div class="sample-body"><div class="sample-note">⚠️ This is a sample only — your answers will be different!</div><div class="sample-section"><div class="sample-label">Test Generation Category — Example:</div><table><tr><th>Tool</th><th>Value</th><th>Complexity</th><th>Agent?</th></tr><tr><td>GitHub Copilot</td><td>High</td><td>Low</td><td>✅ Yes</td></tr><tr><td>Claude (Anthropic)</td><td>High</td><td>Low</td><td>No</td></tr><tr><td>Amazon Q Developer</td><td>Medium</td><td>Low</td><td>✅ Yes</td></tr></table></div><div class="sample-section"><div class="sample-label">Summary Example:</div><div class="sample-text"><b>Top 3:</b> Copilot (low barrier, high output), Claude (best for spec analysis), Playwright (open source automation).<br><b>Biggest Gap:</b> No AI in our CI/CD pipeline currently.</div></div></div></div>';
+  data.toolMap.categories.forEach((cat, ci) => {
+    html += '<div class="card"><div class="card-title"><span class="cat-icon">' + (ci+1) + '</span>' + cat.name + '</div>';
+    cat.tools.forEach((tool, ti) => {
+      html += '<div class="field-row" style="align-items:center;"><input type="text" maxlength="100" value="' + esc(tool.name) + '" placeholder="Tool name" onchange="updateTool(' + ci + ',' + ti + ',\'name\',this.value)">';
+      html += '<div class="rating-group">' + ratingBtns(ci, ti, 'value', tool.value) + '</div>';
+      html += '<div class="rating-group">' + ratingBtns(ci, ti, 'complexity', tool.complexity) + '</div>';
+      html += '<label style="display:flex;align-items:center;gap:4px;margin:0;white-space:nowrap;"><input type="checkbox" ' + (tool.agent ? 'checked' : '') + ' onchange="updateTool(' + ci + ',' + ti + ',\'agent\',this.checked)"> Agent</label>';
+      html += '<button class="btn-danger btn-sm" onclick="removeTool(' + ci + ',' + ti + ')">×</button></div>';
+    });
+    if (cat.tools.length >= 10) {
+      html += '<p style="font-size:0.75rem;color:var(--warning);margin-top:0.3rem">Maximum 10 tools reached for this category.</p>';
+    } else {
+      html += '<button class="btn btn-outline btn-sm" onclick="addTool(' + ci + ')">+ Add Tool</button>';
+    }
+    html += '</div>';
+  });
+  // Migrate legacy top3 string to array
+  if (!Array.isArray(data.toolMap.top3)) { data.toolMap.top3 = [data.toolMap.top3 || '', '', '']; }
+  html += '<div class="card"><div class="card-title">Summary</div>';
+  html += '<div class="field-group"><label>Top Tool #1</label><input type="text" maxlength="200" value="' + esc(data.toolMap.top3[0]) + '" onchange="data.toolMap.top3[0]=this.value;saveData()"></div>';
+  html += '<div class="field-group"><label>Top Tool #2</label><input type="text" maxlength="200" value="' + esc(data.toolMap.top3[1]) + '" onchange="data.toolMap.top3[1]=this.value;saveData()"></div>';
+  html += '<div class="field-group"><label>Top Tool #3</label><input type="text" maxlength="200" value="' + esc(data.toolMap.top3[2]) + '" onchange="data.toolMap.top3[2]=this.value;saveData()"></div>';
+  html += '<div class="field-group"><label>Biggest Gap in Practice</label><input type="text" maxlength="300" value="' + esc(data.toolMap.gap) + '" onchange="data.toolMap.gap=this.value;saveData()"></div></div>';
+  container.innerHTML = html;
+}
+
+function ratingBtns(ci, ti, field, val) {
+  return ['H','M','L'].map(v => '<button class="rating-btn' + (val === v ? ' selected-' + v.toLowerCase() : '') + '" onclick="updateTool(' + ci + ',' + ti + ',\'' + field + '\',\'' + v + '\')">' + v + '</button>').join('');
+}
+function updateTool(ci, ti, field, val) { data.toolMap.categories[ci].tools[ti][field] = val; saveData(); renderContent(); }
+function addTool(ci) {
+  if (data.toolMap.categories[ci].tools.length >= 10) return;
+  data.toolMap.categories[ci].tools.push({ name: '', value: '', complexity: '', agent: false });
+  saveData(); renderContent();
+}
+function removeTool(ci, ti) { if (data.toolMap.categories[ci].tools.length > 1) { data.toolMap.categories[ci].tools.splice(ti, 1); saveData(); renderContent(); } }
+
+// === SESSION 1B: SPEC BUILDER ===
+function renderSpec(container) {
+  const s = data.spec;
+  let html = '<h2 class="section-title">📋 Spec Builder</h2><p class="section-desc">Define your micro-app using spec-driven development principles.</p>';
+  html += '<div class="guidelines" id="guide-spec"><div class="guidelines-header" onclick="toggleGuide(this)"><span class="guidelines-icon">📋</span><span class="guidelines-title">Write Your Micro-App Specification</span><span class="guidelines-toggle">▼</span></div><div class="guidelines-body"><ul><li>Choose or brainstorm your micro-app idea (task manager, quiz app, etc.)</li><li>Write 3-5 user stories in "As a / I want to / So that" format</li><li>Add acceptance criteria using <b>Given / When / Then</b></li><li>Include edge cases — what happens when things go wrong?</li><li>Define data constraints (types, ranges, required/optional)</li><li>Use AI to refine: ask "What am I missing?" and evaluate suggestions</li></ul><div class="guidelines-meta"><span>⏱️ <b>Time:</b> 20 minutes</span><span>🎯 <b>Deliverable:</b> Complete spec with testable acceptance criteria</span><span>💡 <b>Tip:</b> The clearer your spec, the better AI output in Session 2!</span></div></div></div>';
+  html += '<div class="sample-panel collapsed"><div class="sample-header" onclick="toggleSample(this)"><span class="sample-icon">📋</span><span class="sample-title">Example (click to show)</span><span class="sample-toggle">▼</span></div><div class="sample-body"><div class="sample-note">⚠️ This is a sample only — your answers will be different!</div><div class="sample-section"><div class="sample-label">App Info:</div><div class="sample-text"><b>Name:</b> TaskFlow | <b>Purpose:</b> Simple task management for personal productivity | <b>User:</b> Individual developer tracking daily work</div></div><div class="sample-section"><div class="sample-label">User Story 1:</div><div class="sample-text">"As a user, I want to add a new task with a title and priority, so that I can track what I need to do."</div><div class="sample-label" style="margin-top:0.4rem">Acceptance Criteria:</div><div class="sample-text">• Given I am on the task list page, When I enter a title (1-100 chars) and select priority (Low/Medium/High) and click \'Add\', Then the task appears in my list<br>• Given I try to add a task with empty title, When I click \'Add\', Then I see error \'Title is required\'</div><div class="sample-label" style="margin-top:0.4rem">Edge Cases:</div><div class="sample-text">• What happens with special characters (emojis, HTML tags)?<br>• What happens with exactly 100 characters?</div></div><div class="sample-section"><div class="sample-label">Data Constraints:</div><table><tr><th>Field</th><th>Type</th><th>Range</th><th>Required</th></tr><tr><td>title</td><td>string</td><td>1-100 chars</td><td>Yes</td></tr><tr><td>priority</td><td>enum</td><td>Low/Medium/High</td><td>Yes</td></tr></table></div></div></div>';
+  html += '<div class="card"><div class="card-title">App Definition</div>';
+  html += field('App Name', s.appName, 'data.spec.appName=this.value;saveData()', 100);
+  html += field('Purpose (one sentence)', s.purpose, 'data.spec.purpose=this.value;saveData()', 500);
+  html += field('Target User', s.targetUser, 'data.spec.targetUser=this.value;saveData()', 200);
+  html += '</div>';
+
+  s.stories.forEach((story, si) => {
+    html += '<div class="card"><div class="card-title">User Story ' + (si+1) + ' <button class="btn-danger btn-sm" style="margin-left:auto" onclick="removeStory(' + si + ')">Remove</button></div>';
+    html += '<div class="field-row"><span style="font-size:0.8rem;white-space:nowrap">As a</span><input type="text" maxlength="200" value="' + esc(story.asA) + '" onchange="data.spec.stories[' + si + '].asA=this.value;saveData()"></div>';
+    html += '<div class="field-row"><span style="font-size:0.8rem;white-space:nowrap">I want to</span><input type="text" maxlength="200" value="' + esc(story.iWant) + '" onchange="data.spec.stories[' + si + '].iWant=this.value;saveData()"></div>';
+    html += '<div class="field-row"><span style="font-size:0.8rem;white-space:nowrap">So that</span><input type="text" maxlength="200" value="' + esc(story.soThat) + '" onchange="data.spec.stories[' + si + '].soThat=this.value;saveData()"></div>';
+    html += '<label style="margin-top:0.5rem">Acceptance Criteria (Given/When/Then)</label>';
+    story.criteria.forEach((c, ci2) => {
+      html += '<div class="field-row"><input type="text" value="' + esc(c) + '" placeholder="Given... When... Then..." onchange="data.spec.stories[' + si + '].criteria[' + ci2 + ']=this.value;saveData()"><button class="btn-danger btn-sm" onclick="data.spec.stories[' + si + '].criteria.splice(' + ci2 + ',1);saveData();renderContent()">×</button></div>';
+    });
+    if (story.criteria.length < 10) {
+      html += '<button class="btn btn-outline btn-sm" onclick="data.spec.stories[' + si + '].criteria.push(\'\');saveData();renderContent()">+ Criterion</button>';
+    } else {
+      html += '<p style="font-size:0.75rem;color:var(--warning)">Maximum 10 criteria reached.</p>';
+    }
+    html += '<label style="margin-top:0.5rem">Edge Cases</label>';
+    story.edgeCases.forEach((ec2, ei) => {
+      html += '<div class="field-row"><input type="text" value="' + esc(ec2) + '" placeholder="What happens when...?" onchange="data.spec.stories[' + si + '].edgeCases[' + ei + ']=this.value;saveData()"><button class="btn-danger btn-sm" onclick="data.spec.stories[' + si + '].edgeCases.splice(' + ei + ',1);saveData();renderContent()">×</button></div>';
+    });
+    if (story.edgeCases.length < 10) {
+      html += '<button class="btn btn-outline btn-sm" onclick="data.spec.stories[' + si + '].edgeCases.push(\'\');saveData();renderContent()">+ Edge Case</button>';
+    } else {
+      html += '<p style="font-size:0.75rem;color:var(--warning)">Maximum 10 edge cases reached.</p>';
+    }
+    html += '</div>';
+  });
+  if (s.stories.length < 5) {
+    html += '<button class="btn btn-primary" onclick="addStory()">+ Add Story</button>';
+  } else {
+    html += '<p style="font-size:0.85rem;color:var(--warning);margin:0.5rem 0">Maximum 5 user stories reached.</p>';
+  }
+
+  // Data Constraints Table
+  if (!s.constraints) s.constraints = [{ field: '', type: '', range: '', required: false }];
+  html += '<div class="card" style="margin-top:1rem"><div class="card-title">Data Constraints</div>';
+  html += '<div style="overflow-x:auto"><table style="width:100%;border-collapse:collapse;font-size:0.82rem">';
+  html += '<tr><th style="text-align:left;padding:0.4rem;border-bottom:1px solid var(--border)">Field</th><th style="text-align:left;padding:0.4rem;border-bottom:1px solid var(--border)">Type</th><th style="text-align:left;padding:0.4rem;border-bottom:1px solid var(--border)">Range</th><th style="text-align:left;padding:0.4rem;border-bottom:1px solid var(--border)">Required</th><th style="padding:0.4rem;border-bottom:1px solid var(--border)"></th></tr>';
+  s.constraints.forEach((con, ci2) => {
+    html += '<tr>';
+    html += '<td style="padding:0.3rem"><input type="text" value="' + esc(con.field) + '" placeholder="Field name" style="font-size:0.8rem" onchange="data.spec.constraints[' + ci2 + '].field=this.value;saveData()"></td>';
+    html += '<td style="padding:0.3rem"><input type="text" value="' + esc(con.type) + '" placeholder="string/number/enum" style="font-size:0.8rem" onchange="data.spec.constraints[' + ci2 + '].type=this.value;saveData()"></td>';
+    html += '<td style="padding:0.3rem"><input type="text" value="' + esc(con.range) + '" placeholder="e.g. 1-100" style="font-size:0.8rem" onchange="data.spec.constraints[' + ci2 + '].range=this.value;saveData()"></td>';
+    html += '<td style="padding:0.3rem;text-align:center"><input type="checkbox" ' + (con.required ? 'checked' : '') + ' onchange="data.spec.constraints[' + ci2 + '].required=this.checked;saveData()"></td>';
+    html += '<td style="padding:0.3rem"><button class="btn-danger btn-sm" onclick="data.spec.constraints.splice(' + ci2 + ',1);if(!data.spec.constraints.length)data.spec.constraints=[{field:\'\',type:\'\',range:\'\',required:false}];saveData();renderContent()">×</button></td>';
+    html += '</tr>';
+  });
+  html += '</table></div>';
+  if (s.constraints.length < 20) {
+    html += '<button class="btn btn-outline btn-sm" style="margin-top:0.5rem" onclick="data.spec.constraints.push({field:\'\',type:\'\',range:\'\',required:false});saveData();renderContent()">+ Add Constraint</button>';
+  } else {
+    html += '<p style="font-size:0.75rem;color:var(--warning);margin-top:0.3rem">Maximum 20 constraints reached.</p>';
+  }
+  html += '</div>';
+
+  html += '<div class="card" style="margin-top:1rem"><div class="card-title">AI Refinement</div>';
+  html += '<div class="field-group"><label>Keep (✅)</label><textarea maxlength="1000" onchange="data.spec.aiKeep=this.value;saveData()">' + esc(s.aiKeep) + '</textarea></div>';
+  html += '<div class="field-group"><label>Modify (⚠️)</label><textarea maxlength="1000" onchange="data.spec.aiModify=this.value;saveData()">' + esc(s.aiModify) + '</textarea></div>';
+  html += '<div class="field-group"><label>Reject (❌)</label><textarea maxlength="1000" onchange="data.spec.aiReject=this.value;saveData()">' + esc(s.aiReject) + '</textarea></div></div>';
+
+  const checks = ['Completeness','Testability','Clarity','Feasibility','No Ambiguity','Edge Cases Covered'];
+  html += '<div class="card"><div class="card-title">Quality Checklist</div>';
+  checks.forEach((ch, i) => { html += '<div class="checklist-item"><input type="checkbox" id="chk' + i + '" ' + (s.checklist[i] ? 'checked' : '') + ' onchange="data.spec.checklist[' + i + ']=this.checked;saveData()"><label for="chk' + i + '">' + ch + '</label></div>'; });
+  html += '</div>';
+  container.innerHTML = html;
+}
+function addStory() { if (data.spec.stories.length >= 5) return; data.spec.stories.push({ asA: '', iWant: '', soThat: '', criteria: [''], edgeCases: [''] }); saveData(); renderContent(); }
+function removeStory(i) { if (data.spec.stories.length > 1) { data.spec.stories.splice(i, 1); saveData(); renderContent(); } }
+
+// === SESSION 2A: PROMPT LAB ===
+const TEMPLATES = [
+  { name: 'Test Case Generation', fields: ['domain','feature','appDesc','spec'], template: 'Role: You are a senior QA engineer with expertise in [domain].\nContext: We are testing [feature] for [appDesc].\nSpec: [spec]\nTech stack: Playwright with TypeScript, Page Object Model\n\nGenerate comprehensive test scenarios including:\n- Positive flows (happy path)\n- Negative flows (invalid inputs)\n- Boundary conditions (min/max)\n- Edge cases\n\nFor each: Scenario name, Preconditions, Steps, Expected result, Priority.' },
+  { name: 'Spec Review', fields: ['story','criteria'], template: 'Review this user story for completeness and testability:\n\nStory: [story]\nAcceptance Criteria: [criteria]\n\nIdentify: Missing criteria, ambiguous language, missing boundaries, error scenarios, implicit assumptions.\nFor each issue: Problem, Why it matters, Suggested fix.' },
+  { name: 'Playwright Test Code', fields: ['criteria','appContext'], template: 'Generate Playwright test code (TypeScript) for:\n[criteria]\n\nApp context: [appContext]\nRequirements: Page Object Model, data-testid selectors, meaningful assertions, comments linking to spec items.' },
+  { name: 'Test Data Generation', fields: ['fieldName','fieldType','validRange'], template: 'Field: [fieldName] | Type: [fieldType] | Range: [validRange]\n\nGenerate: Valid values (5), Boundary values (at min/max), Invalid values (wrong type/format), Edge cases (special chars).\nFormat as table: Input | Category | Expected (pass/fail) | Reason' },
+  { name: 'Coverage Gap Analysis', fields: ['spec','existingTests'], template: 'Spec: [spec]\nExisting tests: [existingTests]\n\nAnalyze: Untested items, partial coverage, unnecessary tests.\nSuggest 5 highest-priority tests to add, ranked by risk.' }
+];
+
+function renderPromptLab(container) {
+  const p = data.promptLab;
+  let html = '<h2 class="section-title">⚡ Prompt Lab</h2><p class="section-desc">Build, test, and refine prompts using proven templates.</p>';
+  html += '<div class="guidelines" id="guide-prompt"><div class="guidelines-header" onclick="toggleGuide(this)"><span class="guidelines-icon">📋</span><span class="guidelines-title">Master Your QA Prompts</span><span class="guidelines-toggle">▼</span></div><div class="guidelines-body"><ul><li>Select a prompt template from the 5 available</li><li>Fill in the placeholder fields with your project\'s context</li><li>Review the assembled prompt — copy and test with your AI tool</li><li>Rate what worked and what didn\'t</li><li>Build your team\'s prompt pattern log (what gives best results?)</li></ul><div class="guidelines-meta"><span>⏱️ <b>Time:</b> Part of the 25-minute build exercise</span><span>🎯 <b>Deliverable:</b> 3+ tested prompts with quality notes</span><span>💡 <b>Tip:</b> Iterate! First prompt rarely gives perfect output — refine 2-3 times.</span></div></div></div>';
+  html += '<div class="sample-panel collapsed"><div class="sample-header" onclick="toggleSample(this)"><span class="sample-icon">📋</span><span class="sample-title">Example (click to show)</span><span class="sample-toggle">▼</span></div><div class="sample-body"><div class="sample-note">⚠️ This is a sample only — your answers will be different!</div><div class="sample-section"><div class="sample-label">Filled Template: Test Case Generation</div><table><tr><th>Field</th><th>Example Value</th></tr><tr><td>Role</td><td>Senior QA engineer with expertise in web application testing</td></tr><tr><td>Context</td><td>Testing the \'Add Task\' feature for a task management app</td></tr><tr><td>Spec</td><td>Given I am on the task list page, When I enter a valid title and select priority and click Add, Then the task appears in my list</td></tr><tr><td>Tech Stack</td><td>Playwright with TypeScript, Page Object Model</td></tr></table></div><div class="sample-section"><div class="sample-label">Prompt Pattern Log:</div><div class="sample-text">"Chain-of-thought + spec context = best test structure. Role prompting improved assertion quality by 2x."</div></div></div></div>';
+  html += '<div class="card"><div class="card-title">Template Selector</div><select onchange="data.promptLab.selectedTemplate=parseInt(this.value);saveData();renderContent()">';
+  TEMPLATES.forEach((t, i) => { html += '<option value="' + i + '"' + (p.selectedTemplate === i ? ' selected' : '') + '>' + t.name + '</option>'; });
+  html += '</select></div>';
+
+  const tmpl = TEMPLATES[p.selectedTemplate];
+  html += '<div class="card"><div class="card-title">Fill In Fields</div>';
+  tmpl.fields.forEach(f => {
+    const val = (p.fields && p.fields[f]) || '';
+    html += '<div class="field-group"><label>' + f + '</label><textarea placeholder="Enter ' + f + '..." onchange="if(!data.promptLab.fields)data.promptLab.fields={};data.promptLab.fields[\'' + f + '\']=this.value;updatePromptPreview();saveData()">' + esc(val) + '</textarea></div>';
+  });
+  html += '</div>';
+
+  let preview = tmpl.template;
+  tmpl.fields.forEach(f => { preview = preview.replace('[' + f + ']', (p.fields && p.fields[f]) || '[' + f + ']'); });
+  html += '<div class="card"><div class="card-title">Generated Prompt <button class="btn btn-sm btn-outline" onclick="copyPrompt()" style="margin-left:auto">📋 Copy</button></div><pre id="promptPreview" style="background:var(--light-bg);padding:1rem;border-radius:6px;font-size:0.8rem;white-space:pre-wrap;overflow-x:auto">' + esc(preview) + '</pre></div>';
+
+  html += '<div class="card"><div class="card-title">Notes</div>';
+  html += '<div class="field-group"><label>What worked well?</label><textarea onchange="data.promptLab.notes=this.value;saveData()">' + esc(p.notes) + '</textarea></div>';
+  html += '<div class="field-group"><label>What to improve?</label><textarea onchange="data.promptLab.improvements=this.value;saveData()">' + esc(p.improvements) + '</textarea></div></div>';
+
+  html += '<div class="card"><div class="card-title">Prompt Patterns Log</div>';
+  (p.patterns || []).forEach((pat, i) => {
+    html += '<div class="field-row"><input type="text" value="' + esc(pat.name) + '" maxlength="100" placeholder="Pattern name" onchange="data.promptLab.patterns[' + i + '].name=this.value;saveData()"><input type="text" value="' + esc(pat.note) + '" maxlength="500" placeholder="Notes" onchange="data.promptLab.patterns[' + i + '].note=this.value;saveData()"><select style="width:60px" onchange="data.promptLab.patterns[' + i + '].rating=parseInt(this.value);saveData()"><option value="1"' + (pat.rating===1?' selected':'') + '>1</option><option value="2"' + (pat.rating===2?' selected':'') + '>2</option><option value="3"' + ((pat.rating===3||!pat.rating)?' selected':'') + '>3</option><option value="4"' + (pat.rating===4?' selected':'') + '>4</option><option value="5"' + (pat.rating===5?' selected':'') + '>5</option></select><button class="btn-danger btn-sm" onclick="data.promptLab.patterns.splice(' + i + ',1);saveData();renderContent()">×</button></div>';
+  });
+  if ((p.patterns || []).length < 20) {
+    html += '<button class="btn btn-outline btn-sm" onclick="data.promptLab.patterns.push({name:\'\',note:\'\',rating:3});saveData();renderContent()">+ Add Pattern</button>';
+  } else {
+    html += '<p style="font-size:0.75rem;color:var(--warning)">Maximum 20 patterns reached.</p>';
+  }
+  html += '</div>';
+  container.innerHTML = html;
+}
+function copyPrompt() { const t = document.getElementById('promptPreview').textContent; navigator.clipboard.writeText(t).then(() => alert('Prompt copied!')); }
+function updatePromptPreview() { /* re-render handles this */ }
+
+// === SESSION 2B: TEST EVALUATOR ===
+function calcTestScore(passedCount) {
+  if (passedCount === 0) return 1;
+  if (passedCount <= 2) return 2;
+  if (passedCount <= 4) return 3;
+  if (passedCount <= 6) return 4;
+  return 5;
+}
+
+function addTestEntry() {
+  if (data.testEval.tests.length >= 20) return;
+  var nameInput = document.getElementById('newTestName');
+  var codeInput = document.getElementById('newTestCode');
+  var errEl = document.getElementById('testAddError');
+  if (!nameInput || !codeInput) return;
+  var name = nameInput.value.trim();
+  var code = codeInput.value.trim();
+  if (!name && !code) { errEl.textContent = 'Test name and code are required.'; return; }
+  if (!name) { errEl.textContent = 'Test name is required.'; return; }
+  if (!code) { errEl.textContent = 'Code snippet is required.'; return; }
+  errEl.textContent = '';
+  data.testEval.tests.push({ name: name, code: code, checks: [false,false,false,false,false,false,false] });
+  saveData(); renderContent();
+}
+
+function renderTestEval(container) {
+  const te = data.testEval;
+  const criteria = ['Spec traceability','Meaningful assertion','Bug detection potential','Independence','No hallucination','Readable','Maintainable'];
+  let html = '<h2 class="section-title">🔍 Test Evaluator</h2><p class="section-desc">Evaluate AI-generated tests against quality criteria.</p>';
+  html += '<div class="guidelines" id="guide-eval"><div class="guidelines-header" onclick="toggleGuide(this)"><span class="guidelines-icon">📋</span><span class="guidelines-title">Evaluate Your AI-Generated Tests</span><span class="guidelines-toggle">▼</span></div><div class="guidelines-body"><ul><li>Add each AI-generated test (name + code snippet)</li><li>Score each test on the 7-point quality checklist</li><li>Be honest — if it only checks "element exists", that\'s a 1-2</li><li>Key question: "If the feature broke, would this test catch it?"</li><li>Note gaps: what\'s NOT tested that should be?</li></ul><div class="guidelines-meta"><span>⏱️ <b>Time:</b> Part of the 10-minute validation exercise</span><span>🎯 <b>Deliverable:</b> All tests scored, gaps identified</span><span>💡 <b>Tip:</b> Tests scoring 1-2 should be rewritten. 3+ can be refined.</span></div></div></div>';
+
+  html += '<div class="sample-panel collapsed"><div class="sample-header" onclick="toggleSample(this)"><span class="sample-icon">📋</span><span class="sample-title">Example (click to show)</span><span class="sample-toggle">▼</span></div><div class="sample-body"><div class="sample-note">⚠️ This is a sample only — your answers will be different!</div><div class="sample-section"><div class="sample-label">Sample Test Evaluation:</div><div class="sample-text"><b>Test:</b> "should add a task with valid title and priority"<br><b>Code:</b> <code>await taskPage.addTask(\'Buy groceries\', \'High\'); await expect(taskPage.taskList).toContainText(\'Buy groceries\');</code></div></div><div class="sample-section"><div class="sample-label">Checklist Scoring:</div><div class="sample-text"><ul class="sample-checklist"><li>✅ Spec traceability — maps to Story 1, AC1</li><li>✅ Meaningful assertion — validates text content appears</li><li>✅ Bug detection — would fail if add feature broke</li><li>✅ Independence — no dependency on other tests</li><li>✅ No hallucination — real selectors from our app</li><li>✅ Readable — clear intent from name and code</li><li>⬜ Maintainable — could use better variable naming</li></ul></div><div class="sample-text" style="margin-top:0.5rem"><b>Score: 4/5</b> — Good test, minor style improvements needed.</div></div></div></div>';
+
+  te.tests.forEach((test, ti) => {
+    const passed = test.checks.filter(Boolean).length;
+    const score = calcTestScore(passed);
+    html += '<div class="card"><div class="card-title" style="justify-content:space-between"><span>Test ' + (ti+1) + ': ' + (test.name || 'Unnamed') + '</span><span class="score-badge score-' + score + '">' + score + '</span></div>';
+    html += '<div class="field-group"><label>Test Name</label><input type="text" maxlength="100" value="' + esc(test.name) + '" onchange="data.testEval.tests[' + ti + '].name=this.value;saveData()"></div>';
+    html += '<div class="field-group"><label>Code Snippet</label><textarea maxlength="2000" style="font-family:monospace;font-size:0.8rem" onchange="data.testEval.tests[' + ti + '].code=this.value;saveData()">' + esc(test.code) + '</textarea></div>';
+    html += '<label>Evaluation Checklist</label>';
+    criteria.forEach((c, ci2) => {
+      html += '<div class="checklist-item"><input type="checkbox" ' + (test.checks[ci2] ? 'checked' : '') + ' onchange="data.testEval.tests[' + ti + '].checks[' + ci2 + ']=this.checked;saveData();renderContent()"><label>' + c + '</label></div>';
+    });
+    html += '<button class="btn-danger btn-sm" style="margin-top:0.5rem" onclick="data.testEval.tests.splice(' + ti + ',1);saveData();renderContent()">Remove Test</button></div>';
+  });
+
+  // Add Test form with validation
+  if (te.tests.length < 20) {
+    html += '<div class="card" style="margin-top:0.5rem"><div class="card-title">Add New Test</div>';
+    html += '<div class="field-group"><label>Test Name</label><input type="text" id="newTestName" maxlength="100" placeholder="Enter test name"></div>';
+    html += '<div class="field-group"><label>Code Snippet</label><textarea id="newTestCode" maxlength="2000" placeholder="Paste test code here..." style="font-family:monospace;font-size:0.8rem"></textarea></div>';
+    html += '<div id="testAddError" style="color:var(--danger);font-size:0.8rem;margin-bottom:0.5rem"></div>';
+    html += '<button class="btn btn-primary" onclick="addTestEntry()">+ Add Test</button></div>';
+  } else {
+    html += '<p style="font-size:0.85rem;color:var(--warning);margin:0.5rem 0">Maximum 20 test entries reached.</p>';
+  }
+
+  // Suite summary
+  if (te.tests.length > 0) {
+    const avgScore = te.tests.reduce((sum, t) => sum + calcTestScore(t.checks.filter(Boolean).length), 0) / te.tests.length;
+    html += '<div class="card" style="margin-top:1rem"><div class="card-title">Suite Summary</div>';
+    html += '<p style="font-size:0.85rem"><strong>Total tests:</strong> ' + te.tests.length + ' | <strong>Average score:</strong> ' + avgScore.toFixed(1) + '/5</p>';
+    html += '<div class="field-group" style="margin-top:0.5rem"><label>Gap Notes (what\'s missing?)</label><textarea maxlength="500" onchange="data.testEval.gapNotes=this.value;saveData()" placeholder="What tests or scenarios are not covered?">' + esc(te.gapNotes || '') + '</textarea></div></div>';
+  }
+  container.innerHTML = html;
+}
+
+// === SESSION 3A: ROADMAP ===
+function moveStep(i, direction) {
+  var newIdx = i + direction;
+  if (newIdx < 0 || newIdx >= data.roadmap.steps.length) return;
+  var temp = data.roadmap.steps[i];
+  data.roadmap.steps[i] = data.roadmap.steps[newIdx];
+  data.roadmap.steps[newIdx] = temp;
+  saveData(); renderContent();
+}
+
+function renderRoadmap(container) {
+  const r = data.roadmap;
+  // Migrate legacy plan structure
+  if (typeof r.plan.d30 === 'string') {
+    r.plan = {
+      d30: { focus: r.plan.d30 || '', actions: '', metrics: '' },
+      d60: { focus: r.plan.d60 || '', actions: '', metrics: '' },
+      d90: { focus: r.plan.d90 || '', actions: '', metrics: '' }
+    };
+  }
+  let html = '<h2 class="section-title">🗺️ Adoption Roadmap</h2><p class="section-desc">Map your QA process, identify opportunities, and build your AI adoption plan.</p>';
+  html += '<div class="guidelines" id="guide-roadmap"><div class="guidelines-header" onclick="toggleGuide(this)"><span class="guidelines-icon">📋</span><span class="guidelines-title">Build Your AI Adoption Action Plan</span><span class="guidelines-toggle">▼</span></div><div class="guidelines-body"><ul><li>Map your current QA process steps (requirements → deploy)</li><li>Flag pain points (slow, manual, or error-prone areas)</li><li>Identify 2-3 opportunities where AI adds the most value</li><li>Plot on Effort vs Impact matrix (Low Effort + High Impact = Do First!)</li><li>Define guardrails: freely / needs review / must NOT do</li><li>Build your 30-60-90 day plan with concrete actions</li></ul><div class="guidelines-meta"><span>⏱️ <b>Time:</b> 15 minutes</span><span>🎯 <b>Deliverable:</b> Prioritized roadmap + guardrails for leadership</span><span>💡 <b>Tip:</b> Think about what you can start doing MONDAY, not someday.</span></div></div></div>';
+
+  html += '<div class="sample-panel collapsed"><div class="sample-header" onclick="toggleSample(this)"><span class="sample-icon">📋</span><span class="sample-title">Example (click to show)</span><span class="sample-toggle">▼</span></div><div class="sample-body"><div class="sample-note">⚠️ This is a sample only — your answers will be different!</div><div class="sample-section"><div class="sample-label">Process Steps Example:</div><div class="sample-text">Requirements → Sprint Planning → Development → Test Writing ⚠️ → Execution → Bug Fix → Release</div></div><div class="sample-section"><div class="sample-label">Pain Point:</div><div class="sample-text">"Test Writing" — Takes 3-4 hours per feature, mostly repetitive scenarios</div></div><div class="sample-section"><div class="sample-label">Opportunity:</div><table><tr><th>Process Step</th><th>Pain</th><th>AI Solution</th><th>Metric</th><th>Effort</th><th>Impact</th></tr><tr><td>Test Writing</td><td>3-4 hrs manual per feature</td><td>AI-assisted test gen from specs</td><td>Reduce to &lt;1hr</td><td>Low</td><td>High → QUICK WIN</td></tr></table></div><div class="sample-section"><div class="sample-label">Guardrails Example:</div><div class="sample-text"><b>Automate freely:</b> Test data generation, boilerplate scaffolding<br><b>Human reviews:</b> AI-generated assertions, coverage recommendations<br><b>Prohibit:</b> Security test sign-off, production deploy decisions</div></div></div></div>';
+  html += '<div class="card"><div class="card-title">Process Steps</div>';
+  r.steps.forEach((step, i) => {
+    html += '<div class="field-row" style="align-items:center"><span style="font-size:0.8rem;color:var(--accent);font-weight:700;min-width:20px">' + (i+1) + '</span>';
+    html += '<button class="btn btn-sm btn-outline" style="padding:0.2rem 0.4rem;font-size:0.7rem" onclick="moveStep(' + i + ',-1)"' + (i === 0 ? ' disabled' : '') + '>▲</button>';
+    html += '<button class="btn btn-sm btn-outline" style="padding:0.2rem 0.4rem;font-size:0.7rem" onclick="moveStep(' + i + ',1)"' + (i === r.steps.length - 1 ? ' disabled' : '') + '>▼</button>';
+    html += '<input type="text" maxlength="300" value="' + esc(step.name) + '" placeholder="Process step name" onchange="data.roadmap.steps[' + i + '].name=this.value;saveData()">';
+    html += '<label style="display:flex;align-items:center;gap:4px;margin:0;white-space:nowrap"><input type="checkbox" ' + (step.hasPain ? 'checked' : '') + ' onchange="data.roadmap.steps[' + i + '].hasPain=this.checked;saveData();renderContent()">⚠️ Pain</label>';
+    html += '<button class="btn-danger btn-sm" onclick="data.roadmap.steps.splice(' + i + ',1);saveData();renderContent()">×</button></div>';
+    if (step.hasPain) html += '<div style="margin-left:2rem;margin-bottom:0.5rem"><input type="text" maxlength="300" value="' + esc(step.pain) + '" placeholder="Describe the pain point" style="border-color:var(--warning)" onchange="data.roadmap.steps[' + i + '].pain=this.value;saveData()"></div>';
+  });
+  if (r.steps.length < 15) {
+    html += '<button class="btn btn-outline btn-sm" onclick="data.roadmap.steps.push({name:\'\',pain:\'\',hasPain:false});saveData();renderContent()">+ Add Step</button>';
+  } else {
+    html += '<p style="font-size:0.75rem;color:var(--warning);margin-top:0.3rem">Maximum 15 process steps reached.</p>';
+  }
+  html += '</div>';
+
+  html += '<div class="card"><div class="card-title">AI Integration Opportunities</div>';
+  html += '<div style="overflow-x:auto">';
+  r.opportunities.forEach((opp, i) => {
+    html += '<div class="opp-grid-4">';
+    html += '<div class="field-group"><label>Process Step</label><input type="text" value="' + esc(opp.step) + '" onchange="data.roadmap.opportunities[' + i + '].step=this.value;saveData()"></div>';
+    html += '<div class="field-group"><label>Pain Point</label><input type="text" value="' + esc(opp.pain) + '" onchange="data.roadmap.opportunities[' + i + '].pain=this.value;saveData()"></div>';
+    html += '<div class="field-group"><label>AI Solution</label><input type="text" value="' + esc(opp.solution) + '" onchange="data.roadmap.opportunities[' + i + '].solution=this.value;saveData()"></div>';
+    html += '<div class="field-group"><label>Success Metric</label><input type="text" value="' + esc(opp.metric) + '" onchange="data.roadmap.opportunities[' + i + '].metric=this.value;saveData()"></div>';
+    html += '</div><div class="opp-grid-3a">';
+    html += '<div class="field-group"><label>Effort</label><select onchange="data.roadmap.opportunities[' + i + '].effort=this.value;saveData()"><option value=""' + (!opp.effort ? ' selected' : '') + '>—</option><option value="L"' + (opp.effort==='L'?' selected':'') + '>Low</option><option value="M"' + (opp.effort==='M'?' selected':'') + '>Medium</option><option value="H"' + (opp.effort==='H'?' selected':'') + '>High</option></select></div>';
+    html += '<div class="field-group"><label>Impact</label><select onchange="data.roadmap.opportunities[' + i + '].impact=this.value;saveData()"><option value=""' + (!opp.impact ? ' selected' : '') + '>—</option><option value="L"' + (opp.impact==='L'?' selected':'') + '>Low</option><option value="M"' + (opp.impact==='M'?' selected':'') + '>Medium</option><option value="H"' + (opp.impact==='H'?' selected':'') + '>High</option></select></div>';
+    html += '<div class="field-group"><label>Quadrant</label><select onchange="data.roadmap.opportunities[' + i + '].quadrant=this.value;saveData()"><option value=""' + (!opp.quadrant ? ' selected' : '') + '>—</option><option value="Quick Wins"' + (opp.quadrant==='Quick Wins'?' selected':'') + '>Quick Wins</option><option value="Strategic"' + (opp.quadrant==='Strategic'?' selected':'') + '>Strategic</option><option value="Nice-to-Have"' + (opp.quadrant==='Nice-to-Have'?' selected':'') + '>Nice-to-Have</option><option value="Avoid"' + (opp.quadrant==='Avoid'?' selected':'') + '>Avoid</option></select></div>';
+    html += '<div class="field-group"><label>&nbsp;</label><button class="btn-danger btn-sm" onclick="data.roadmap.opportunities.splice(' + i + ',1);saveData();renderContent()">×</button></div>';
+    html += '</div>';
+  });
+  html += '</div>';
+  if (r.opportunities.length < 20) {
+    html += '<button class="btn btn-outline btn-sm" onclick="data.roadmap.opportunities.push({step:\'\',pain:\'\',solution:\'\',metric:\'\',effort:\'\',impact:\'\',quadrant:\'\'});saveData();renderContent()">+ Add Opportunity</button>';
+  } else {
+    html += '<p style="font-size:0.75rem;color:var(--warning)">Maximum 20 opportunities reached.</p>';
+  }
+  html += '</div>';
+
+  html += '<div class="card"><div class="card-title">Guardrails</div>';
+  html += '<div class="field-group"><label>🟢 AI can do FREELY</label><textarea maxlength="500" onchange="data.roadmap.guardrails.automate=this.value;saveData()">' + esc(r.guardrails.automate) + '</textarea></div>';
+  html += '<div class="field-group"><label>🟡 AI generates + HUMAN REVIEWS</label><textarea maxlength="500" onchange="data.roadmap.guardrails.gate=this.value;saveData()">' + esc(r.guardrails.gate) + '</textarea></div>';
+  html += '<div class="field-group"><label>🔴 AI must NOT (human only)</label><textarea maxlength="500" onchange="data.roadmap.guardrails.prohibit=this.value;saveData()">' + esc(r.guardrails.prohibit) + '</textarea></div></div>';
+
+  html += '<div class="card"><div class="card-title">30-60-90 Day Plan</div>';
+  html += '<div class="plan-grid-3">';
+  html += '<div style="background:var(--light-bg);padding:0.8rem;border-radius:var(--radius)"><h4 style="font-size:0.85rem;color:var(--success);margin-bottom:0.5rem">Days 1-30: Quick Wins</h4>';
+  html += '<div class="field-group"><label>Focus</label><input type="text" maxlength="200" value="' + esc(r.plan.d30.focus) + '" onchange="data.roadmap.plan.d30.focus=this.value;saveData()"></div>';
+  html += '<div class="field-group"><label>Actions</label><textarea maxlength="500" onchange="data.roadmap.plan.d30.actions=this.value;saveData()">' + esc(r.plan.d30.actions) + '</textarea></div>';
+  html += '<div class="field-group"><label>Metrics</label><input type="text" maxlength="300" value="' + esc(r.plan.d30.metrics) + '" onchange="data.roadmap.plan.d30.metrics=this.value;saveData()"></div></div>';
+  html += '<div style="background:var(--light-bg);padding:0.8rem;border-radius:var(--radius)"><h4 style="font-size:0.85rem;color:var(--warning);margin-bottom:0.5rem">Days 31-60: Integration</h4>';
+  html += '<div class="field-group"><label>Focus</label><input type="text" maxlength="200" value="' + esc(r.plan.d60.focus) + '" onchange="data.roadmap.plan.d60.focus=this.value;saveData()"></div>';
+  html += '<div class="field-group"><label>Actions</label><textarea maxlength="500" onchange="data.roadmap.plan.d60.actions=this.value;saveData()">' + esc(r.plan.d60.actions) + '</textarea></div>';
+  html += '<div class="field-group"><label>Metrics</label><input type="text" maxlength="300" value="' + esc(r.plan.d60.metrics) + '" onchange="data.roadmap.plan.d60.metrics=this.value;saveData()"></div></div>';
+  html += '<div style="background:var(--light-bg);padding:0.8rem;border-radius:var(--radius)"><h4 style="font-size:0.85rem;color:var(--secondary);margin-bottom:0.5rem">Days 61-90: Expansion</h4>';
+  html += '<div class="field-group"><label>Focus</label><input type="text" maxlength="200" value="' + esc(r.plan.d90.focus) + '" onchange="data.roadmap.plan.d90.focus=this.value;saveData()"></div>';
+  html += '<div class="field-group"><label>Actions</label><textarea maxlength="500" onchange="data.roadmap.plan.d90.actions=this.value;saveData()">' + esc(r.plan.d90.actions) + '</textarea></div>';
+  html += '<div class="field-group"><label>Metrics</label><input type="text" maxlength="300" value="' + esc(r.plan.d90.metrics) + '" onchange="data.roadmap.plan.d90.metrics=this.value;saveData()"></div></div>';
+  html += '</div></div>';
+  container.innerHTML = html;
+}
+
+// === SESSION 3B: SKILLS ===
+const SKILL_NAMES = ['Prompt Engineering','Spec Writing','Tool Evaluation','Critical Validation','Agent Understanding','Guardrail Thinking','Playwright / Automation','AI-Assisted Development'];
+
+function renderSkills(container) {
+  const sk = data.skills;
+  let html = '<h2 class="section-title">📊 Skills Self-Assessment</h2><p class="section-desc">Rate yourself 1-4: 1=Consumer, 2=Power User, 3=Builder, 4=Architect</p>';
+  html += '<div class="guidelines" id="guide-skills"><div class="guidelines-header" onclick="toggleGuide(this)"><span class="guidelines-icon">📋</span><span class="guidelines-title">Assess Your AI Skills &amp; Plan Growth</span><span class="guidelines-toggle">▼</span></div><div class="guidelines-body"><ul><li>Rate yourself honestly on each of the 8 skills (1-4)</li><li>Set a realistic 90-day target for each skill</li><li>Be honest — this is a growth tool, not a performance review</li><li>Reflect: strongest skill? Where to grow most?</li><li>Plan: ONE thing you\'ll do differently starting Monday?</li></ul><div class="guidelines-meta"><span>⏱️ <b>Time:</b> 5 minutes (during theory)</span><span>🎯 <b>Deliverable:</b> Completed self-assessment with growth plan</span><span>💡 <b>Tip:</b> Pair with a teammate strong where you\'re weak — peer learning works!</span></div></div></div>';
+
+  html += '<div class="sample-panel collapsed"><div class="sample-header" onclick="toggleSample(this)"><span class="sample-icon">📋</span><span class="sample-title">Example (click to show)</span><span class="sample-toggle">▼</span></div><div class="sample-body"><div class="sample-note">⚠️ This is a sample only — your answers will be different!</div><div class="sample-section"><div class="sample-label">Skill Rating Example:</div><table><tr><th>Skill</th><th>Now</th><th>Target (90d)</th><th>Action</th></tr><tr><td>Prompt Engineering</td><td>2 (Power User)</td><td>3 (Builder)</td><td>Build 5 reusable prompt templates for team</td></tr></table></div><div class="sample-section"><div class="sample-label">Reflection Example:</div><div class="sample-text"><b>Strongest:</b> Critical Validation — I naturally question AI output<br><b>Growth area:</b> Agent Understanding — haven\'t explored agent workflows yet<br><b>Monday action:</b> Try using Copilot for test generation on my current sprint feature</div></div></div></div>';
+  html += '<div class="card"><div class="card-title">Current vs Target (90 days)</div>';
+  SKILL_NAMES.forEach((name, i) => {
+    html += '<div class="skill-row"><span class="skill-name">' + name + '</span>';
+    html += '<div class="skill-slider"><span style="font-size:0.7rem;color:var(--text-muted)">Now</span><input type="range" min="1" max="4" value="' + sk.now[i] + '" oninput="data.skills.now[' + i + ']=parseInt(this.value);saveData();renderContent()"><span class="skill-val">' + sk.now[i] + '</span></div>';
+    html += '<div class="skill-slider"><span style="font-size:0.7rem;color:var(--secondary)">Target</span><input type="range" min="1" max="4" value="' + sk.target[i] + '" oninput="data.skills.target[' + i + ']=parseInt(this.value);saveData();renderContent()"><span class="skill-val" style="color:var(--secondary)">' + sk.target[i] + '</span></div></div>';
+  });
+  html += '</div>';
+
+  html += '<div class="card"><div class="card-title">Radar Comparison</div><div class="radar-container"><canvas id="radarChart" width="350" height="350"></canvas></div></div>';
+
+  html += '<div class="card"><div class="card-title">Reflection</div>';
+  html += '<div class="field-group"><label>Strongest skill today</label><input type="text" maxlength="500" value="' + esc(sk.strongest) + '" onchange="data.skills.strongest=this.value;saveData()"></div>';
+  html += '<div class="field-group"><label>Biggest growth area</label><input type="text" maxlength="500" value="' + esc(sk.growth) + '" onchange="data.skills.growth=this.value;saveData()"></div>';
+  html += '<div class="field-group"><label>Biggest surprise from the training</label><input type="text" maxlength="500" value="' + esc(sk.surprise || '') + '" onchange="data.skills.surprise=this.value;saveData()"></div>';
+  html += '<div class="field-group"><label>One thing I\'ll do differently on Monday</label><input type="text" maxlength="500" value="' + esc(sk.monday) + '" onchange="data.skills.monday=this.value;saveData()"></div></div>';
+
+  html += '<div class="card"><div class="card-title">4-Week Growth Plan</div>';
+  sk.weekPlan.forEach((w, i) => {
+    html += '<div class="field-row" style="align-items:center"><span style="font-size:0.8rem;font-weight:700;color:var(--primary);white-space:nowrap">Wk ' + (i+1) + '</span><input type="text" value="' + esc(w.focus) + '" placeholder="Focus skill" onchange="data.skills.weekPlan[' + i + '].focus=this.value;saveData()"><input type="text" value="' + esc(w.action) + '" placeholder="Action" onchange="data.skills.weekPlan[' + i + '].action=this.value;saveData()"><label style="margin:0;display:flex;align-items:center;gap:4px"><input type="checkbox" ' + (w.done ? 'checked' : '') + ' onchange="data.skills.weekPlan[' + i + '].done=this.checked;saveData()">Done</label></div>';
+  });
+  html += '</div>';
+  container.innerHTML = html;
+  setTimeout(drawRadar, 50);
+}
+
+function drawRadar() {
+  const canvas = document.getElementById('radarChart');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = 350, h = 350, cx = w/2, cy = h/2, r = 130;
+  ctx.clearRect(0, 0, w, h);
+  const n = SKILL_NAMES.length;
+  const angleStep = (Math.PI * 2) / n;
+
+  // Grid
+  for (let level = 1; level <= 4; level++) {
+    ctx.beginPath();
+    for (let i = 0; i <= n; i++) {
+      const a = -Math.PI/2 + i * angleStep;
+      const x = cx + Math.cos(a) * (r * level / 4);
+      const y = cy + Math.sin(a) * (r * level / 4);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = '#e2e8f0'; ctx.lineWidth = 1; ctx.stroke();
+  }
+
+  // Labels
+  ctx.font = '10px -apple-system, sans-serif'; ctx.fillStyle = '#5a6a7a'; ctx.textAlign = 'center';
+  for (let i = 0; i < n; i++) {
+    const a = -Math.PI/2 + i * angleStep;
+    const x = cx + Math.cos(a) * (r + 20);
+    const y = cy + Math.sin(a) * (r + 20);
+    ctx.fillText(SKILL_NAMES[i].split('/')[0].trim(), x, y + 4);
+  }
+
+  // Now (filled)
+  ctx.beginPath();
+  for (let i = 0; i <= n; i++) {
+    const idx = i % n;
+    const a = -Math.PI/2 + idx * angleStep;
+    const x = cx + Math.cos(a) * (r * data.skills.now[idx] / 4);
+    const y = cy + Math.sin(a) * (r * data.skills.now[idx] / 4);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.fillStyle = 'rgba(72,201,176,0.2)'; ctx.fill();
+  ctx.strokeStyle = '#48C9B0'; ctx.lineWidth = 2; ctx.stroke();
+
+  // Target (dashed)
+  ctx.beginPath(); ctx.setLineDash([5, 3]);
+  for (let i = 0; i <= n; i++) {
+    const idx = i % n;
+    const a = -Math.PI/2 + idx * angleStep;
+    const x = cx + Math.cos(a) * (r * data.skills.target[idx] / 4);
+    const y = cy + Math.sin(a) * (r * data.skills.target[idx] / 4);
+    i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+  }
+  ctx.strokeStyle = '#2E86C1'; ctx.lineWidth = 2; ctx.stroke();
+  ctx.setLineDash([]);
+
+  // Legend
+  ctx.fillStyle = '#48C9B0'; ctx.fillRect(10, h - 25, 12, 12);
+  ctx.fillStyle = '#333'; ctx.font = '11px sans-serif'; ctx.textAlign = 'left'; ctx.fillText('Current', 26, h - 14);
+  ctx.fillStyle = '#2E86C1'; ctx.fillRect(90, h - 25, 12, 12);
+  ctx.fillStyle = '#333'; ctx.fillText('Target (90d)', 106, h - 14);
+}
+
+// === HELPERS ===
+function esc(s) { return (s || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function field(label, val, handler, maxlen) { return '<div class="field-group"><label>' + label + '</label><input type="text"' + (maxlen ? ' maxlength="' + maxlen + '"' : '') + ' value="' + esc(val) + '" onchange="' + handler + '"></div>'; }
+
+// Auto-save interval
+setInterval(() => { if (currentGroup) saveData(); }, 30000);
+
+// Expose functions to window for onclick handlers
+window.toggleGuide = toggleGuide;
+window.toggleSample = toggleSample;
+window.selectGroup = selectGroup;
+window.switchGroup = switchGroup;
+window.exportData = exportData;
+window.addTool = addTool;
+window.removeTool = removeTool;
+window.updateTool = updateTool;
+window.addStory = addStory;
+window.removeStory = removeStory;
+window.copyPrompt = copyPrompt;
+window.updatePromptPreview = updatePromptPreview;
+window.saveData = saveData;
+window.renderContent = renderContent;
+window.drawRadar = drawRadar;
+window.moveStep = moveStep;
+window.addTestEntry = addTestEntry;
+window.calcTestScore = calcTestScore;
+
+// Initialize on page load: check for stored group
+initApp();
+
+</script>
+
+
+</body></html>
