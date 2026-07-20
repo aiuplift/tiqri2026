@@ -1326,7 +1326,7 @@ function renderSession() {
   }
   updateTabStates();
 
-  const subTabs = { '1': [['a','Tool Map'],['b','Spec Builder']], '2': [['a','Prompt Lab'],['b','Test Evaluator']], '3': [['a','Adoption Roadmap'],['b','Skills Assessment']] };
+  const subTabs = { '1': [['a','Tool Map'],['b','Spec Builder'],['c','AI Story Expansion']], '2': [['a','Prompt Lab'],['b','Test Evaluator']], '3': [['a','Adoption Roadmap'],['b','Skills Assessment']] };
   const tabs = subTabs[currentSession];
   let html = '<div class="sub-tabs">';
   tabs.forEach(([id, label]) => { html += '<div class="sub-tab' + (id === currentSubTab ? ' active' : '') + '" data-sub="' + id + '">' + label + '</div>'; });
@@ -1349,7 +1349,7 @@ function renderContent() {
   updateTabStates();
 
   const key = currentSession + currentSubTab;
-  const renderers = { '1a': renderToolMap, '1b': renderSpec, '2a': renderPromptLab, '2b': renderTestEval, '3a': renderRoadmap, '3b': renderSkills };
+  const renderers = { '1a': renderToolMap, '1b': renderSpec, '1c': renderStoryExpansion, '2a': renderPromptLab, '2b': renderTestEval, '3a': renderRoadmap, '3b': renderSkills };
   const el = document.getElementById('mainContent');
   el.innerHTML = '';
   if (renderers[key]) renderers[key](el);
@@ -1366,8 +1366,8 @@ function renderToolMap(container) {
     html += '<div class="card"><div class="card-title"><span class="cat-icon">' + (ci+1) + '</span>' + cat.name + '</div>';
     cat.tools.forEach((tool, ti) => {
       html += '<div class="field-row" style="align-items:center;"><input type="text" maxlength="100" value="' + esc(tool.name) + '" placeholder="Tool name" onchange="updateTool(' + ci + ',' + ti + ',\'name\',this.value)">';
-      html += '<div class="rating-group">' + ratingBtns(ci, ti, 'value', tool.value) + '</div>';
-      html += '<div class="rating-group">' + ratingBtns(ci, ti, 'complexity', tool.complexity) + '</div>';
+      html += '<div class="rating-group"><span style="font-size:0.7rem;color:#888;display:block;margin-bottom:2px;">Value</span>' + ratingBtns(ci, ti, 'value', tool.value) + '</div>';
+      html += '<div class="rating-group"><span style="font-size:0.7rem;color:#888;display:block;margin-bottom:2px;">Complexity</span>' + ratingBtns(ci, ti, 'complexity', tool.complexity) + '</div>';
       html += '<label style="display:flex;align-items:center;gap:4px;margin:0;white-space:nowrap;"><input type="checkbox" ' + (tool.agent ? 'checked' : '') + ' onchange="updateTool(' + ci + ',' + ti + ',\'agent\',this.checked)"> Agent</label>';
       html += '<button class="btn-danger btn-sm" onclick="removeTool(' + ci + ',' + ti + ')">×</button></div>';
     });
@@ -1486,6 +1486,27 @@ const TEMPLATES = [
   { name: 'Test Data Generation', fields: ['fieldName','fieldType','validRange'], template: 'Field: [fieldName] | Type: [fieldType] | Range: [validRange]\n\nGenerate: Valid values (5), Boundary values (at min/max), Invalid values (wrong type/format), Edge cases (special chars).\nFormat as table: Input | Category | Expected (pass/fail) | Reason' },
   { name: 'Coverage Gap Analysis', fields: ['spec','existingTests'], template: 'Spec: [spec]\nExisting tests: [existingTests]\n\nAnalyze: Untested items, partial coverage, unnecessary tests.\nSuggest 5 highest-priority tests to add, ranked by risk.' }
 ];
+
+function renderStoryExpansion(container) {
+  if (!data.storyExpansion) data.storyExpansion = { story: '', criteria: '', aiOutput: '', keepItems: '', modifyItems: '', rejectItems: '', insight: '' };
+  const se = data.storyExpansion;
+  let html = '<h2 class="section-title">🤖 AI Story Expansion</h2><p class="section-desc">Feed your spec to AI, then evaluate the output: Keep / Modify / Reject.</p>';
+  html += '<div class="guidelines" id="guide-story"><div class="guidelines-header" onclick="toggleGuide(this)"><span class="guidelines-icon">📋</span><span class="guidelines-title">AI-Assisted Story Expansion</span><span class="guidelines-toggle">▼</span></div><div class="guidelines-body"><ul><li>Take your strongest user story + acceptance criteria from the Spec Builder</li><li>Prompt AI: "Generate comprehensive test scenarios including positive, negative, boundary, and edge cases"</li><li>Evaluate output: ✅ Keep / ⚠️ Modify / ❌ Reject</li><li>Note how spec quality affected AI output quality</li></ul><div class="guidelines-meta"><span>⏱️ <b>Time:</b> 10 minutes</span><span>🎯 <b>Deliverable:</b> AI-generated scenarios with team annotations</span><span>💡 <b>Tip:</b> The better your spec, the better the AI output!</span></div></div></div>';
+  html += '<div class="card"><div class="card-title">Input to AI</div>';
+  html += '<div class="field-group"><label>User Story</label><textarea rows="2" maxlength="500" onchange="data.storyExpansion.story=this.value;saveData()">' + esc(se.story) + '</textarea></div>';
+  html += '<div class="field-group"><label>Acceptance Criteria (Given/When/Then)</label><textarea rows="3" maxlength="1000" onchange="data.storyExpansion.criteria=this.value;saveData()">' + esc(se.criteria) + '</textarea></div>';
+  html += '</div>';
+  html += '<div class="card"><div class="card-title">AI Output (paste what AI generated)</div>';
+  html += '<div class="field-group"><textarea rows="6" maxlength="3000" placeholder="Paste the AI-generated test scenarios here..." onchange="data.storyExpansion.aiOutput=this.value;saveData()">' + esc(se.aiOutput) + '</textarea></div>';
+  html += '</div>';
+  html += '<div class="card"><div class="card-title">Evaluation</div>';
+  html += '<div class="field-group"><label>✅ Keep (useful as-is)</label><textarea rows="2" maxlength="1000" placeholder="List items to keep..." onchange="data.storyExpansion.keepItems=this.value;saveData()">' + esc(se.keepItems) + '</textarea></div>';
+  html += '<div class="field-group"><label>⚠️ Modify (needs changes)</label><textarea rows="2" maxlength="1000" placeholder="List items that need modification..." onchange="data.storyExpansion.modifyItems=this.value;saveData()">' + esc(se.modifyItems) + '</textarea></div>';
+  html += '<div class="field-group"><label>❌ Reject (wrong/hallucinated)</label><textarea rows="2" maxlength="1000" placeholder="List items to reject..." onchange="data.storyExpansion.rejectItems=this.value;saveData()">' + esc(se.rejectItems) + '</textarea></div>';
+  html += '<div class="field-group"><label>💡 Key Insight: How did spec quality affect output?</label><textarea rows="2" maxlength="500" placeholder="What did AI add that you missed? What did AI get wrong?" onchange="data.storyExpansion.insight=this.value;saveData()">' + esc(se.insight) + '</textarea></div>';
+  html += '</div>';
+  container.innerHTML = html;
+}
 
 function renderPromptLab(container) {
   const p = data.promptLab;
