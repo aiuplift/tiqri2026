@@ -20,6 +20,20 @@
 
 ---
 
+## Slide 2B: Today's Mental Model — People, Process, Technology
+
+> "Before we dive in, here's the lens for today's session. Sustainable AI adoption requires three pillars working together."
+
+> **[Click — People]** "People: skills, growth paths, accountability, culture of learning. Without the right people skills, the best tools go unused."
+
+> **[Click — Process]** "Process: guardrails, governance, review workflows, change management. Without process, AI generates chaos at scale."
+
+> **[Click — Technology]** "Technology: AI tools, automation, CI/CD integration, platform choices. This is what most teams focus on first — but it's only one third of the picture."
+
+> **[Click — bottom insight]** "Technology without process equals chaos. Process without people equals shelfware. You need all three. Today covers all three."
+
+---
+
 ## Recap Quiz: Session 2 Review
 
 > "Quick recall. Three questions on prompt engineering, evaluation, and the spec-to-test workflow."
@@ -68,7 +82,17 @@
 
 > **[Pause 2 minutes]**
 
-> "Where are you strongest? Where do you want to grow? This series has moved most of you from Consumer/Power User toward Builder level. The Advanced Series takes you to Architect."
+> "Where are you strongest? Where do you want to grow? This series has moved most of you from Consumer toward Builder level."
+
+---
+
+## Slide 7B: Self-Assessment Grid
+
+> "Here's your personal scorecard. Six skill areas, four levels. Take 2 minutes — silently rate yourself on each row."
+
+> **[Pause 2 minutes while they mentally assess]**
+
+> "Look at your grid. Which row has the biggest gap between where you are and Builder level? That's your 30-day focus. One skill, one level up, 30 days. That's achievable."
 
 ---
 
@@ -169,21 +193,31 @@
 
 ---
 
-## Closing & Series Wrap
+## Slide 20A: The Formula — People, Process, Technology (Venn)
 
-> "Let's recap the journey."
+> "Before we close — let me bring it full circle."
 
-> "Session 1: 'I understand what AI can do for QA.' You built tool maps, learned the Three Levels, and wrote your first specs."
+> **[Click — People circle]** "People. You assessed your skills, built a growth path, defined accountability."
 
-> "Session 2: 'I can use AI tools effectively in my daily workflow.' You mastered prompt engineering, built apps with AI, and wrote Playwright tests from specs."
+> **[Click — Process circle]** "Process. You designed guardrails, governance frameworks, review workflows."
 
-> "Session 3: 'I have a plan to transform our QA practice.' You defined guardrails, built roadmaps, and demonstrated the full AI-augmented workflow."
+> **[Click — Technology circle]** "Technology. You evaluated tools, built with AI, integrated into your pipeline."
+
+> **[Click — center badge]** "The intersection — where all three overlap — that's AI-Augmented Quality. That's what you've been building across three sessions."
+
+> **[Click — bottom]** "All three must evolve together. That's the takeaway."
+
+---
+
+## Closing: What's Next for You
 
 > "What happens next: each team has a 30-60-90 day plan. Implement your top priority within 2 weeks. Let's schedule a 4-week check-in to review progress."
 
-> "For those interested in going deeper — the Advanced Series covers custom AI agents, CI/CD integration, self-healing tests, production monitoring, and enterprise governance. Let's talk if you want to explore that."
+> "Keep building your prompt library. Pair across teams. Share what works."
 
-> "Thank you all for three weeks of incredible engagement. Go build great things. See you at the check-in."
+> "The foundation you've built opens doors to deeper territory — custom agents, self-healing frameworks, CI/CD integration. When the team is ready to go deeper, the path is there."
+
+> "Keep practicing — consistency beats intensity. Thank you all for three weeks of engagement. See you at the check-in."
 
 ---
 
